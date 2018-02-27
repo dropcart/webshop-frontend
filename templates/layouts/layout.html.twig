@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index,follow">
+
+    <title>
+        {% if page_title is defined %}
+            {{ page_title }} -
+        {% elseif title is defined %}
+            {{ title }} -
+        {% endif %}
+
+        {% if site_name is defined %}
+            {{ site_name }}
+        {% else %}
+            Een Dropcart webshop
+        {% endif %}
+    </title>
+
+    <!-- STYLES -->
+    {% block stylesheets %}
+        {% include 'dynamic/styles.html.twig' %}
+    {% endblock %}
+
+    <!-- PRE JS SCRIPTS -->
+    {% block pre_js %}
+        {% include 'dynamic/pre_js.html.twig' %}
+    {% endblock %}
+</head>
+
+<body>
+
+<div class="colorgraph"></div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+    <!-- Include header.html.twig -->
+    {% include 'layouts/header.html.twig' %}
+
+    <!-- Content block -->
+    {% block content %}
+    {% endblock %}
+
+    {% include 'layouts/footer.html.twig' %}
+
+</div>
+<!-- / CONTAINER -->
+
+<!-- POST JS SCRIPTS -->
+{% block post_js %}
+    {% include 'dynamic/post_js.html.twig' %}
+{% endblock %}
+
+</body>
+</html>

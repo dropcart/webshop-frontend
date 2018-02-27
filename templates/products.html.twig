@@ -1,0 +1,246 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block content %}
+
+    <h1>{{ page_title ? page_title : '' }}</h1>
+
+    <div class="col-md-2 filter-box">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title">Filter resultaten</h5>
+            </div>
+            <div class="panel-body">
+                <form action="{{ query_string }}" class="form-horizontal">
+
+                    <div class="form-group">
+                    <div class=" col-sm-12">
+
+                    {% for brand in brands %}
+                        <div class="checkbox">
+                            <label class="checkbox-custom" id="brand-{{ brand.id }}">
+                            <input name="brands[]" type="checkbox"
+                            value="{{ brand.id }}"{{ brand.id in selected_brands ? ' checked="checked"' : ''}}>
+                            <span class="checkbox-label">{{ brand.name }}</span>
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="checkbox">
+                                <label class="checkbox-custom" id="0">
+                                    <input name="show_unavailable_items" type="checkbox"
+                                           value="true" {{ show_unavailable ? 'checked="checked"' : '' }}>
+                                    <span class="checkbox-label">Toon ook niet voorraadige producten</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-primary pull-left">Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-list col-md-10">
+        <!-- Search in category -->
+        <form class="form-horizontal">
+            <!-- Save old selected brands input -->
+            {% if selected_brands %}
+                {% for brand in selected_brands %}
+                    <input type="hidden" name="brands[{{ loop.index0 }}]" value="{{ brand }}"/>
+                {% endfor %}
+            {% endif %}
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <h4>Zoeken binnen categorie</h4>
+                    <div class="search-category input-group" data-initialize="search" role="search">
+                        <input id="query" name="query" class="form-control" placeholder="Naam, beschrijving, EAN of SKU"
+                               type="search" value="{{ search_query ? search_query : '' }}">
+                        <span class="input-group-btn">
+		        <button class="btn btn-default" type="submit">
+		          <span class="glyphicon glyphicon-search"></span>
+		          <span class="sr-only">Zoeken</span>
+		        </button>
+		        </span>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        {% for product in products %}
+            <div class="row">
+                <!-- PRODUCT IMAGE -->
+                <div class="col-md-3 center">
+                    <img src="{{ product.images|length > 0 ? product.images[0].url : '/img/no_image.gif' }}"
+                         class="fill">
+                </div>
+
+                <div class="col-md-7 color">
+                    <!-- PRODUCT TITLE -->
+                    <h3><a class="product-link" href="/product/{{ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a></h3>
+
+                    <!-- PRODUCT DESCRIPTION -->
+                    <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
+
+                    <!-- PRODUCT STOCK -->
+                    <div class="float-left stock-shipping-status">
+                        {% if product.stock %}
+
+                            {% if product.stock > 10 %}
+                                <div class="label label-success">Ruimschoots op voorraad</div>
+                            {% else %}
+                                <div class="label label-success">Op voorraad</div>
+                            {% endif %}
+
+                            {% if product.shipping_details.shipping_days %}
+                                <div class="label label-info">Levertijd {{ product.shipping_details.shipping_days }} werkdag(en)</div>
+                            {% else %}
+                                <div class="label label-info">Levertijd 1-3 werkdag(en)</div>
+                            {% endif %}
+                        {% else %}
+                            <div class="label label-warning">Niet op voorraad</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- PRODUCT INFO -->
+                    <div class="float-right product-details">
+                        <table class="product-id-table">
+                            <tr>
+                                <th>EAN</th>
+                                <td>{{ product.ean }}</td>
+                            </tr>
+                            <tr>
+                                <th>SKU</th>
+                                <td>{{ product.sku }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="float-clear"></div>
+                </div>
+
+                <!-- PRODUCT PRICE -->
+                <div class="col-md-2">
+
+                    {% if product.price_details %}
+                        <h3 class="price">
+                            &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, '.', ',') }}
+                            {#<div class="float-right"><span#}
+                            {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
+                            {#</div>#}
+                        </h3>
+                        <p class="float-clear">
+                            <small><em>Inclusief verzendkosten</em></small>
+                        </p>
+                        <div>
+                            <a href="/shopping-cart/add/{{ product.id }}/1" class="btn btn-lg btn-block btn-primary order-link">
+                                <span class="glyphicon glyphicon-shopping-cart">Bestellen</span>
+                            </a>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            {{ loop.last ? '<hr>' : '' }}
+
+        {% else %}
+            <div class="alert alert-info">
+                Geen producten beschikbaar
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="pagination-block">
+    <p class="info">
+    {{ per_page ~ ' resultaten op deze pagina' }}
+    {{ 'van de ' ~ total ~ ' in totaal.' }}
+    </p>
+
+    <ul class="pagination">
+    <!-- SELECTED BRAND PARAMETER URL (ADD URL PARAMETERS BELOW -->
+    {#<?php#}
+    {#if ($selected_brands) {#}
+    {#$vars = "&" . http_build_query(['brands' => $selected_brands]);#}
+    {#} else {#}
+    {#$vars = '';#}
+    {#}#}
+
+    {#if (isset($query)) {#}
+    {#$vars = $vars."&" . http_build_query(['query' => $query]);#}
+    {#} else {#}
+    {#$vars = $vars.'&';#}
+    {#}#}
+    {#?>#}
+
+    <!-- PREVIOUS PAGE -->
+    {% if current_page is not defined or current_page < 2 %}
+        <li class="disabled"><span>Vorige</span></li>
+    {% else %}
+        <li><a href="{{ query_string ? query_string ~ '&page=' ~ current_page-1 : '?page=' ~ current_page-1 }}" rel="previous">Vorige</a></li>
+    {% endif %}
+
+
+    <!-- PAGES BEFORE CURRENT -->
+    {% if total_pages == 1 %}
+        <li class="{{ current_page == 1 ? 'active' : '' }} disabled"><a
+        href="{{ query_string ? query_string ~ '&page=1' : '?page=1' }}">1</a></li>
+    {% else %}
+        <li class="{{ current_page == 1 ? 'active' : '' }}"><a
+        href="{{ query_string ? query_string ~ '&page=1' : '?page=1' }}">1</a></li>
+    {% endif %}
+
+    {% if current_page > 1 %}
+        {% if current_page > 3 %}
+            <li class="disabled"><span>...</span></li>
+        {% endif %}
+
+        {% for count in 3..1 if (current_page - count) > 1 %}
+            <li>
+                <a href="{{ query_string ? query_string ~ '&page=' ~ (current_page - count) : '?page=' ~ (current_page - count) }}">{{ current_page - count }}</a>
+            </li>
+        {% endfor %}
+
+        <!-- ACTIVE PAGE -->
+        <li class="active">
+        <a href="{{ query_string ? query_string ~ '&page=' ~ current_page : '?page=' ~ current_page }}">{{ current_page }}</a>
+        </li>
+
+    {% endif %}
+
+    {% if current_page < total_pages %}
+        {% for count in (current_page + 1)..(current_page + 3) if count < total_pages %}
+            <li>
+            <a href="{{ query_string ? query_string ~ '&page=' ~ count : '?page=' ~ count }}">{{ count }}</a>
+            </li>
+        {% endfor %}
+    {% endif %}
+
+    {% if current_page < (total_pages - 2) %}
+        <li class="disabled"><span>...</span></li>
+    {% endif %}
+
+    {% if total_pages > 1 and current_page < total_pages %}
+        <li class="{{ current_page == total_pages ? 'active' : '' }}"><a
+        href="{{ query_string ? query_string ~ '&page=' ~ total_pages : '?page=' ~ total_pages }}">{{ total_pages }}</a>
+        </li>
+    {% endif %}
+
+    {% if current_page < total_pages %}
+        <li><a href="{{ query_string ? query_string ~ '&page=' ~ current_page : '?page=' ~ current_page }}" rel="next">Volgende</a></li>
+    {% else %}
+        <li class="disabled"><span>Volgende</span></li>
+    {% endif %}
+
+    </ul>
+    </div>
+
+{% endblock %}

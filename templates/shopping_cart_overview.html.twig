@@ -1,0 +1,163 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block content %}
+
+    <h1>{{ page_title }}</h1>
+
+    <ul class="nav nav-tabs order-tabs">
+        <li class="active">
+            <a href="javascript:void(0);">
+                <strong>Stap 1 - </strong>
+                Winkelwagen
+            </a>
+        </li>
+        <li class="{{ shopping_cart|length <= 0 ? 'disabled' : '' }}">
+            <a href="{{ shopping_cart|length >= 1 ? '/customer-details' : 'javascript:void(0);' }}">
+                <strong>Stap 2 - </strong>
+                Uw gegevens
+            </a>
+        </li>
+        <li class="{{ transaction is defined ? '' : 'disabled' }}">
+            <a href="{{ transaction is defined ? '/order/checkout' : 'javascript:void(0);' }}">
+                <strong>Stap 3 - </strong>
+                Bevestigen en betalen
+            </a>
+        </li>
+        <li class="disabled">
+            <a href="javascript:void(0);">
+                <strong>Stap 4 - </strong>
+                Bestelling geplaatst
+            </a>
+        </li>
+    </ul>
+
+    {% include 'blocks/flash_messages.html.twig' %}
+
+    {% if transaction is defined and transaction.status == 'CONFIRMED' %}
+        <div class="alert alert-warning">
+            De bestelling is al bevestigd. U kunt deze gegevens daarom niet meer aanpassen, maar alleen lezen: <a href="/order/checkout">klik hier om te betalen</a>.
+        </div>
+    {% endif %}
+
+    <table class="shopping-bag table">
+
+        {% if shopping_cart|length < 1 %}
+            <tbody>
+            <td>
+                <div class="alert alert-info center">
+                    <h5>Uw winkelwagen is leeg</h5>
+                </div>
+            </td>
+            </tbody>
+        {% else %}
+            <thead>
+            <tr>
+                <th width="10%"></th>
+                <th>Product</th>
+                <th width="14%">Aantal</th>
+                <th width="12%">Stukprijs</th>
+                <th width="12%">Prijs</th>
+                <th class="fold"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for order_product in shopping_cart %}
+                <tr class="{{ order_product.product.id }}">
+                    <td>
+                        <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/img/no_image.gif' }}"
+                             class="fill">
+                    </td>
+                    <td>
+                        <strong><a href="{{ '/product/' ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
+                        <br>
+
+                        {% if order_product.product.stock is defined and order_product.product.stock > 0 %}
+
+                            {% if order_product.quantity > order_product.product.stock %}
+                                <div class="label label-warning">Niet genoeg op voorraad, langere levertijd</div>
+                            {% else %}
+                                <div class="label label-success">
+                                    {% if order_product.product.stock > 10 %}
+                                        <div class="label label-success">Ruimschoots op voorraad</div>
+                                    {% else %}
+                                        <div class="label label-success">Op voorraad</div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            {% if product.shipping_details.shipping_days %}
+                                <div class="label label-info">Levertijd {{ product.shipping_details.shipping_days }}
+                                    werkdag(en)
+                                </div>
+                            {% else %}
+                                <div class="label label-info">Levertijd 1-3 werkdag(en)</div>
+                            {% endif %}
+                        {% else %}
+                            <div class="label label-warning">Dit product is niet op voorraad</div>
+                        {% endif %}
+
+                        <table class="product-id-table">
+                            <tr>
+                                <th>EAN</th>
+                                <td>{{ order_product.product.ean }}</td>
+                            </tr>
+                            <tr>
+                                <th>SKU</th>
+                                <td>{{ order_product.product.sku }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <input class="product-quantity" type="text" data-truevalue="{{ order_product.quantity }}"
+                               value="{{ order_product.quantity }}" disabled/>
+
+                        {% if transaction is not defined or transaction.status != 'CONFIRMED' %}
+
+                            <a href="/shopping-cart/add/{{ order_product.product.id ~ '/1' }}"><span
+                                        class="glyphicon glyphicon-plus"></span></a>
+                            <a href="/shopping-cart/remove/{{ order_product.product.id ~ '/1' }}"><span
+                                        class="glyphicon glyphicon-minus"></span></a>
+
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        &euro;&nbsp;<span
+                                class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, '.', ',') }}</span>
+                    </td>
+                    <td>
+                        &euro;&nbsp;<span
+                                class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, '.', ',') }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4" align="right">
+                    <div class="next-step">
+                        {% if transaction is defined and transaction %}
+                            <a href="/order/checkout" class="btn btn-lg btn-block btn-primary">Naar afrekenen <span
+                                        class="glyphicon glyphicon-shopping-cart"></span></a>
+                        {% else %}
+                            <a href="/customer-details" class="btn btn-lg btn-block btn-primary customer-link">Naar klantgegevens <span
+                                        class="glyphicon glyphicon-shopping-cart"></span></a>
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    <h3>&euro;&nbsp;<span class="shopping-bag-total">{{ shopping_cart_overview.total_price|number_format(2, '.', ',') }}</span>
+                    </h3>
+                    <p>
+                        <small>Inclusief verzendkosten</small>
+                    </p>
+                </td>
+            </tr>
+            </tfoot>
+        {% endif %}
+        <!-- END IF HAS PRODUCTS -->
+    </table>
+
+{% endblock %}

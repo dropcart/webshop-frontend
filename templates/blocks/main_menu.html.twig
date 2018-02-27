@@ -1,0 +1,37 @@
+<nav>
+    <ul class="nav nav-justified">
+        <li class="no-stretch">
+            <a href="/">
+                <b class="glyphicon glyphicon-home"></b>
+            </a>
+        </li>
+
+        <!-- Category menu -->
+        {% for category in categories[0:8] %}
+            <li>
+                <a href="/products/category/{{ category.id }}">{{ category.name }}</a>
+            </li>
+        {% else %}
+            <li style="text-align: center; font-weight: bold">Geen categorieën</li>
+        {% endfor %}
+
+        <!-- Add additional categories to a dropdown -->
+        {% if categories|length > 8 %}
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Meer<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {% for category in categories[8:] %}
+                        <li>
+                            <a href="/products/category/{{ category.id }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>

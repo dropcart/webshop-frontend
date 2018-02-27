@@ -1,0 +1,75 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block content %}
+
+    <h1>{{ page_title }}</h1>
+
+    <div class="row">
+        <div class="col-md-3 center">
+            <img src="{{ product.images|length > 0 ? product.images[0].url : '/img/no_image.gif' }}" class="fill">
+        </div>
+        <div class="col-md-7">
+            <!-- PRODUCT DESCRIPTION -->
+            <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
+
+            <!-- PRODUCT STOCK -->
+            <div class="float-left stock-shipping-status">
+                {% if product.stock %}
+
+                    {% if product.stock > 10 %}
+                        <div class="label label-success">Ruimschoots op voorraad</div>
+                    {% else %}
+                        <div class="label label-success">Op voorraad</div>
+                    {% endif %}
+
+                    {% if product.shipping_details.shipping_days %}
+                        <div class="label label-info">Levertijd {{ product.shipping_details.shipping_days }} werkdag(en)</div>
+                    {% else %}
+                        <div class="label label-info">Levertijd 1-3 werkdag(en)</div>
+                    {% endif %}
+                {% else %}
+                    <div class="label label-warning">Niet op voorraad</div>
+                {% endif %}
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="float-right product-details">
+                <table class="product-id-table">
+                    <tr>
+                        <th>EAN</th>
+                        <td>{{ product.ean }}</td>
+                    </tr>
+                    <tr>
+                        <th>SKU</th>
+                        <td>{{ product.sku }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- PRODUCT PRICE -->
+        <div class="col-md-2">
+
+            {% if product.price_details %}
+                <h3 class="price">
+                    &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, '.', ',') }}
+                    {#<div class="float-right"><span#}
+                    {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
+                    {#</div>#}
+                </h3>
+                <p class="float-clear">
+                    <small><em>Inclusief verzendkosten</em></small>
+                </p>
+                <div>
+                    <a href="" class="btn btn-lg btn-block btn-primary order-link">
+                        <span class="glyphicon glyphicon-shopping-cart">Bestellen</span>
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

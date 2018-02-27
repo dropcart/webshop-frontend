@@ -1,0 +1,64 @@
+<div class="row">
+
+    <div class="col-md-3">
+        <span style="height:10px; display: block" aria-hidden="true">&nbsp;</span>
+        <div class="push-left">
+            <a href="/"><img style="max-height: 94px; max-width: 275px;"
+                             src="/images/logo/logo.png"
+                             alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/></a>
+            {% if site_slug %}
+                <h4 class="slogan">{{ site_slug }}</h4>
+            {% else %}
+                <div style="height: 39px;"></div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <form class="form-horizontal search-products" method="get"
+              action="/products">
+
+            {% if selected_brands is defined %}
+                {% for brand in selected_brands %}
+                    <input type="hidden" name="brands[{{ loop.index0 }}]" value="{{ brand }}"/>
+                {% endfor %}
+            {% endif %}
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <h5 class="global-search-title">Zoek binnen assortiment</h5>
+                    <div class="search input-group" data-initialize="search" role="search">
+                        <input id="query" name="query" class="form-control"
+                               placeholder="Naam, beschrijving, EAN of SKU" type="search" value="">
+                        <span class="input-group-btn">
+		                        <button class="btn btn-default" type="submit">
+		                            <span class="glyphicon glyphicon-search"></span>
+		                            <span class="sr-only">Zoeken</span>
+		                        </button>
+		                    </span>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <div class="push-right">
+            <!-- Pages menu -->
+            {% include 'blocks/pages_menu.html.twig' %}
+            <div class="float-clear"></div>
+
+            <div id="cart">
+                <!-- Shopping cart -->
+                {% include 'blocks/shopping_cart.html.twig' %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Main menu -->
+<div class="masthead">
+    {% include 'blocks/main_menu.html.twig' %}
+</div>

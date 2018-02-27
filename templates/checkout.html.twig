@@ -1,0 +1,279 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block content %}
+
+    <h1>{{ page_title }}</h1>
+
+    <ul class="nav nav-tabs order-tabs">
+        <li>
+            <a href="/shopping-cart">
+                <strong>Stap 1 - </strong>
+                Winkelwagen
+            </a>
+        </li>
+        <li>
+            <a href="/customer-details">
+                <strong>Stap 2 - </strong>
+                Uw gegevens
+            </a>
+        </li>
+        <li class="active">
+            <a href="javascript:void(0);">
+                <strong>Stap 3 - </strong>
+                Bevestigen en betalen
+            </a>
+        </li>
+        <li class="disabled">
+            <a href="javascript:void(0);">
+                <strong>Stap 4 - </strong>
+                Bestelling geplaatst
+            </a>
+        </li>
+    </ul>
+
+    {% include 'blocks/flash_messages.html.twig' %}
+
+    {% if transaction is defined and transaction.status == "CONFIRMED" %}
+        <div class="alert alert-warning">
+            De bestelling is al bevestigd. Het is nog niet gelukt om de betaling te voltooien. Druk nogmaals op onderstaande knop om deze bestelling te betalen.
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Controleer de onderstaande informatie goed! Als u een fout ontdekt in het afleveradres, factuuradres of in de contactgegevens, <a href="/customer-details">klik hier om deze te wijzigen</a>
+        </div>
+    {% endif %}
+
+    <form class="form-horizontal confirm-form bv-form" role="form" method="post">
+    <input type="hidden" name="submitting" value="1" />
+    <table class="customer-details-overview table table-bordered">
+        <thead>
+        <tr>
+            <th width="33%">Factuuradres</th>
+            <th width="34%">Afleveradres</th>
+            <th width="33%">Contactgegevens</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ customer_details.billing_address.first_name ~ ' ' ~ customer_details.billing_address.last_name }}</td>
+            <td>{{ customer_details.shipping_is_billing ? customer_details.billing_address.first_name ~ ' ' ~ customer_details.billing_address.last_name : customer_details.shipping_adress.first_name ~ ' ' ~ customer_details.shipping_adress.last_name }}</td>
+            <td>{{ customer_details.first_name }} {{ customer_details.last_name }}</td>
+        </tr>
+        <tr>
+            <td rowspan="2">{{ customer_details.billing_address.address_1 ~ ' ' ~ (customer_details.billing_address.address_2 ? customer_details.billing_address.address_2 ~ ' ' : '') ~ customer_details.billing_address.address_house_nr }}</td>
+            <td rowspan="2">{{ customer_details.shipping_is_billing ? customer_details.billing_address.address_1 ~ ' ' ~ (customer_details.billing_address.address_2 ? customer_details.billing_address.address_2 ~ ' ' : '') ~ customer_details.billing_address.address_house_nr : customer_details.shipping_address.address_1 ~ ' ' ~ (customer_details.shipping_address.address_2 ? customer_details.shipping_address.address_2 ~ ' ' : '') ~ customer_details.shipping_address.address_house_nr }}</td>
+            <td>{{ customer_details.email }}</td>
+        </tr>
+        <tr>
+            <td>{{ customer_details.telephone }}</td>
+        </tr>
+        <tr>
+            <td>{{ customer_details.billing_address.postcode ~ ' ' ~ customer_details.billing_address.city }}</td>
+            <td>{{ customer_details.shipping_is_billing ? customer_details.billing_address.postcode ~ ' ' ~ customer_details.billing_address.city : customer_details.shipping_address.postcode ~ ' ' ~ customer_details.shipping_address.city }}</td>
+        </tr>
+        <tr>
+            <td>{{ customer_details.billing_address.country_name }}</td>
+            <td>{{ customer_details.shipping_is_billing ? customer_details.billing_address.country_name : customer_details.shipping_address.country_name }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <table class="shopping-bag table">
+        {% if shopping_cart|length < 1 %}
+            <tbody>
+            <td>
+                <div class="alert alert-info center">
+                    <h5>Uw winkelwagen is leeg</h5>
+                </div>
+            </td>
+            </tbody>
+        {% else %}
+        <thead>
+        <tr>
+                <th width="10%"></th>
+                <th>Product</th>
+                <th width="14%">Aantal</th>
+                <th width="12%">Stukprijs</th>
+                <th width="12%">Prijs</th>
+                <th class="fold"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for order_product in shopping_cart %}
+                <tr class="{{ order_product.product.id }}">
+                    <td>
+                        <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/img/no_image.gif' }}"
+                             class="fill">
+                    </td>
+                    <td>
+                        <strong><a href="{{ '/product/' ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
+                        <br>
+
+                        {% if order_product.product.stock is defined and order_product.product.stock > 0 %}
+
+                            {% if order_product.quantity > order_product.product.stock %}
+                                <div class="label label-warning">Niet genoeg op voorraad, langere levertijd</div>
+                            {% else %}
+                                <div class="label label-success">
+                                    {% if order_product.product.stock > 10 %}
+                                        <div class="label label-success">Ruimschoots op voorraad</div>
+                                    {% else %}
+                                        <div class="label label-success">Op voorraad</div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            {% if product.shipping_details.shipping_days %}
+                                <div class="label label-info">Levertijd {{ product.shipping_details.shipping_days }}
+                                    werkdag(en)
+                                </div>
+                            {% else %}
+                                <div class="label label-info">Levertijd 1-3 werkdag(en)</div>
+                            {% endif %}
+                        {% else %}
+                            <div class="label label-warning">Dit product is niet op voorraad</div>
+                        {% endif %}
+
+                        <table class="product-id-table">
+                            <tr>
+                                <th>EAN</th>
+                                <td>{{ order_product.product.ean }}</td>
+                            </tr>
+                            <tr>
+                                <th>SKU</th>
+                                <td>{{ order_product.product.sku }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        {{ order_product.quantity }}
+                    </td>
+                    <td>
+                        &euro;&nbsp;<span
+                                class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, '.', ',') }}</span>
+                    </td>
+                    <td>
+                        &euro;&nbsp;<span
+                                class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, '.', ',') }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+
+        <tbody>
+        <tr>
+            <td>&nbsp;</td>
+            <td colspan="2">
+                <div class="col-xs-12"><h4>Selecteer uw gewenste betaalmethode:</h4></div>
+                <div class="row">
+
+                    {% for payment_method in payment_methods %}
+                        <div class="col-sm-3 col-xs-6 col-md-2" style="text-align: center; margin-top: 20px;">
+                            <label>
+                                <input type="radio" name="paymentMethod" class="radio-{{ payment_method.id }}" value="{{ payment_method.id }}">
+                                {% if payment_method.logo %}
+                                    <img src="{{ payment_method.logo }}" style="height: 50px; width: auto;"><br />
+                                {% endif %}
+                                {{ payment_method.name }}
+                                {% if payment_method.extra is defined %}
+                                    {% for field in payment_method.extra.fields %}
+                                    <br>
+                                        {% if field.type == 'selectable' %}
+                                            <select name="paymentMethodAttributes[{{ field.id }}]">
+                                                {% for value in payment_method.extra.issuers %}
+                                                    <option value="{{ value.id }}">{{ value.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </label>
+                        </div>
+
+                        {% if loop.index0 == 1 %}
+                            <div class="clearfix visible-xs-block"></div>
+                        {% endif %}
+                        {% if loop.index0 == 3 %}
+                            <div class="clearfix visible-sm-block"></div>
+                        {% endif %}
+                        {% if loop.index0 == 5 %}
+                            <div class="clearfix visible-md-block visible-lg-block"></div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <div class="next-step">
+                    <div class="form-group checkbox has-feedback">
+                        <div class="col-sm-12">
+                            <label class="confirm"><input type="checkbox" name="conditions" {{ transaction is defined and transaction.status == "CONFIRMED" ? ' checked="checked" disabled="disabled"' : '' }} data-bv-field="conditions" class="i-agree-with-the-conditions">
+                                Ik ga akkoord met de algemene voorwaarden <a href="/terms-and-conditions">(Bekijk)</a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" align="right">
+                <div class="next-step">
+                    {% if transaction is defined and transaction.status == "CONFIRMED" %}
+                        <button type="submit" class="btn btn-lg btn-block btn-primary payment-link"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;Opnieuw naar Betalen</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-lg btn-block btn-primary payment-link"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;Bestelling plaatsen en Betalen</button>
+                    {% endif %}
+                    <p>
+                        U wordt omgeleid naar onze betaalpagina waar u het totaalbedrag direct kan voldoen.
+                    </p>
+                </div>
+            </td>
+            <td>
+                <h3>&euro;&nbsp;{{ shopping_cart_overview.total_price|number_format(2, '.', ',') }}</h3>
+                <p>
+                    <small>inclusief verzendkosten</small>
+                </p>
+            </td>
+        </tr>
+        </tfoot>
+
+        <!-- END IF HAS PRODUCTS -->
+        {% endif %}
+    </table>
+
+{% endblock %}
+
+{% block post_js %}
+    {{ parent() }}
+
+    <script src="/js/bv.js" language="javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.confirm-form').bootstrapValidator({
+            message: 'Dit is een verplicht veld',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                conditions: {
+                    validators: {
+                        notEmpty: {
+                            message: 'U dient akkoord te gaan met de algemene (verkoop)voorwaarden.'
+                        }
+                    }
+                }
+
+            }
+        });
+    });
+    </script>
+{% endblock %}

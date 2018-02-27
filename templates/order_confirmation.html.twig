@@ -1,0 +1,34 @@
+{% extends "layouts/layout.html.twig" %}
+
+{% block content %}
+
+    {% if payment_status == 'paid' %}
+
+        <h1>Bedankt voor uw bestelling!</h1>
+        <p>
+            We hebben uw betaling ontvangen en u een betalingsbewijs toegezonden. Uw bestelling zal zo spoedig mogelijk worden geleverd.
+        </p>
+
+    {% elseif payment_status == 'pending' %}
+
+        <h1>Bedankt voor uw bestelling!</h1>
+        <p>
+            We hebben uw betaling ontvangen, maar deze is nog niet verwerkt. Controlleer goed uw opgegeven e-mail voor ontvangen berichten: zodra uw betaling geslaagd, ontvangt u een betalingsbevestiging.
+        </p>
+
+    {% else %}
+
+        <h1>Er ging iets fout</h1>
+        <p>
+            Er is iets misgegaan tijdens uw betaling. Controlleer goed uw opgegeven e-mail voor ontvangen berichten: als de betaling toch geslaagd is, ontvangt u een betalingsbevestiging.
+        </p>
+
+        <form action="/order/checkout" method="post">
+            <p>
+                <button class="btn btn-link" type="submit">U kunt de betaling ook opnieuw proberen te doen.</button>
+            </p>
+        </form>
+
+    {% endif %}
+
+{% endblock %}

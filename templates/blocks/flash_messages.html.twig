@@ -1,0 +1,29 @@
+{% if flash_messages.success_messages is defined and flash_messages.success_messages|length > 0  %}
+    <div class="alert alert-dismissable alert-success">
+        <ul>
+            {% for success_message in flash_messages.success_messages %}
+                <li>{{ success_message|raw }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% if flash_messages.warning_messages is defined and flash_messages.warning_messages|length > 0  %}
+    <div class="alert alert-dismissable alert-warning">
+        <ul>
+            {% for warning_message in flash_messages.warning_messages %}
+                <li>{{ warning_message|raw }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% if flash_messages.error_messages is defined and flash_messages.error_messages|length > 0 %}
+    <div class="alert alert-dismissable alert-danger">
+        <ul>
+            {% for error_message in flash_messages.error_messages %}
+                <li>{{ error_message|raw }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
