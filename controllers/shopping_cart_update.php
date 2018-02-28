@@ -46,10 +46,10 @@ if (isset($_SESSION['transaction']) && $_SESSION['transaction']['status'] == "CO
     back();
 }
 
-if ($uri[1] == 'add') {
+if ('/'.$uri[0].'/'.$uri[1].'/' == lang('url.shopping_cart_add')) {
 	shopping_cart()->addProduct($uri[2], $uri[3]);
 }
-elseif ($uri[1] == 'remove')  {
+elseif ('/'.$uri[0].'/'.$uri[1].'/'== lang('url.shopping_cart_remove'))  {
     $quantity = (isset($uri[3]) ? $uri[3] : null);
     shopping_cart()->removeProduct($uri[2], $quantity);
 }

@@ -39,6 +39,6 @@
 
 echo view('blank.html.twig', [
 	//'page_title' => '404 Error',
-	'title' => 'Hier gaat iets helemaal 404-fout',
+	'title' => lang('page_titles.404'),
 	'content' => '<p><img src="/images/404_image.gif" style="width: 50%;"></p><p>De opgevraagde pagina bestaat niet.</p><p>Wellicht was u op zoek naar:</p><ul><li><a href="/">De homepagina</a>?</li><li><a href="/support">De support-pagina</a>?</li></ul>'
 ]);

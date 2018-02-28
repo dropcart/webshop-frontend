@@ -37,4 +37,6 @@
  * =========================================================
  */
 
-echo 'support';
+echo view('support.html.twig', [
+    'page_title' => lang('page_titles.support'),
+]);

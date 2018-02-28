@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $order = request([], 'order', 'order', [
                 'shopping_cart' => shopping_cart()->get(),
                 'customer_details' => customer()->get(),
-                'payment_return_url' => url() . '/order/confirmation',
+                'payment_return_url' => url() . lang('url.confirmation'),
             ], 'post');
 
             $transaction = $transaction->confirm($order->id)->setPaymentMethod($_POST)->get();
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     }
 
-    header('location: /order/checkout');
+    header('location: ' . lang('url.checkout'));
 }
 
 // Collect all countries
@@ -107,4 +107,5 @@ echo view('checkout.html.twig', [
 	'payment_methods' => $payment_methods,
 	// Warnings and errors
 	'flash_messages' => flash_messages()->get(),
+    'page_title' => lang('page_titles.checkout'),
 ]);

@@ -78,3 +78,21 @@ function back()
 		exit;
 	}
 }
+
+/**
+ * Returns the localization file for the current default locale, or the translation from array_key
+ * @return string
+ */
+function lang($key = null)
+{
+    $lang = include __BASEDIR__ . '/public/lang/'.locale_get_default().'/'.locale_get_default().'.php';
+    if ($key) {
+        $keys = explode('.', $key);
+        foreach ($keys as $key) {
+            $lang = $lang[$key];
+        }
+        return $lang;
+    } else {
+        return $lang;
+    }
+}

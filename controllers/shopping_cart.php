@@ -41,4 +41,5 @@ echo view('shopping_cart_overview.html.twig', [
 	'shopping_cart' => shopping_cart()->get(),
 	// Warnings and errors
 	'flash_messages' => flash_messages()->get(),
+    'page_title' => lang('page_titles.shopping_cart'),
 ]);

@@ -86,7 +86,7 @@
 
                 <div class="col-md-7 color">
                     <!-- PRODUCT TITLE -->
-                    <h3><a class="product-link" href="/product/{{ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a></h3>
+                    <h3><a class="product-link" href="{{ lang.url.product ~ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a></h3>
 
                     <!-- PRODUCT DESCRIPTION -->
                     <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
@@ -132,7 +132,7 @@
 
                     {% if product.price_details %}
                         <h3 class="price">
-                            &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, '.', ',') }}
+                            &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
                             {#<div class="float-right"><span#}
                             {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
                             {#</div>#}
@@ -141,7 +141,7 @@
                             <small><em>Inclusief verzendkosten</em></small>
                         </p>
                         <div>
-                            <a href="/shopping-cart/add/{{ product.id }}/1" class="btn btn-lg btn-block btn-primary order-link">
+                            <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn-lg btn-block btn-primary order-link">
                                 <span class="glyphicon glyphicon-shopping-cart">Bestellen</span>
                             </a>
                         </div>

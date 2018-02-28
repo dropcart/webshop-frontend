@@ -92,6 +92,8 @@ $extra_twig_variables = [
 	'selected_brands' => (isset($_GET['brands']) ? $_GET['brands'] : []),
 	'search_query' => (isset($_GET['query']) ? $_GET['query'] : null),
 	'show_unavailable' => (isset($_GET['show_unavailable_items']) && $_GET['show_unavailable_items'] == true ? true : false),
+
+    'page_title' => lang('page_titles.products'),
 ];
 
 // Form the page_title variable

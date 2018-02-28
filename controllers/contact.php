@@ -37,4 +37,6 @@
  * =========================================================
  */
 
-echo 'contact';
+echo view('contact.html.twig', [
+    'page_title' => lang('page_titles.contact'),
+]);

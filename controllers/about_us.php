@@ -37,4 +37,6 @@
  * =========================================================
  */
 
-echo 'about_us';
+echo view('about_us.html.twig', [
+    'page_title' => lang('page_titles.about_us'),
+]);

@@ -66,29 +66,29 @@ function route($route, $file) {
 route('/', 'home');
 
 // Default pages
-route('/contact', 'contact');
-route('/about-us', 'about_us');
-route('/terms-and-conditions', 'about_us');
-route('/support', 'support');
-route('/account', 'account');
+route(lang('url.contact'), 'contact');
+route(lang('url.about_us'), 'about_us');
+route(lang('url.terms_and_conditions'), 'terms_and_conditions');
+route(lang('url.support'), 'support');
+route(lang('url.account'), 'account');
 
 // Products
-route('/products', 'products');
-route('/products/category/(.*)', 'products');
+route(lang('url.products'), 'products');
+route(lang('url.category_products') . '(.*)', 'products');
 
 // Product overview
-route('/product/(.*)/(.*)', 'product');
+route(lang('url.product') . '(.*)/(.*)', 'product');
 
-// Shopping bag
-route('/shopping-cart', 'shopping_cart');
-// Shopping bag add / remove
-route('/shopping-cart/add/(.*)/(.*)', 'shopping_cart_update');
-route('/shopping-cart/remove/(.*)/(.*)', 'shopping_cart_update');
+// Shopping cart
+route(lang('url.shopping_cart'), 'shopping_cart');
+// Shopping cart add / remove
+route(lang('url.shopping_cart_add') . '(.*)/(.*)', 'shopping_cart_update');
+route(lang('url.shopping_cart_remove') . '(.*)/(.*)', 'shopping_cart_update');
 
 // Order routes
-route('/customer-details', 'customer_details');
-route('/order/checkout', 'checkout');
-route('/order/confirmation', 'order_confirmation');
+route(lang('url.customer_details'), 'customer_details');
+route(lang('url.checkout'), 'checkout');
+route(lang('url.confirmation'), 'order_confirmation');
 
 // Image routes
 route('/assets/images/(.*)', 'images');

@@ -48,6 +48,9 @@ require_once __BASEDIR__ . '/classes/shopping_cart.php';
 require_once __BASEDIR__ . '/classes/customer.php';
 require_once __BASEDIR__ . '/classes/flash_messages.php';
 
+// Includes
+include __BASEDIR__ . '/includes/helpers.php';
+
 // Load the config repository
 $Config = new Config(__BASEDIR__ . '/config/config.php');
 if(! function_exists('config') )
@@ -82,6 +85,8 @@ if(!function_exists('customer')) { function customer() { global $Customer; retur
 $Messages       = new flash_messages([]);
 if(!function_exists('flash_messages')) { function flash_messages() { global $Messages; return $Messages; } }
 
+// Set locale
+Locale::setDefault(strtolower(config('APP_LOCALE', 'NL')));
 
 $Twig = (object) [
 	'environment' => new Twig_Environment(new Twig_Loader_Filesystem(config('template_path')), array(
@@ -96,6 +101,8 @@ $Twig = (object) [
 		'categories'                => request([], 'catalog', 'categories'),
 		'customer_details'          => customer()->get(),
 		'shopping_cart_overview'    => shopping_cart()->overview(),
+        // Translations
+        'lang'                      => lang(),
 	]
 ];
 
@@ -123,5 +130,3 @@ if(! function_exists('view') )
 		return $template->render($vars);
 	}
 }
-
-include __BASEDIR__ . '/includes/helpers.php';

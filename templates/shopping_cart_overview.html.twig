@@ -12,13 +12,13 @@
             </a>
         </li>
         <li class="{{ shopping_cart|length <= 0 ? 'disabled' : '' }}">
-            <a href="{{ shopping_cart|length >= 1 ? '/customer-details' : 'javascript:void(0);' }}">
+            <a href="{{ shopping_cart|length >= 1 ? lang.url.customer_details : 'javascript:void(0);' }}">
                 <strong>Stap 2 - </strong>
                 Uw gegevens
             </a>
         </li>
         <li class="{{ transaction is defined ? '' : 'disabled' }}">
-            <a href="{{ transaction is defined ? '/order/checkout' : 'javascript:void(0);' }}">
+            <a href="{{ transaction is defined ? lang.url.checkout : 'javascript:void(0);' }}">
                 <strong>Stap 3 - </strong>
                 Bevestigen en betalen
             </a>
@@ -35,7 +35,7 @@
 
     {% if transaction is defined and transaction.status == 'CONFIRMED' %}
         <div class="alert alert-warning">
-            De bestelling is al bevestigd. U kunt deze gegevens daarom niet meer aanpassen, maar alleen lezen: <a href="/order/checkout">klik hier om te betalen</a>.
+            De bestelling is al bevestigd. U kunt deze gegevens daarom niet meer aanpassen, maar alleen lezen: <a href="{{ lang.url.checkout }}">klik hier om te betalen</a>.
         </div>
     {% endif %}
 
@@ -69,7 +69,7 @@
                              class="fill">
                     </td>
                     <td>
-                        <strong><a href="{{ '/product/' ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
+                        <strong><a href="{{ lang.url.product ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
                         <br>
 
                         {% if order_product.product.stock is defined and order_product.product.stock > 0 %}
@@ -114,9 +114,9 @@
 
                         {% if transaction is not defined or transaction.status != 'CONFIRMED' %}
 
-                            <a href="/shopping-cart/add/{{ order_product.product.id ~ '/1' }}"><span
+                            <a href="{{ lang.url.shopping_cart_add ~ order_product.product.id ~ '/1' }}"><span
                                         class="glyphicon glyphicon-plus"></span></a>
-                            <a href="/shopping-cart/remove/{{ order_product.product.id ~ '/1' }}"><span
+                            <a href="{{ lang.url.shopping_cart_remove ~ order_product.product.id ~ '/1' }}"><span
                                         class="glyphicon glyphicon-minus"></span></a>
 
                         {% endif %}
@@ -124,11 +124,11 @@
                     </td>
                     <td>
                         &euro;&nbsp;<span
-                                class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, '.', ',') }}</span>
+                                class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, ',', '.') }}</span>
                     </td>
                     <td>
                         &euro;&nbsp;<span
-                                class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, '.', ',') }}</span>
+                                class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, ',', '.') }}</span>
                     </td>
                 </tr>
             {% endfor %}
@@ -139,10 +139,10 @@
                 <td colspan="4" align="right">
                     <div class="next-step">
                         {% if transaction is defined and transaction %}
-                            <a href="/order/checkout" class="btn btn-lg btn-block btn-primary">Naar afrekenen <span
+                            <a href="{{ lang.url.checkout }}" class="btn btn-lg btn-block btn-primary">Naar afrekenen <span
                                         class="glyphicon glyphicon-shopping-cart"></span></a>
                         {% else %}
-                            <a href="/customer-details" class="btn btn-lg btn-block btn-primary customer-link">Naar klantgegevens <span
+                            <a href="{{ lang.url.customer_details }}" class="btn btn-lg btn-block btn-primary customer-link">Naar klantgegevens <span
                                         class="glyphicon glyphicon-shopping-cart"></span></a>
                         {% endif %}
                     </div>

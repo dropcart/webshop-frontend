@@ -37,5 +37,6 @@
  * =========================================================
  */
 
-
-echo view('home.html.twig');
+echo view('home.html.twig', [
+    'page_title' => lang('page_titles.home'),
+]);

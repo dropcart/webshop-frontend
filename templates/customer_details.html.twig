@@ -12,7 +12,7 @@
 
     <ul class="nav nav-tabs order-tabs">
         <li>
-            <a href="/shopping-cart">
+            <a href="{{ lang.url.shopping_cart }}">
                 <strong>Stap 1 - </strong>
                 Winkelwagen
             </a>
@@ -24,7 +24,7 @@
             </a>
         </li>
         <li class="{{ transaction is defined ? '' : 'disabled' }}">
-            <a href="{{ transaction is defined ? '/order/checkout' : 'javascript:void(0);' }}">
+            <a href="{{ transaction is defined ? lang.url.checkout : 'javascript:void(0);' }}">
                 <strong>Stap 3 - </strong>
                 Bevestigen en betalen
             </a>
@@ -41,7 +41,7 @@
 
     {% if transaction is defined and tansaction.status == "CONFIRMED" %}
         <div class="alert alert-warning">
-            De bestelling is al bevestigd. U kunt deze gegevens daarom niet meer aanpassen, maar alleen lezen: <a href="/order/checkout">klik hier om te betalen</a>.
+            De bestelling is al bevestigd. U kunt deze gegevens daarom niet meer aanpassen, maar alleen lezen: <a href="{{ lang.url.checkout }}">klik hier om te betalen</a>.
         </div>
     {% elseif post.submit is defined %}
         <div class="alert alert-info">

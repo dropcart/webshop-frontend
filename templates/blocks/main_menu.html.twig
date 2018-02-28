@@ -9,7 +9,7 @@
         <!-- Category menu -->
         {% for category in categories[0:8] %}
             <li>
-                <a href="/products/category/{{ category.id }}">{{ category.name }}</a>
+                <a href="{{ lang.url.category_products ~ category.id }}">{{ category.name }}</a>
             </li>
         {% else %}
             <li style="text-align: center; font-weight: bold">Geen categorieën</li>
@@ -24,7 +24,7 @@
                 <ul class="dropdown-menu">
                     {% for category in categories[8:] %}
                         <li>
-                            <a href="/products/category/{{ category.id }}">
+                            <a href="{{ lang.url.category_products ~ category.id }}">
                                 {{ category.name }}
                             </a>
                         </li>

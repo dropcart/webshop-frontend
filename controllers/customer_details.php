@@ -37,13 +37,12 @@
  * =========================================================
  */
 
-
 // POST actions
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     // Fill the customer details with the POST data
-    $customer->fill($_POST);
-    header('location: /order/checkout');
+    customer()->fill($_POST);
+    header('location: ' . lang('url.checkout'));
     exit;
 }
 
@@ -56,4 +55,5 @@ echo view('customer_details.html.twig', [
 	'post' => $_POST,
 	// Warnings and errors
 	'flash_messages' => flash_messages()->get(),
+    'page_title' => lang('page_titles.customer_details'),
 ]);

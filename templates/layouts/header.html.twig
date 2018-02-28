@@ -16,7 +16,7 @@
 
     <div class="col-md-5">
         <form class="form-horizontal search-products" method="get"
-              action="/products">
+              action="{{ lang.url.products }}">
 
             {% if selected_brands is defined %}
                 {% for brand in selected_brands %}

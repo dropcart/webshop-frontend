@@ -40,18 +40,22 @@
 // Initialize payment_status
 $payment_status = '';
 
+$twig_variables = [];
+
 // Get order payment status
 if (!isset($_GET['status'])) {
     // Redirect back to order checkout page with error message.
     // Payment is either cancelled or expired. A new payment_url should be generated.
     flash_messages()->setErrorMessages('De betaling is afgebroken of verlopen.<br>Indien u de bestelling toch door wilt voeren kunt u opnieuw uw betaalmethode selecteren en verder gaan naar de betaalpagina om uw bestelling af te ronden.');
-    header("Location: /order/checkout");
+    header("Location: " . lang('url.checkout'));
     exit();
 } else {
     // Switch the order payment status and pass it on to the template.
     switch ($_GET['status']) {
         case 'paid':
             session_unset();
+            // Set the shopping_cart_overview to null
+            $twig_variables['shopping_cart_overview'] = null;
             $payment_status = 'paid';
             break;
         case 'open':
@@ -59,11 +63,16 @@ if (!isset($_GET['status'])) {
             break;
         case 'pending':
             session_unset();
+            // Set the shopping_cart_overview to null
+            $twig_variables['shopping_cart_overview'] = null;
             $payment_status = 'pending';
             break;
     }
 }
 
-echo view('order_confirmation.html.twig', [
-	'payment_status' => $payment_status,
-]);
+$twig_variables['payment_status'] = $payment_status;
+
+echo view('order_confirmation.html.twig', array_merge($twig_variables, [
+    'payment_status' => $payment_status,
+    'page_title' => lang('page_titles.order_confirmation'),
+]));

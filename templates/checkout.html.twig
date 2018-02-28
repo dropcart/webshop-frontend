@@ -6,13 +6,13 @@
 
     <ul class="nav nav-tabs order-tabs">
         <li>
-            <a href="/shopping-cart">
+            <a href="{{ lang.url.shopping_cart }}">
                 <strong>Stap 1 - </strong>
                 Winkelwagen
             </a>
         </li>
         <li>
-            <a href="/customer-details">
+            <a href="{{ lang.url.customer_details }}">
                 <strong>Stap 2 - </strong>
                 Uw gegevens
             </a>
@@ -39,7 +39,7 @@
         </div>
     {% else %}
         <div class="alert alert-info">
-            Controleer de onderstaande informatie goed! Als u een fout ontdekt in het afleveradres, factuuradres of in de contactgegevens, <a href="/customer-details">klik hier om deze te wijzigen</a>
+            Controleer de onderstaande informatie goed! Als u een fout ontdekt in het afleveradres, factuuradres of in de contactgegevens, <a href="{{ lang.url.customer_details }}">klik hier om deze te wijzigen</a>
         </div>
     {% endif %}
 
@@ -108,7 +108,7 @@
                              class="fill">
                     </td>
                     <td>
-                        <strong><a href="{{ '/product/' ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
+                        <strong><a href="{{ lang.url.product ~ order_product.product.name|url_encode ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
                         <br>
 
                         {% if order_product.product.stock is defined and order_product.product.stock > 0 %}
@@ -152,11 +152,11 @@
                     </td>
                     <td>
                         &euro;&nbsp;<span
-                                class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, '.', ',') }}</span>
+                                class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, ',', '.') }}</span>
                     </td>
                     <td>
                         &euro;&nbsp;<span
-                                class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, '.', ',') }}</span>
+                                class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, ',', '.') }}</span>
                     </td>
                 </tr>
             {% endfor %}
@@ -215,7 +215,7 @@
                     <div class="form-group checkbox has-feedback">
                         <div class="col-sm-12">
                             <label class="confirm"><input type="checkbox" name="conditions" {{ transaction is defined and transaction.status == "CONFIRMED" ? ' checked="checked" disabled="disabled"' : '' }} data-bv-field="conditions" class="i-agree-with-the-conditions">
-                                Ik ga akkoord met de algemene voorwaarden <a href="/terms-and-conditions">(Bekijk)</a>
+                                Ik ga akkoord met de algemene voorwaarden <a href="{{ lang.url.terms_and_confitions }}">(Bekijk)</a>
                             </label>
                         </div>
                     </div>

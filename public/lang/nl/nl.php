@@ -40,18 +40,41 @@
 return [
 
     'page_titles' => [
-        '404' => '',
-        'about_us' => '',
-        'account' => '',
-        'checkout' => '',
-        'contact' => '',
-        'customer_details' => '',
-        'home' => '',
-        'order_confirmation' => '',
-        'product' => '',
-        'products' => '',
-        'shopping_cart' => '',
-        'support' => '',
-    ]
+        '404' => 'Hier gaat iets helemaal 404-fout',
+        'about_us' => 'Over ons',
+        'account' => 'Uw account',
+        'checkout' => 'Afrekenen',
+        'contact' => 'Contact',
+        'customer_details' => 'Klantgegevens',
+        'home' => 'Home',
+        'order_confirmation' => 'Orderbevestiging',
+        'product' => 'Product',
+        'products' => 'Producten',
+        'shopping_cart' => 'Winkelwagen',
+        'support' => 'Ondersteuning',
+    ],
 
+    // CHANGES AT OWN RISK!
+    'url' => [
+        // Default pages
+        'contact'				=> '/contact',
+        'about_us'				=> '/over-ons',
+        'terms_and_conditions'	=> '/onze-voorwaarden',
+        'support'				=> '/support',
+        'account'				=> '/mijn-account',
+        // Products
+        'products'	            => '/producten',
+        'category_products'	    => '/producten/categorie/',
+        // Product overview
+        'product'				=> '/product/',
+        // Shopping cart
+        'shopping_cart'			=> '/winkelmandje',
+        // Shopping cart add / remove
+        'shopping_cart_add'		=> '/winkelmandje/toevoegen/',
+        'shopping_cart_remove'	=> '/winkelmandje/verwijderen/',
+        // Order routes
+        'customer_details'		=> '/kantgegevens',
+        'checkout'				=> '/bestellen/afrekenen',
+        'confirmation'			=> '/bestellen/bevestiging'
+    ],
 ];
