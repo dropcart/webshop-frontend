@@ -297,7 +297,7 @@ class DropcartClient {
 
 		return  (new Builder())->setIssuer(static::options()->getPublicKey())
 								->setAudience(static::options()->getUrl($url))
-								->setExpiration(time() + 36000) // Max time is one minute
+								->setExpiration(time() + 60) // Max time is one minute
 								->setIssuedAt(time())
 								->sign((new Sha256()), static::options()->getPrivateKey())
 								->getToken();
