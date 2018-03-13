@@ -106,7 +106,9 @@ class transaction {
             $_SESSION['transaction']['payment_attributes'] = $post_data['paymentMethodAttributes'];
 
         } else {
-            throw new InputException();
+            throw new InputException ('', 0, null, [
+                'Geen betaalmethode geselecteerd. Selecteer een betaalmethode om uw bestelling af te ronden.'
+            ]);
         }
 
         $this->transaction = $_SESSION['transaction'];

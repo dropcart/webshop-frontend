@@ -209,6 +209,7 @@ class DropcartClient {
 			]
 		];
 
+
 		if(strtolower(substr($base_url, 0, 5)) == 'https')
 		{
 			$options[RequestOptions::VERIFY] = static::options()->get('verify', static::options()->get('cert'));

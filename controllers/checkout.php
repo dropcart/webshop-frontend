@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
         try {
             // Insert and confirm
-            $order = request([], 'order', 'order', [
+            $order = request([], 'order', 'orders', [
                 'shopping_cart' => shopping_cart()->get(),
                 'customer_details' => customer()->get(),
                 'payment_return_url' => url() . lang('url.confirmation'),
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             exit();
 
         } catch (InputException $e) {
-            flash_messages()->setWarningMessages('Geen betaalmethode geselecteerd. Selecteer een betaalmethode om uw bestelling af te ronden.');
+            flash_messages()->setWarningMessages($e->getErrors());
 
             back();
         } catch (\Exception $e) {

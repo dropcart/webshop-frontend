@@ -95,6 +95,6 @@ route('/assets/images/(.*)', 'images');
 
 // Catch a 404
 header ('HTTP/1.0 404 Not Found');
-include_once __DIR__ . '/../controllers/404.php';
+include_once __DIR__ . '/../errors/404.php';
 flash_messages()->reset();
 exit;

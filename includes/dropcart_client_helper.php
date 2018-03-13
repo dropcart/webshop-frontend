@@ -75,13 +75,32 @@ function request($config = [], $service, $contract, $params = null, $method = 'g
             $response = $request->{$method}();
         }
     } catch (\Dropcart\PhpClient\DropcartClientException $e) {
-        die('Client error:' . $e->getMessage());
+        if (config('app_debug')) {
+            die('Client error:' . $e->getMessage());
+        } else {
+            header ('HTTP/1.0 500 Internal Server Error');
+            include_once __DIR__ . '/../errors/500.php';
+            exit();
+        }
+        exit();
     } catch (\Exception $e) {
-        die('Server error:' . $e->getMessage());
+        if (config('app_debug')) {
+            die('Server error:' . $e->getMessage());
+        } else {
+            header ('HTTP/1.0 500 Internal Server Error');
+            include_once __DIR__ . '/../errors/500.php';
+            exit();
+        }
+        exit();
     }
 
     $content = $response->getBody()->getContents();
     $content = json_decode($content);
+
+    // Input exception
+    if($response->getStatusCode() === 412){
+        throw new InputException('', 0, null, $content->errors);
+    }
 
     return $content;
 }
