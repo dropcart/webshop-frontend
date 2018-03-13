@@ -98,7 +98,7 @@ function request($config = [], $service, $contract, $params = null, $method = 'g
     $content = json_decode($content);
 
     // Input exception
-    if($response->getStatusCode() === 412){
+    if (isset($content->errors)) {
         throw new InputException('', 0, null, $content->errors);
     }
 

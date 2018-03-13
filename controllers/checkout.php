@@ -62,10 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
             header('Location: '.$payment_url);
             exit();
-
         } catch (InputException $e) {
             flash_messages()->setWarningMessages($e->getErrors());
-
             back();
         } catch (\Exception $e) {
             die();
@@ -76,14 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         try {
             $transaction = $transaction->setPaymentMethod($_POST)->get();
             // Generate payment link for the Order
-            $payment_url = request($config, 'payment', 'orderPayment', $transaction);
+            $payment_url = request([], 'payment', 'orderPayment', $transaction);
 
             header('Location: '.$payment_url);
             exit();
-
         } catch (InputException $e) {
-	        flash_messages()->setWarningMessages('Geen betaalmethode geselecteerd. Selecteer een betaalmethode om uw bestelling af te ronden.');
-
+	        flash_messages()->setWarningMessages($e->getErrors());
             back();
         } catch (\Exception $e) {
             die();
