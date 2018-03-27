@@ -93,6 +93,9 @@ route(lang('url.confirmation'), 'order_confirmation');
 // Image routes
 route('/assets/images/(.*)', 'images');
 
+// Include package routes
+include_once __DIR__ . '/../packages/index.php';
+
 // Catch a 404
 header ('HTTP/1.0 404 Not Found');
 include_once __DIR__ . '/../errors/404.php';
