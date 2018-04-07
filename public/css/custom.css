@@ -114,8 +114,9 @@
 }
 .next-step > * {
 	margin-top: 8pt;
+	width: 70%;
 }
-.table>tfoot>tr>td, .table>tfoot>tr>th {
+.table>tfoot>tr>td:not(.totals-column), .table>tfoot>tr>th {
 	border: 0;
 }
 .order-tabs {
@@ -185,4 +186,26 @@
 .search-category.input-group {
 	margin-top: 20px;
 	margin-bottom: 30px;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.table>tfoot>tr>td.totals-column, .table>tbody>tr>td.totals-column {
+	border-bottom: 2px solid #D0D0D0;
+	border-top: 0;
+	padding: 8px;
+	padding-bottom: 0;
+}
+
+h4.totals-h4 {
+	color: black;
+	font-weight: bold;
+	margin: 0;
+}
+
+p.totals-paragraph {
+	color: black;
+	font-weight: bold;
 }

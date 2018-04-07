@@ -122,15 +122,48 @@ class shopping_cart {
         $overview = [];
 
         $overview['total_products'] = 0;
+        $overview['subtotal_price']    = 0;
+        $overview['shipping_costs'] = $this->calculateShippingCosts();
         $overview['total_price']    = 0;
 
         foreach ($this->shopping_cart as $order_product)
         {
             $overview['total_products'] += $order_product['quantity'];
-            $overview['total_price']    += ($order_product['product']->price_details->piece_price->in * $order_product['quantity']);
+            $overview['subtotal_price']    += ($order_product['product']->price_details->piece_price->in * $order_product['quantity']);
         }
+
+        // Add shipping costs to the subtotal to calculate the total price
+        $overview['total_price'] = $overview['subtotal_price'] + $overview['shipping_costs'];
 
         return $overview;
     }
 
+    private function calculateShippingCosts()
+    {
+        /** @var array $supplier_shipping_costs */
+        $supplier_shipping_costs = [];
+        $shipping_costs = 0;
+
+        foreach ($this->shopping_cart as $order_product) {
+            $shipping_details = $order_product['product']->shipping_details;
+
+            if (array_key_exists($shipping_details->supplier_id, $supplier_shipping_costs)) {
+                // Not the first product of the supplier in the order. Check if the shipping_costs are higher than the ones we already noted.
+                if ($supplier_shipping_costs[$shipping_details->supplier_id] < $shipping_details->shipping_costs_ex) {
+                    $supplier_shipping_costs[$shipping_details->supplier_id] = $shipping_details->shipping_costs_in;
+                }
+            } else {
+                // First product of the supplier. Add the shipping costs to the array
+                $supplier_shipping_costs[$shipping_details->supplier_id] = $shipping_details->shipping_costs_in;
+            }
+        }
+
+        if (count($supplier_shipping_costs) > 0) {
+            foreach ($supplier_shipping_costs as $supplier_shipping_cost) {
+                $shipping_costs += $supplier_shipping_cost;
+            }
+        }
+
+        return $shipping_costs;
+    }
 }

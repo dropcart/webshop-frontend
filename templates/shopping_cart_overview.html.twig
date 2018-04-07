@@ -55,9 +55,8 @@
                 <th width="10%"></th>
                 <th>Product</th>
                 <th width="14%">Aantal</th>
-                <th width="12%">Stukprijs</th>
-                <th width="12%">Prijs</th>
-                <th class="fold"></th>
+                <th width="12%" class="align-right">Stukprijs</th>
+                <th width="12%" class="align-right">Prijs</th>
             </tr>
             </thead>
             <tbody>
@@ -122,11 +121,11 @@
                         {% endif %}
 
                     </td>
-                    <td>
+                    <td align="right">
                         &euro;&nbsp;<span
                                 class="product_piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, ',', '.') }}</span>
                     </td>
-                    <td>
+                    <td align="right">
                         &euro;&nbsp;<span
                                 class="product_subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, ',', '.') }}</span>
                     </td>
@@ -135,24 +134,48 @@
 
             </tbody>
             <tfoot>
+            <tr class="subtotal">
+                <td colspan="2"></td>
+                <td colspan="2" class="totals-column" align="left">Subtotaal (incl. BTW)</td>
+                <td colspan="1" class="totals-column" align="right">
+                    <p>
+                        &euro;&nbsp;<span class="shopping-bag-total">{{ shopping_cart_overview.subtotal_price|number_format(2, ',', '.') }}</span>
+                    </p>
+                </td>
+            </tr>
+            <tr class="shipping-costs">
+                <td colspan="2"></td>
+                <td colspan="2" class="totals-column" align="left">Verzendkosten</td>
+                <td colspan="1" class="totals-column" align="right">
+                    <p>
+                        &euro;&nbsp;<span class="shopping-bag-total">{{ shopping_cart_overview.shipping_costs|number_format(2, ',', '.') }}</span>
+                    </p>
+                </td>
+            </tr>
+            <tr class="total">
+                <td colspan="2"></td>
+                <td colspan="2" class="" align="left">
+                    <p class="totals-paragraph">
+                        Totaal
+                    </p>
+                </td>
+                <td colspan="1" class="" align="right">
+                    <h4 class="totals-h4">
+                        &euro;&nbsp;<span class="shopping-bag-total">{{ shopping_cart_overview.total_price|number_format(2, ',', '.') }}</span>
+                    </h4>
+                </td>
+            </tr>
             <tr>
-                <td colspan="4" align="right">
+                <td colspan="5" align="center">
                     <div class="next-step">
                         {% if transaction is defined and transaction %}
-                            <a href="{{ lang.url.checkout }}" class="btn btn-lg btn-block btn-primary">Naar afrekenen <span
+                            <a href="{{ lang.url.checkout }}" class="btn btn btn-block btn-primary">Naar afrekenen <span
                                         class="glyphicon glyphicon-shopping-cart"></span></a>
                         {% else %}
-                            <a href="{{ lang.url.customer_details }}" class="btn btn-lg btn-block btn-primary customer-link">Naar klantgegevens <span
+                            <a href="{{ lang.url.customer_details }}" class="btn btn btn-block btn-primary customer-link">Naar klantgegevens <span
                                         class="glyphicon glyphicon-shopping-cart"></span></a>
                         {% endif %}
                     </div>
-                </td>
-                <td>
-                    <h3>&euro;&nbsp;<span class="shopping-bag-total">{{ shopping_cart_overview.total_price|number_format(2, '.', ',') }}</span>
-                    </h3>
-                    <p>
-                        <small>Inclusief verzendkosten</small>
-                    </p>
                 </td>
             </tr>
             </tfoot>
