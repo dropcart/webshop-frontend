@@ -1,20 +1,20 @@
 <div class="row">
 
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-6">
         <span style="height:10px; display: block" aria-hidden="true">&nbsp;</span>
         <div class="push-left">
-            <a href="/"><img style="max-height: 94px; max-width: 275px;"
-                             src="/images/logo/logo.png"
-                             alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/></a>
+            <div class="site-slug-header">
             {% if site_slug %}
                 <h4 class="slogan">{{ site_slug }}</h4>
-            {% else %}
-                <div style="height: 39px;"></div>
             {% endif %}
+            </div>
+            <a href="/"><img class="col-xs-12 no-padding" style="max-height: 94px; max-width: 275px;"
+                             src="/images/logo/logo.png"
+                             alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/></a>
         </div>
     </div>
 
-    <div class="col-md-5">
+    <div class="col-md-5 hidden-xs">
         <form class="form-horizontal search-products" method="get"
               action="{{ lang.url.products }}">
 
@@ -43,20 +43,41 @@
         </form>
     </div>
 
-    <div class="col-md-4">
-        <div class="push-right">
-            <!-- Pages menu -->
-            {% include 'blocks/pages_menu.html.twig' %}
-            <div class="float-clear"></div>
+    <div class="col-md-4 col-xs-6">
 
-            <div id="cart">
-                <!-- Shopping cart -->
-                {% include 'blocks/shopping_cart.html.twig' %}
+        <div class="push-right">
+            <div class="row">
+                <nav class="float-right">
+                    <!-- Pages menu -->
+                    {% include 'blocks/pages_menu.html.twig' %}
+                </nav>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 hidden-xs">
+                    <div class="pull-right social">
+                        <a href="#" class="fa fa-facebook-square"></a>
+                        <a href="#" class="fa fa-twitter-square"></a>
+                        <a href="#" class="fa fa-google-plus-square"></a>
+                        <a href="#" class="fa fa-linkedin"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div id="cart">
+                        <!-- Shopping cart -->
+                        {% include 'blocks/shopping_cart.html.twig' %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 </div>
+
+<hr class="hidden-sm hidden-md hidden-lg">
 
 <!-- Main menu -->
 <div class="masthead">

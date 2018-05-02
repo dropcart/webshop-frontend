@@ -103,6 +103,7 @@ $Twig = (object) [
 		'shopping_cart_overview'    => shopping_cart()->overview(),
         // Translations
         'lang'                      => lang(),
+        'container'                 => config('full_width'),
 	]
 ];
 

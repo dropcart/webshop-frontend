@@ -57,6 +57,8 @@ return [
     "BASE_URL" => "/",
     "MULTILINGUAL" => false,
     "COUNTRIES" => "Nederland",
+    // Website layout in full width
+    "FULL_WIDTH" => false,
 
     // Twig config
     // Note: set the path relative from the public folder

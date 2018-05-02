@@ -36,17 +36,19 @@
 <div class="colorgraph"></div>
 
 <!-- CONTAINER -->
-<div class="container">
+<div class="body">
+    <div class="{{ container == true ? 'container-fluid' : 'container' }}">
 
-    <!-- Include header.html.twig -->
-    {% include 'layouts/header.html.twig' %}
+        <!-- Include header.html.twig -->
+        {% include 'layouts/header.html.twig' %}
 
-    <!-- Content block -->
-    {% block content %}
-    {% endblock %}
-
-    {% include 'layouts/footer.html.twig' %}
-
+        <!-- Content block -->
+        <div id="content">
+            <!-- Content block -->
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
 </div>
 <!-- / CONTAINER -->
 
@@ -56,4 +58,9 @@
 {% endblock %}
 
 </body>
+<footer>
+    <div class="{{ container == 'container' ? 'container-fluid' : 'container' }}">
+        {% include 'layouts/footer.html.twig' %}
+    </div>
+</footer>
 </html>

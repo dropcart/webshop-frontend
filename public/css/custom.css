@@ -49,6 +49,15 @@
   background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
 
+html, body {
+	min-height: 100%;
+	height: 100%;
+}
+
+.body {
+	min-height: 85%;
+}
+
 .float-left {
 	float: left;
 }
@@ -61,6 +70,7 @@
 
 #cart {
 	text-align: right;
+	margin-bottom: 10px;
 }
 
 .center {
@@ -78,6 +88,10 @@
 }
 .price .flag {
 	margin-top: -5px;
+}
+
+.no-padding {
+	padding:0 !important;
 }
 
 .product-id-table td, .product-id-table th {
@@ -208,4 +222,105 @@ h4.totals-h4 {
 p.totals-paragraph {
 	color: black;
 	font-weight: bold;
+}
+
+.site-slug-header {
+	height: 40px;
+}
+
+/** Social media icon styling */
+.ftrtop .social {
+	text-align: right;
+}
+.social a:focus {
+	color: #fff;
+	/*box-shadow: inset 0px 0px 8px 4px #337ab7;*/
+	/*background: #23527c;*/
+	text-decoration: none;
+}
+.fa {
+	padding: 5px;
+	font-size: 40px;
+	width: 24px;
+	text-align: center;
+	text-decoration: none;
+	margin: 0px;
+}
+
+.fa:hover {
+	opacity: 0.9;
+	color: #fff;
+	text-decoration: none;
+}
+
+.fa-facebook-square {
+	background: #3B5998;
+	color: white;
+}
+
+.fa-twitter-square {
+	background: #55ACEE;
+	color: white;
+}
+
+.fa-google-plus-square {
+	background: #dd4b39;
+	color: white;
+}
+
+.fa-linkedin {
+	background: #007bb5;
+	color: white;
+}
+
+/** Footer styling */
+.footer, .push {
+	height: 100px;
+}
+footer ul {
+	list-style-type: none;
+}
+footer li {
+	float: left;
+}
+footer li a {
+	display: block;
+	color: #333;
+	text-align: center;
+	padding: 5px 20px 5px 0;
+}
+.footer {
+	margin-top: 0px;
+	padding-top: 19px;
+}
+.ftrtop {
+	padding-bottom: 50px;
+	height: auto;
+}
+.ftrtop .social {
+	text-align: right;
+}
+.ftrbtm {
+	font-size: 12px;
+	background: #f5f5f5;
+	padding-top: 0px;
+	/*border-radius: 5px 5px 0 0;*/
+	border: 1px solid #ddd;
+}
+.ftrbtm p {
+	margin-bottom: 0;
+	padding: 5px 0;
+}
+.ftrbtm {
+	margin-top:10px;
+}
+
+/* Product overview */
+.floating-box {
+	margin: 0 0 10px 0;
+	padding: 10px 0;
+}
+
+.floating-box .price-box {
+	height:130px;
 }
