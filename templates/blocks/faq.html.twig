@@ -1,0 +1,15 @@
+<div class="row">
+    {% for question in lang.page_support.faq %}
+        <div class="col-xs-12">
+            <br>
+            <ul class="list card">
+                <li class="faq-question card-header" id="faq-question-{{ loop.index }}" data-open="{{ loop.index }}">
+                    <a href="#question-{{ loop.index }}">{{ question.q }}</a>
+                    <p class="faq-answer card-block" id="faq-answer-{{ loop.index }}">
+                        {{ question.a }}
+                    </p>
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
+</div>

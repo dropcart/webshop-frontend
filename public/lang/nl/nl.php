@@ -39,6 +39,13 @@
 
 return [
 
+    'site_header' => [
+        'search_in_products' => 'Zoek binnen assortiment',
+        'search' => 'Zoeken',
+    ],
+
+    'site_footer' => 'Alle prijzen zijn inclusief BTW - Merknamen zijn alleen gebruikt om de toepasbaarheid van producten aan te geven en dienen verder niet te worden geassocieerd met',
+
     'page_titles' => [
         '404' => 'Hier gaat iets helemaal 404-fout',
         'about_us' => 'Over ons',
@@ -76,6 +83,39 @@ return [
         'customer_details'		=> '/kantgegevens',
         'checkout'				=> '/bestellen/afrekenen',
         'confirmation'			=> '/bestellen/bevestiging'
+    ],
+
+    'page_home' => 	[
+        'lead_title'            => 'Uw titel hier',
+        'lead_text'             => 'ondertitel',
+        'left_block'            => '',
+        'right_block'           => '',
+    ],
+
+    'page_contact' => 	[
+        'title' => 'Onze contactgegevens',
+        'content' => '@Default::dynamic.page-contact',
+        'emailaddress_desc' => 'E-mailadres',
+        'emailaddress' => 'uw@emailadres.nl',
+        'phone_desc' => 'Telefoonnummer',
+        'phone' => '(+31) (0) 12-345678',
+        'address_desc' => 'Adres',
+        'address' => 'Uw straat 2, POSTCODE Plaats, Land',
+        'vat_desc' => 'BTW-nummer',
+        'vat' => 'Uw BTW-nummer',
+        'coc_desc' => 'KvK-nummer',
+        'coc' => 'Uw KvK-nummer',
+    ],
+
+    'page_support' => [
+        'content'               => 'Hieronder vindt u de meest gestelde vragen. Staat uw vraag of gewenste antwoord er niet tussen? <a href="contact">Neem dan contact met ons op</a>',
+
+        'faq' => 		[
+            '0' => 			[
+                'q' => 'Q',
+                'a' => 'A',
+            ],
+        ],
     ],
 
     'http_errors' => [
