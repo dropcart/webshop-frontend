@@ -141,7 +141,7 @@
                             <small><em>Inclusief BTW</em></small>
                         </p>
                         <div>
-                            <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link">
+                            <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1{{ query_string ? query_string ~ '&page=' ~ current_page : '?page=' ~ current_page }}" class="btn btn btn-block btn-success order-link">
                                 Bestellen <span class="glyphicon glyphicon-shopping-cart"></span>
                             </a>
                         </div>

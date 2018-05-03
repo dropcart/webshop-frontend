@@ -56,7 +56,7 @@
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="email">E-mailadres</label>
                 <div class="col-sm-8">
-                    <input type="email"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control" name="email" value="{{ customer_details.email }}" data-bv-notempty="true" data-bv-emailaddress="true" data-bv-field="email">
+                    <input type="email"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control" name="email" value="{{ customer_details.email }}" data-bv-notempty="true" autocomplete="off" data-bv-emailaddress="true" data-bv-field="email">
                     <p class="help-block">
                         Op dit e-mailadres ontvangt u het besteloverzicht, het betalingsbewijs en de verzendingsinformatie.
                     </p>
@@ -66,7 +66,7 @@
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="telephone">Telefoonnummer</label>
                 <div class="col-sm-8">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control" name="telephone" value="{{ customer_details.telephone }}" data-bv-notempty="true" data-bv-field="telephone">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control" name="telephone" value="{{ customer_details.telephone }}" data-bv-notempty="true" autocomplete="off" data-bv-field="telephone">
                     <p class="help-block">
                         Met dit telefoonnummer nemen wij contact op als wij u dringend willen spreken over uw bestelling.
                     </p>
@@ -78,32 +78,32 @@
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="billing_company">Bedrijf</label>
                 <div class="col-sm-4">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="billing_company" value="{{ customer_details.billing_address.company }}" data-bv-notempty="false" data-bv-field="billing_company">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="billing_company" value="{{ customer_details.billing_address.company }}" data-bv-notempty="false" autocomplete="off" data-bv-field="billing_company">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="billing_first_name">Voornaam</label>
                 <div class="col-sm-4">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="billing_first_name" value="{{ customer_details.first_name }}" data-bv-notempty="true" data-bv-field="billing_first_name">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="billing_first_name" value="{{ customer_details.first_name }}" data-bv-notempty="true" autocomplete="off" data-bv-field="billing_first_name">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="billing_last_name">Achternaam</label>
                 <div class="col-sm-4">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="billing_last_name" value="{{ customer_details.last_name }}" data-bv-notempty="true" data-bv-field="billing_last_name">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="billing_last_name" value="{{ customer_details.last_name }}" data-bv-notempty="true" autocomplete="off" data-bv-field="billing_last_name">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="billing_postcode">Postcode</label>
                 <div class="col-sm-2">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="1234AB" class="form-control billing_postcode" name="billing_postcode" value="{{ customer_details.billing_address.postcode }}" data-bv-notempty="true" data-bv-field="billing_postcode">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="1234AB" class="form-control billing_postcode" name="billing_postcode" value="{{ customer_details.billing_address.postcode }}" data-bv-notempty="true" autocomplete="off" data-bv-field="billing_postcode">
                 </div>
                 <label class="col-sm-3 control-label" for="billing_house_nr">Huisnummer</label>
                 <div class="col-sm-3">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control billing_house_nr" name="billing_house_nr" value="{{ customer_details.billing_address.address_house_nr }}" data-bv-notempty="true" data-bv-field="billing_house_nr">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control billing_house_nr" name="billing_house_nr" value="{{ customer_details.billing_address.address_house_nr }}" data-bv-notempty="true" autocomplete="off" data-bv-field="billing_house_nr">
                 </div>
             </div>
 
@@ -155,32 +155,32 @@
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="shipping_company">Bedrijf</label>
                 <div class="col-sm-4">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="shipping_company" value="{{ customer_details.shipping_address.company }}" data-bv-notempty="false" data-bv-field="shipping_company">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="shipping_company" value="{{ customer_details.shipping_address.company }}" data-bv-notempty="false" autocomplete="off" data-bv-field="shipping_company">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="shipping_first_name">Voornaam</label>
                 <div class="col-sm-4">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="shipping_first_name" value="{{ customer_details.shipping_address.first_name }}" data-bv-notempty="true" data-bv-field="shipping_first_name">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="shipping_first_name" value="{{ customer_details.shipping_address.first_name }}" data-bv-notempty="true" autocomplete="off" data-bv-field="shipping_first_name">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="shipping_last_name">Achternaam</label>
                 <div class="col-sm-4">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="shipping_last_name" value="{{ customer_details.shipping_address.last_name }}" data-bv-notempty="true" data-bv-field="shipping_last_name">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="" class="form-control" name="shipping_last_name" value="{{ customer_details.shipping_address.last_name }}" data-bv-notempty="true" autocomplete="off" data-bv-field="shipping_last_name">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label class="col-sm-3 control-label" for="shipping_postcode">Postcode</label>
                 <div class="col-sm-2">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="1234AB" class="form-control shipping_postcode" name="shipping_postcode" value="{{ customer_details.shipping_address.postcode }}" data-bv-notempty="true" data-bv-field="shipping_postcode">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} placeholder="1234AB" class="form-control shipping_postcode" name="shipping_postcode" value="{{ customer_details.shipping_address.postcode }}" data-bv-notempty="true" autocomplete="off" data-bv-field="shipping_postcode">
                 </div>
                 <label class="col-sm-3 control-label" for="shipping_house_nr">Huisnummer</label>
                 <div class="col-sm-3">
-                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control shipping_house_nr" name="shipping_house_nr" value="{{ customer_details.shipping_address.address_house_nr }}" data-bv-notempty="true" data-bv-field="shipping_house_nr">
+                    <input type="text"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} class="form-control shipping_house_nr" name="shipping_house_nr" value="{{ customer_details.shipping_address.address_house_nr }}" data-bv-notempty="true" autocomplete="off" data-bv-field="shipping_house_nr">
                 </div>
             </div>
 

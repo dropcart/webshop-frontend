@@ -70,7 +70,7 @@ function back()
 {
 	if(isset($_SESSION['previous_url']) && $_SESSION['previous_url'] != $_SERVER['REQUEST_URI'] && !headers_sent())
 	{
-		header('Location: ' . $_SESSION['previous_url']);
+        header('Location: ' . $_SESSION['previous_url'] . (isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : ''));
 		exit;
 	}
 	else {
