@@ -89,7 +89,7 @@
                     <h3><a class="product-link" href="{{ lang.url.product ~ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a></h3>
 
                     <!-- PRODUCT DESCRIPTION -->
-                    <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
+                    <p>{{ (product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!')|raw }}</p>
 
                     <!-- PRODUCT STOCK -->
                     <div class="float-left stock-shipping-status">

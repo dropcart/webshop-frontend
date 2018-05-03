@@ -13,3 +13,59 @@
         </div>
     {% endfor %}
 </div>
+
+{% block post_js %}
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            console.log('works');
+            if(window.location.hash !== '')
+            {
+                $('#faq-answer-' + window.location.hash.substring(window.location.hash.indexOf('-') + 1)).addClass('open');
+                $('#faq-question-' + window.location.hash.substring(window.location.hash.indexOf('-') + 1)).addClass('open');
+            }
+            $('.faq-question').click(function(e)
+            {
+                $('.faq-answer').removeClass('open');
+                $('.faq-question').removeClass('open');
+                $('#faq-answer-' + $(this).data('open')).toggleClass('open');
+                $('#faq-question-' + $(this).data('open')).toggleClass('open');
+            })
+        });
+    </script>
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css" rel="stylesheet" media="screen">
+        .faq-question {
+            cursor: pointer;
+        }
+        .faq-question:before {
+            content: ' ▸';
+            float: right;
+            position: relative;
+        }
+        .faq-question.open:before
+        {
+            content: ' ▾';
+        }
+        .faq-question a {
+            color: inherit;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .faq-question a:hover {
+            text-decoration: underline;
+        }
+        .faq-answer {
+            transition: 1s all linear;
+            display: block;
+            height: 0px;
+            overflow: hidden;
+        }
+        .faq-answer.open {
+            min-height: 10px;
+            height: auto;
+        }
+    </style>
+{% endblock %}

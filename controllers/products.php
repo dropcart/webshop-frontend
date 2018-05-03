@@ -57,18 +57,18 @@ $uri = explode('/', $uri);
 // Set get variable(s)
 // $uri[2] will always be the category ID
 if (isset($uri[2])) {
-    $category_id = $uri[2];
+    $category_ids = [$uri[2]];
     // Collect the current Category
-    $category = request([], 'catalog', 'categories', $category_id);
+    $category = request([], 'catalog', 'categories', $category_ids[0]);
 } else {
-    $category_id = null;
+    $category_ids = null;
 }
 
 // Collect all filter options from the get variables (search query, brand, show products not in stock)
 $filters = [
     'page'                      => (isset($_GET['page']) ? $_GET['page'] : null),
     'query'                     => (isset($_GET['query']) ? $_GET['query'] : null),
-    'category_ids'              => [$category_id],
+    'category_ids'              => $category_ids,
     'brand_ids'                 => (isset($_GET['brands']) ? $_GET['brands'] : null),
     'show_unavailable_items'    => (isset($_GET['show_unavailable_items']) && $_GET['show_unavailable_items'] == true ? true : false),
 ];
