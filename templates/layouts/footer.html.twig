@@ -1,18 +1,25 @@
-<footer class="footer">
-    <div class="ftrtop">
-        {#<a href="/"><img class="col-sm-3 col-xs-8 mb-3" src="/images/logo/logo.png" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/></a>#}
-        <div class="col-sm-6 col-xs-9 mb-3">
+<footer id="footer" class="footer col-sm-12 col-xs-12">
+    <div class="ftrtop" style="width: 100%;">
+        <div class="col-sm-2 col-xs-6 mb-3">
+            <a href="/">
+                <img src="/images/logo/logo.png" width="180" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/>
+            </a>
+        </div>
+        <div class="col-sm-6 col-sm-offset-1 col-xs-9 mb-3">
             <!-- Pages menu -->
             {% include 'blocks/pages_menu.html.twig' %}
         </div>
-        <div class="col-sm-6 col-xs-3 mb-3 social">
-            <div class="pull-right social">
-                <a href="#" class="fa fa-facebook-square"></a>
-                <a href="#" class="fa fa-twitter-square"></a>
-                <a href="#" class="fa fa-google-plus-square"></a>
-                <a href="#" class="fa fa-linkedin"></a>
-            </div>
-        </div>
+
+        <!-- HEADER SOCIAL MEDIA ICONS -->
+        {#<div>#}
+            {#<div class="pull-right social">#}
+                {#<a href="#" class="fa fa-facebook-square"></a>#}
+                {#<a href="#" class="fa fa-twitter-square"></a>#}
+                {#<a href="#" class="fa fa-google-plus-square"></a>#}
+                {#<a href="#" class="fa fa-linkedin"></a>#}
+            {#</div>#}
+        {#</div>#}
+
     </div>
     <div class="col-sm-12 col-xs-12 mb-3 ftrbtm">
         <p>© {{ "now"|date('Y') }} - {{ lang.site_footer }} {{ site_name }}</p>

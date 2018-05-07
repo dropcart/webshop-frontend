@@ -1,13 +1,16 @@
-<div class="row">
+<div class="row header">
 
     <div class="col-md-3 col-xs-6">
         <span style="height:10px; display: block" aria-hidden="true">&nbsp;</span>
         <div class="push-left">
-            <div class="site-slug-header">
+
+            <!-- SITE SLUG -->
             {% if site_slug %}
-                <h4 class="slogan">{{ site_slug }}</h4>
+                <h4 class="slogan hidden-xs">{{ site_slug }}</h4>
+            {% else %}
+                <div class="hidden-xs" style="height: 50px;"></div>
             {% endif %}
-            </div>
+
             <a href="/"><img class="col-xs-12 no-padding" style="max-height: 94px; max-width: 275px;"
                              src="/images/logo/logo.png"
                              alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/></a>
@@ -44,40 +47,33 @@
     </div>
 
     <div class="col-md-4 col-xs-6">
+        <div class="push-right header-nav">
+            <nav class="float-right hidden-xs">
+                <!-- Pages menu -->
+                {% include 'blocks/pages_menu.html.twig' %}
+            </nav>
+            <div class="float-clear hidden-xs"></div>
 
-        <div class="push-right">
-            <div class="row">
-                <nav class="float-right">
-                    <!-- Pages menu -->
-                    {% include 'blocks/pages_menu.html.twig' %}
-                </nav>
-            </div>
+            <!-- HEADER SOCIAL MEDIA ICONS -->
+            {#<div class="row">#}
+                {#<div class="col-md-12 hidden-xs">#}
+                    {#<div class="pull-right social">#}
+                        {#<a href="#" class="fa fa-facebook-square"></a>#}
+                        {#<a href="#" class="fa fa-twitter-square"></a>#}
+                        {#<a href="#" class="fa fa-google-plus-square"></a>#}
+                        {#<a href="#" class="fa fa-linkedin"></a>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
 
-            <div class="row">
-                <div class="col-md-12 hidden-xs">
-                    <div class="pull-right social">
-                        <a href="#" class="fa fa-facebook-square"></a>
-                        <a href="#" class="fa fa-twitter-square"></a>
-                        <a href="#" class="fa fa-google-plus-square"></a>
-                        <a href="#" class="fa fa-linkedin"></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    <div id="cart">
-                        <!-- Shopping cart -->
-                        {% include 'blocks/shopping_cart.html.twig' %}
-                    </div>
-                </div>
+            <div id="cart">
+                <!-- Shopping cart -->
+                {% include 'blocks/shopping_cart.html.twig' %}
             </div>
         </div>
     </div>
 
 </div>
-
-<hr class="hidden-sm hidden-md hidden-lg">
 
 <!-- Main menu -->
 <div class="masthead">

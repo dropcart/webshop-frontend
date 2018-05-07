@@ -2,11 +2,11 @@
 
 {% block content %}
 
-    <h1>{{ page_title }}</h1>
+    <h2>{{ page_title }}</h2>
 
     <div class="row">
         <div class="col-md-3 center">
-            <img src="{{ product.images|length > 0 ? product.images[0].url : '/img/no_image.gif' }}" class="fill">
+            <img src="{{ product.images|length > 0 ? product.images[0].url : '/images/no_image.gif' }}" class="fill">
         </div>
         <div class="col-md-7">
             <!-- PRODUCT DESCRIPTION -->
@@ -50,7 +50,7 @@
         </div>
 
         <!-- PRODUCT PRICE -->
-        <div class="col-md-2">
+        <div class="col-md-2 product-price">
 
             {% if product.price_details %}
                 <h3 class="price">
@@ -62,9 +62,10 @@
                 <p class="float-clear">
                     <small><em>Inclusief BTW</em></small>
                 </p>
+
                 <div>
-                    <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn-lg btn-block btn-primary order-link">
-                        <span class="glyphicon glyphicon-shopping-cart">Bestellen</span>
+                    <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link">
+                        Bestellen <span class="glyphicon glyphicon-shopping-cart"></span>
                     </a>
                 </div>
             {% endif %}

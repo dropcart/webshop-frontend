@@ -31,13 +31,13 @@
     {% endblock %}
 </head>
 
-<body>
+<body onscroll="stickyHeader()">
 
 <div class="colorgraph"></div>
 
 <!-- CONTAINER -->
-<div class="body">
-    <div class="{{ container == true ? 'container-fluid' : 'container' }}">
+<div id="body" class="body">
+    <div id="container" class="{{ container == true ? 'container-fluid' : 'container' }}">
 
         <!-- Include header.html.twig -->
         {% include 'layouts/header.html.twig' %}
@@ -49,7 +49,15 @@
             {% endblock %}
         </div>
     </div>
+
+    <div class="push"></div>
 </div>
+
+{#<div class="{{ container == true ? 'container-fluid' : 'container' }}">#}
+<div class="{{ container == true ? 'container-fluid' : 'container' }}">
+    {% include 'layouts/footer.html.twig' %}
+</div>
+
 <!-- / CONTAINER -->
 
 <!-- POST JS SCRIPTS -->
@@ -58,9 +66,4 @@
 {% endblock %}
 
 </body>
-<footer>
-    <div class="{{ container == 'container' ? 'container-fluid' : 'container' }}">
-        {% include 'layouts/footer.html.twig' %}
-    </div>
-</footer>
 </html>
