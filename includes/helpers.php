@@ -96,3 +96,14 @@ function lang($key = null)
         return $lang;
     }
 }
+
+/**
+ * @param string $url
+ * @return string
+ */
+function base64_encode_image(string $url) {
+    $type = pathinfo($url, PATHINFO_EXTENSION);
+    $data = file_get_contents($url);
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    return $base64;
+}
