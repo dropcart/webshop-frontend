@@ -70,6 +70,20 @@ html, body {
 	min-height: 99%;
 }
 
+.logo {
+	max-height: 72px;
+	max-width: 270px;
+}
+
+.logo-small {
+	max-height: 40px;
+	max-width: 150px;
+}
+
+.bottom-logo {
+	padding-left: 0px;
+}
+
 .float-left {
 	float: left !important;
 }
@@ -372,7 +386,7 @@ footer li a {
 }
 .footer {
 	margin-top: 0px;
-	padding-top: 19px;
+	padding-top: 12px;
 }
 .footer, .push {
 	float: left;
