@@ -144,7 +144,7 @@ return [
     'http_errors' => [
         '404' => [
             'page_title' => 'Hier gaat iets helemaal 404-fout',
-            'content' => '<p><img src="/images/404_image.gif" style="width: 50%;"></p><p>De opgevraagde pagina bestaat niet.</p><p>Wellicht was u op zoek naar <a href="/">de homepagina</a> of <a href="/support">de support-pagina</a>?',
+            'content' => '<p><img src="/public/images/404_image.gif" style="width: 50%;"></p><p>De opgevraagde pagina bestaat niet.</p><p>Wellicht was u op zoek naar <a href="/">de homepagina</a> of <a href="/support">de support-pagina</a>?',
             'footer' => '<p>Technisch contact: <a href="mailto:info@example.com">info@example.com</a></p>',
         ],
         '500' => [
