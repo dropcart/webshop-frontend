@@ -37,8 +37,15 @@
  * =========================================================
  */
 
+$price_changed = shopping_cart()->productPricesChanged();
+if ($price_changed) {
+    flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
+}
+
 echo view('shopping_cart_overview.html.twig', [
+    // Reset shopping cart and overview (in case update occured)
 	'shopping_cart' => shopping_cart()->get(),
+    'shopping_cart_overview'    => shopping_cart()->overview(),
 	// Warnings and errors
 	'flash_messages' => flash_messages()->get(),
     'page_title' => lang('page_titles.shopping_cart'),

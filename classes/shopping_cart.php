@@ -122,6 +122,33 @@ class shopping_cart {
     }
 
     /**
+     * Validates the product prices and checks if there's any changes.
+     * If old and new prices do not match, return true. Default, return false.
+     *
+     * @return bool
+     */
+    public function productPricesChanged()
+    {
+        $price_changed = false;
+        foreach ($_SESSION['shopping_cart'] as $order_product) {
+            $product = $order_product['product'];
+            $updated_product = request([], 'catalog', 'products', $product->id);
+
+            if (
+                $product->price_details->piece_price->ex != $updated_product->price_details->piece_price->ex ||
+                $product->price_details->piece_price->in != $updated_product->price_details->piece_price->in ||
+                $product->price_details->shipping_costs_ex != $updated_product->price_details->shipping_costs_ex ||
+                $product->price_details->shipping_costs_in != $updated_product->price_details->shipping_costs_in
+            ) {
+                $this->updateProduct($product->id, $updated_product);
+                $price_changed = true;
+            }
+        }
+
+        return $price_changed;
+    }
+
+    /**
      * Returns the shopping_cart.
      *
      * @return array
