@@ -49,7 +49,7 @@ return [
     "DROPCART_KEY" => "",
     "DROPCART_SECRET" => "",
     "DROPCART_ENDPOINT" => "https://rest-api.v3.dropcart.nl/v3",
-    "TIMEOUT" => 5,
+    "TIMEOUT" => 15,
 
     // Site global config
     "SITE_NAME" => "",
