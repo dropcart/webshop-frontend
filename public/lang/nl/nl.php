@@ -59,30 +59,33 @@ return [
         'products' => 'Producten',
         'shopping_cart' => 'Winkelwagen',
         'support' => 'Ondersteuning',
+        'terms_and_conditions' => 'Algemene voorwaarden',
+        'disclaimer_and_privacy' => 'Disclaimer & Privacy',
     ],
 
     // CHANGES AT OWN RISK!
     'url' => [
         // Default pages
-        'contact'				=> '/contact',
-        'about_us'				=> '/over-ons',
-        'terms_and_conditions'	=> '/onze-voorwaarden',
-        'support'				=> '/support',
-        'account'				=> '/mijn-account',
+        'contact'				    => '/contact',
+        'about_us'				    => '/over-ons',
+        'terms_and_conditions'	    => '/algemene-voorwaarden',
+        'disclaimer_and_privacy'    => '/disclaimer-en-privacy',
+        'support'				    => '/support',
+        'account'				    => '/mijn-account',
         // Products
-        'products'	            => '/producten',
-        'category_products'	    => '/producten/categorie/',
+        'products'	                => '/producten',
+        'category_products'	        => '/producten/categorie/',
         // Product overview
-        'product'				=> '/product/',
+        'product'				    => '/product/',
         // Shopping cart
-        'shopping_cart'			=> '/winkelmandje',
+        'shopping_cart'			    => '/winkelmandje',
         // Shopping cart add / remove
-        'shopping_cart_add'		=> '/winkelmandje/toevoegen/',
-        'shopping_cart_remove'	=> '/winkelmandje/verwijderen/',
+        'shopping_cart_add'		    => '/winkelmandje/toevoegen/',
+        'shopping_cart_remove'	    => '/winkelmandje/verwijderen/',
         // Order routes
-        'customer_details'		=> '/kantgegevens',
-        'checkout'				=> '/bestellen/afrekenen',
-        'confirmation'			=> '/bestellen/bevestiging'
+        'customer_details'		    => '/klantgegevens',
+        'checkout'				    => '/bestellen/afrekenen',
+        'confirmation'			    => '/bestellen/bevestiging'
     ],
 
     'page_home' => 	[
@@ -116,6 +119,26 @@ return [
                 'a' => 'A',
             ],
         ],
+    ],
+
+    /**
+     * Make sure to assign the right data to the variables below.
+     * These are required in the Terms and conditions, Privacy policy and Disclaimer and will set these pages up for you.
+     */
+    'page_disclaimer_and_privacy' => [
+        /** Product range description used in the Terms and Conditions. We used an example below. */
+        'product_range_description' => 'onder andere maar niet uitsluitend printerbenodigdheden en kantoorartikelen',
+        'store_name' => config('site_name'),
+        'store_location' => 'Alkmaar',
+        'store_address' => 'Prof. van der Waalsstraat 2',
+        'store_postal_code' => '1821BT',
+        'store_chamber_of_commerce_number' => '60680326',
+        'store_vat_number' => 'NL854012965B01',
+        'store_email' => 'info@tonerkopen.nl',
+        'store_phone_number' => '+3172 567 5055',
+        'store_url' => 'https://',
+        'court_province' => 'Noord-Holland',
+        'court_location' => 'Alkmaar',
     ],
 
     'http_errors' => [

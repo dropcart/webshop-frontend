@@ -103,6 +103,25 @@ class shopping_cart {
     }
 
     /**
+     * Updates a product in the shopping_cart in the session.
+     *
+     * @param $product_id
+     * @param $product
+     */
+    public function updateProduct($product_id, $product = null)
+    {
+        if (key_exists($product_id, $_SESSION['shopping_cart'])) {
+            if ($product) {
+                $_SESSION['shopping_cart'][$product_id]['product'] = $product;
+            } else {
+                $_SESSION['shopping_cart'][$product_id]['product'] = request($this->config, 'catalog', 'products', $product_id);
+            }
+        }
+
+        $this->shopping_cart = $_SESSION['shopping_cart'];
+    }
+
+    /**
      * Returns the shopping_cart.
      *
      * @return array

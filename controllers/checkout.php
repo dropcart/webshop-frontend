@@ -90,6 +90,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     header('location: ' . lang('url.checkout'));
 }
 
+//$warnings = [];
+//// Check for product prices
+//foreach ($_SESSION['shopping_cart'] as $order_product) {
+//    $product = $order_product['product'];
+/*    highlight_string("<?php \n" . var_export($product, true) . ";\n?>");*/
+//    die();
+//    $updated_product = request([], 'catalog', 'products', $product['id']);
+//
+//
+//
+//    $warnings[] = 'Prijs veranderd';
+//}
+
 // Collect all countries
 $countries = request([], 'management', 'countries');
 

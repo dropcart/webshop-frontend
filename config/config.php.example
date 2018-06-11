@@ -48,7 +48,7 @@ return [
     // Dropcart config
     "DROPCART_KEY" => "",
     "DROPCART_SECRET" => "",
-    "DROPCART_ENDPOINT" => "",
+    "DROPCART_ENDPOINT" => "https://rest-api.v3.dropcart.nl/v3",
     "TIMEOUT" => 5,
 
     // Site global config

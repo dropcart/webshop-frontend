@@ -51,6 +51,14 @@ function removeqsvar($url, $varname)
     return $urlpart . '?' . $newqs;
 }
 
+function dd(array $array)
+{
+    echo '<pre>';
+    var_dump($array);
+    echo '</pre>';
+    die();
+}
+
 /**
  * @return string
  */

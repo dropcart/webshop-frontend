@@ -38,8 +38,9 @@
  */
 
 require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../classes/static_page.php';
 
-function route($route, $file) {
+function route($route, $file, $static_page = false, $view = null, $view_vars = []) {
 
     $route = str_replace('/', '\/', $route);
 
@@ -51,7 +52,14 @@ function route($route, $file) {
 	                $matches, PREG_OFFSET_CAPTURE);
 
 
-    if ($is_match && file_exists(__DIR__ . '/../controllers/' . $file . '.php')) {
+    if ($is_match && $static_page) {
+        header ('HTTP/1.0 200 Found');
+        $page = new static_page($view, $view_vars);
+        echo $page->render();
+        flash_messages()->reset();
+        $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
+        exit;
+    } elseif ($is_match && $file && file_exists(__DIR__ . '/../controllers/' . $file . '.php')) {
     	twig()->default['page_title'] = ucwords(str_replace(['-', '_', '  '], ' ', $file));
 
     	header ('HTTP/1.0 200 Found');
@@ -63,14 +71,30 @@ function route($route, $file) {
 }
 
 // Home
-route('/', 'home');
+route('/',null, true, 'home.html.twig', [
+    'page_title' => lang('page_titles.home'),
+    'base_uri' => url()
+]);
 
 // Default pages
-route(lang('url.contact'), 'contact');
-route(lang('url.about_us'), 'about_us');
-route(lang('url.terms_and_conditions'), 'terms_and_conditions');
-route(lang('url.support'), 'support');
-route(lang('url.account'), 'account');
+route(lang('url.contact'), null, true, 'contact.html.twig', [
+    'page_title' => lang('page_titles.contact'),
+]);
+route(lang('url.about_us'), null, true, 'about_us.html.twig', [
+    'page_title' => lang('page_titles.about_us'),
+]);
+route(lang('url.terms_and_conditions'),null,true,'terms_and_conditions.html.twig', [
+    'page_title' => lang('page_titles.terms_and_conditions'),
+]);
+route(lang('url.disclaimer_and_privacy'),null,true,'disclaimer_and_privacy.html.twig', [
+    'page_title' => lang('page_titles.disclaimer_and_privacy'),
+]);
+route(lang('url.support'),null,true,'support.html.twig', [
+    'page_title' => lang('page_titles.support'),
+]);
+
+// @todo
+route(lang('url.account'), null, null, null, []);
 
 // Products
 route(lang('url.products'), 'products');
