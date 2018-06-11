@@ -62,8 +62,8 @@ return [
 
     // Twig config
     // Note: set the path relative from the public folder
-    "TEMPLATE_PATH" => "../templates",
-    "CACHE_PATH" => "../templates/compilation_cache",
+    "TEMPLATE_PATH" => __BASEDIR__ . "/templates",
+    "CACHE_PATH" => __BASEDIR__ . "/templates/compilation_cache",
     "AUTO_RELOAD" => true,
 
 ];
