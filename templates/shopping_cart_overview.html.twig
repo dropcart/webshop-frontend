@@ -64,7 +64,7 @@
             {% for order_product in shopping_cart %}
                 <tr class="{{ order_product.product.id }}">
                     <td>
-                        <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/public/images/no_image.gif' }}"
+                        <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/images/no_image.gif' }}"
                              class="fill">
                     </td>
                     <td>

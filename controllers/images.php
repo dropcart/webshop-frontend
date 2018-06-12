@@ -42,7 +42,7 @@ $uri = trim( $_SERVER['REQUEST_URI'], "/" );
 $uri = explode('/', $uri);
 
 // Build file location
-$path = __BASEDIR__ . '/public/images';
+$path = __BASEDIR__ . '/images';
 for ($i = 2; $i < count($uri) ; $i++) {
     $path .= '/'.$uri[$i];
 }
@@ -50,7 +50,7 @@ for ($i = 2; $i < count($uri) ; $i++) {
 if (file_exists($path)) {
     $file = file_get_contents($path);
 } else {
-    $file = file_get_contents(__BASEDIR__ . '/public/images//no_image.gif');
+    $file = file_get_contents(__BASEDIR__ . '/images//no_image.gif');
 }
 
 $ext = pathinfo($path, PATHINFO_EXTENSION);
