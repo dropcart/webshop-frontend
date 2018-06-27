@@ -45,7 +45,7 @@ $transaction = new transaction([]);
 // Check / validate prices and notify user if they have changed
 $price_changed = shopping_cart()->productPricesChanged();
 if ($price_changed) {
-    flash_messages()->setWarningMessages('De prijzen voor één of meerdere producten zijn veranderd.');
+    flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
 }
 
 // POST actions
