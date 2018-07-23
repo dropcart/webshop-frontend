@@ -25,9 +25,8 @@ This repository contains an fully functional, but basic PHP / HTML implementatio
 
 1. Download latest version of this repository: [https://github.com/dropcart/webshop-frontend/archive/master.zip](https://github.com/dropcart/webshop-frontend/archive/master.zip)
 2. Upload (via (S)FTP) the (extracted) files to your server.
-3. There is a folder `public` in the .zip file, the contents of this folder need to be placed in your webroot folder. 
-   Sometimes this folder is called `public_html` or `htdocs`. The other files and folders need to be placed right outside 
-   the webroot directory.
+3. Extract all the contents of the .zip file in your webroot folder. 
+   Sometimes this folder is called `public_html` or `htdocs`.
 4. Create the folder `templates/compilation_cache` when it doesn't exist. And chmod it to 777.
 
 
@@ -78,9 +77,8 @@ Deze repository bevat een volledig functioneel, maar basale PHP / HTML implement
 
 1. Download de laatste versie van deze repository: [https://github.com/dropcart/webshop-frontend/archive/master.zip](https://github.com/dropcart/webshop-frontend/archive/master.zip)
 2. Upload (via (S)FTP) de (uitgepakte) bestanden naar je server.
-3. In het .zip bestand staat een map `public`, in deze map staan de bestanden die in de webroot-map geplaatst dienen te worden.
-   De naam verschilt per webhosting soms heet deze `public_html` of `htdocs`. De overige bestanden en mappen moeten net buiten 
-   deze webroot map geplaats worden.
+3. Pak het gehele .zip bestand uit in de webroot-map van jouw webhosting.
+   De naam van deze map verschilt per webhosting soms heet deze `public_html` of `htdocs`.
 4. Maak de map `templates/compilation_cache` aan als deze nog niet bestaat. Zet de rechten naar 777.
 
 
