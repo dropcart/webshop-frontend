@@ -189,24 +189,36 @@ class shopping_cart {
         /** @var array $supplier_shipping_costs */
         $supplier_shipping_costs = [];
         $shipping_costs = 0;
+        /** @var float $highest_tax_rule */
+        $highest_tax_rate = 0.00;
 
         foreach ($this->shopping_cart as $order_product) {
             $shipping_details = $order_product['product']->shipping_details;
+            $price_details = $order_product['product']->price_details;
 
+            // See if highest tax rate has to be re-set
+            if ($price_details->piece_price->tax_rule->rate < 1.0) {
+                $price_details->piece_price->tax_rule->rate += 1;
+            }
+            if ($highest_tax_rate < $price_details->piece_price->tax_rule->rate) {
+                $highest_tax_rate = $price_details->piece_price->tax_rule->rate;
+            }
+
+            // Set shipping costs (ex. VAT)
             if (array_key_exists($shipping_details->supplier_id, $supplier_shipping_costs)) {
                 // Not the first product of the supplier in the order. Check if the shipping_costs are higher than the ones we already noted.
                 if ($supplier_shipping_costs[$shipping_details->supplier_id] < $shipping_details->shipping_costs_ex) {
-                    $supplier_shipping_costs[$shipping_details->supplier_id] = $shipping_details->shipping_costs_in;
+                    $supplier_shipping_costs[$shipping_details->supplier_id] = $shipping_details->shipping_costs_ex;
                 }
             } else {
                 // First product of the supplier. Add the shipping costs to the array
-                $supplier_shipping_costs[$shipping_details->supplier_id] = $shipping_details->shipping_costs_in;
+                $supplier_shipping_costs[$shipping_details->supplier_id] = $shipping_details->shipping_costs_ex;
             }
         }
 
         if (count($supplier_shipping_costs) > 0) {
             foreach ($supplier_shipping_costs as $supplier_shipping_cost) {
-                $shipping_costs += $supplier_shipping_cost;
+                $shipping_costs += round($supplier_shipping_cost * $highest_tax_rate, 2);
             }
         }
 
