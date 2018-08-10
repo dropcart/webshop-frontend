@@ -37,12 +37,15 @@
  * =========================================================
  */
 
+require_once __DIR__ . '/../exceptions/InputException.php';
+
 /**
  * @param string $method
  * @param $config
  * @param $service
  * @param $contract
  * @param $params
+ * @throws InputException
  * @return bool|mixed|string
  */
 function request($config = [], $service, $contract, $params = null, $method = 'get')
@@ -98,7 +101,7 @@ function request($config = [], $service, $contract, $params = null, $method = 'g
     $content = json_decode($content);
 
     // Input exception
-    if (isset($content->errors)) {
+    if (isset($content->errors) && count($content->errors) > 0) {
         throw new InputException('', 0, null, $content->errors);
     }
 

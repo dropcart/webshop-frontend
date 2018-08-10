@@ -37,7 +37,7 @@
  * =========================================================
  */
 
-require '../exceptions/InputException.php';
+require_once __DIR__ . '/../exceptions/InputException.php';
 
 class transaction {
 
