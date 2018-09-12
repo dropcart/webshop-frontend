@@ -5,7 +5,7 @@
         var content = document.getElementById("content");
         var sticky = header.offsetTop;
 
-        function stickyHeader() {
+        $(window).scroll(function(){
             if (window.pageYOffset >= sticky) {
                 header.classList.add("hidden");
                 fixedheader.classList.remove("hidden");
@@ -15,15 +15,15 @@
                 fixedheader.classList.add("hidden");
                 content.classList.remove("content");
             }
-        }
+        });
 
         // Get height of footer
         $(document).ready(function() {
             $footerHeight = $("#footer").outerHeight();
-            $containerWidth = $("#container").width();
+            $('#bodyContent').css('margin-bottom', -$footerHeight);
 
-            $('#body').css('margin-bottom', -$footerHeight);
             $('#fixednavbar').css('width', $containerWidth);
+            $containerWidth = $("#container").width();
         });
     </script>
 {% endblock %}
