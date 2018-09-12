@@ -379,47 +379,6 @@ p.totals-paragraph {
 	color: white;
 }
 
-/** Footer styling */
-/*footer ul {*/
-	/*list-style-type: none;*/
-/*}*/
-/*footer li {*/
-	/*float: left;*/
-/*}*/
-/*footer li a {*/
-	/*display: block;*/
-	/*color: #333;*/
-	/*text-align: center;*/
-	/*padding: 5px 20px 5px 0;*/
-/*}*/
-/*.footer {*/
-	/*margin-top: 0px;*/
-	/*padding-top: 12px;*/
-/*}*/
-/*.footer, .push {*/
-	/*float: left;*/
-	/*padding-bottom: 0;*/
-/*}*/
-/*.ftrtop {*/
-	/*!*padding-bottom: 50px;*!*/
-	/*height: auto;*/
-/*}*/
-/*.ftrtop .social {*/
-	/*text-align: right;*/
-/*}*/
-/*.ftrbtm {*/
-	/*background: #f5f5f5;*/
-	/*font-size: 12px;*/
-	/*padding-top: 0px;*/
-	/*border-radius: 2px 2px 0 0;*/
-	/*border: 1px solid #ddd;*/
-	/*margin-top:10px;*/
-/*}*/
-/*.ftrbtm p {*/
-	/*margin-bottom: 0;*/
-	/*padding: 5px 0;*/
-/*}*/
-
 /* Product overview */
 .floating-box {
 	margin: 0 0 10px 0;
