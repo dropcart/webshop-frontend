@@ -122,6 +122,15 @@ html, body {
 ul.nav.nav-pills.pages-menu {
 		font-size: 12px;
 	}
+
+/* Fix sticky navbar in Firefox */
+li .search-products {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	padding: 8px;
+}
+
 .product-id-table td, .product-id-table th {
 	padding: 1px;
 }
