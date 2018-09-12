@@ -1,16 +1,111 @@
-<footer id="footer" class="footer col-sm-12 col-xs-12">
-    <div class="ftrtop" style="width: 100%;">
-        <div class="col-sm-2 col-xs-6 mb-3 bottom-logo">
-            <a href="/">
-                <img src="/images/logo/logo_small.png" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/>
-            </a>
-        </div>
-        <div class="col-sm-8 col-xs-12 mb-3">
-            <!-- Pages menu -->
-            {% include 'blocks/pages_menu.html.twig' %}
-        </div>
+{% block styles %}
+    <style>
+        /** Footer styling */
+        footer ul {
+            list-style-type: none;
+            margin-bottom: 0;
+        }
+        footer li {
+            /*float: left;*/
+        }
+        footer li a {
+            display: block;
+            color: #333;
+            padding: 2px 0;
+        }
+        .footer {
+            margin-top: 0;
+            padding-top: 0;
+        }
+        .footer, .push {
+            float: left;
+            padding-bottom: 0;
+        }
+        .ftrtop {
+            /*padding-bottom: 50px;*/
+            height: auto;
+            float: left;
+            padding: 15px 0;
+        }
+        .ftrtop .social {
+            text-align: right;
+        }
+        .ftrbtm {
+            background: #f5f5f5;
+            font-size: 12px;
+            padding-top: 0;
+            border-radius: 2px 2px 0 0;
+            border: 1px solid #ddd;
+        }
+        .ftrbtm p {
+            margin-bottom: 0;
+            padding: 5px 0;
+        }
+        .footer-links .pages-menu {
+            float: right;
+        }
+    </style>
+{% endblock %}
 
-        <!-- HEADER SOCIAL MEDIA ICONS -->
+<footer id="footer" class="footer col-xs-12">
+    <div class="{{ container == true ? 'container-fluid' : 'container' }}">
+        <div class="ftrtop" style="width: 100%;">
+            {#<div class="col-sm-2 col-xs-6 mb-3 bottom-logo">#}
+            {#<a href="/">#}
+            {#<img class="logo-small" src="/images/logo/Ikwilinkt_logo.png" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/>#}
+            {#</a>#}
+            {#</div>#}
+            <div class="col-md-4 col-xs-6 footer-info">
+                <p>Telefonisch bereikbaar van maandag tot en met zondag: 09.00 tot 17.00 uur</p>
+                <span>Teststraat 2b</span><br>
+                <span>1234 AB Amsterdam</span><br>
+                <span class="glyphicon glyphicon-phone"></span>
+                <span>072-1234567</span><br>
+                <span class="glyphicon glyphicon-envelope"></span>
+                <span>info@gmail.nl</span><br>
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <ul>
+                    <li><b>Categorieën</b></li>
+                    {% for category in categories %}
+                        <li>
+                            <a href="{{ lang.url.category_products ~ category.id }}">{{ category.name }}</a>
+                        </li>
+                    {% else %}
+                        {#<li style="text-align: center; font-weight: bold">Geen categorieën</li>#}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md-4 col-xs-12">
+                <!-- Pages menu -->
+                {% include 'blocks/pages_menu.html.twig' %}
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xs-12 ftrbtm">
+        <p>© {{ "now"|date('Y') }} - {{ lang.site_footer }} {{ site_name }}</p>
+    </div>
+    <div class="footer-links text-center full-width">
+
+        <span class="full-width">Powered by <a href="https://dropcart.nl">DropCart v3.0</a></span>
+    </div>
+</footer>
+
+{#<footer id="footer" class="footer col-sm-12 col-xs-12">#}
+    {#<div class="ftrtop" style="width: 100%;">#}
+        {#<div class="col-sm-2 col-xs-6 mb-3 bottom-logo">#}
+            {#<a href="/">#}
+                {#<img src="/images/logo/logo_small.png" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/>#}
+            {#</a>#}
+        {#</div>#}
+        {#<div class="col-sm-8 col-xs-12 mb-3">#}
+            {#<!-- Pages menu -->#}
+            {#{% include 'blocks/pages_menu.html.twig' %}#}
+        {#</div>#}
+
+        {#<!-- HEADER SOCIAL MEDIA ICONS -->#}
         {#<div>#}
             {#<div class="pull-right social">#}
                 {#<a href="#" class="fa fa-facebook-square"></a>#}
@@ -20,8 +115,8 @@
             {#</div>#}
         {#</div>#}
 
-    </div>
-    <div class="col-sm-12 col-xs-12 mb-3 ftrbtm">
-        <p>© {{ "now"|date('Y') }} - {{ lang.site_footer }} {{ site_name }}</p>
-    </div>
-</footer>
+    {#</div>#}
+    {#<div class="col-sm-12 col-xs-12 mb-3 ftrbtm">#}
+        {#<p>© {{ "now"|date('Y') }} - {{ lang.site_footer }} {{ site_name }}</p>#}
+    {#</div>#}
+{#</footer>#}
