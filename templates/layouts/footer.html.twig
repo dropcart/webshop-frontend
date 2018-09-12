@@ -5,9 +5,6 @@
             list-style-type: none;
             margin-bottom: 0;
         }
-        footer li {
-            /*float: left;*/
-        }
         footer li a {
             display: block;
             color: #333;
@@ -22,7 +19,6 @@
             padding-bottom: 0;
         }
         .ftrtop {
-            /*padding-bottom: 50px;*/
             height: auto;
             float: left;
             padding: 15px 0;
@@ -50,11 +46,6 @@
 <footer id="footer" class="footer col-xs-12">
     <div class="{{ container == true ? 'container-fluid' : 'container' }}">
         <div class="ftrtop" style="width: 100%;">
-            {#<div class="col-sm-2 col-xs-6 mb-3 bottom-logo">#}
-            {#<a href="/">#}
-            {#<img class="logo-small" src="/images/logo/Ikwilinkt_logo.png" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/>#}
-            {#</a>#}
-            {#</div>#}
             <div class="col-md-4 col-xs-6 footer-info">
                 <p>Telefonisch bereikbaar van maandag tot en met zondag: 09.00 tot 17.00 uur</p>
                 <span>Teststraat 2b</span><br>
@@ -92,31 +83,3 @@
         <span class="full-width">Powered by <a href="https://dropcart.nl">DropCart v3.0</a></span>
     </div>
 </footer>
-
-{#<footer id="footer" class="footer col-sm-12 col-xs-12">#}
-    {#<div class="ftrtop" style="width: 100%;">#}
-        {#<div class="col-sm-2 col-xs-6 mb-3 bottom-logo">#}
-            {#<a href="/">#}
-                {#<img src="/images/logo/logo_small.png" alt="{% if site_name is defined %}{{ site_name }}{% endif %}"/>#}
-            {#</a>#}
-        {#</div>#}
-        {#<div class="col-sm-8 col-xs-12 mb-3">#}
-            {#<!-- Pages menu -->#}
-            {#{% include 'blocks/pages_menu.html.twig' %}#}
-        {#</div>#}
-
-        {#<!-- HEADER SOCIAL MEDIA ICONS -->#}
-        {#<div>#}
-            {#<div class="pull-right social">#}
-                {#<a href="#" class="fa fa-facebook-square"></a>#}
-                {#<a href="#" class="fa fa-twitter-square"></a>#}
-                {#<a href="#" class="fa fa-google-plus-square"></a>#}
-                {#<a href="#" class="fa fa-linkedin"></a>#}
-            {#</div>#}
-        {#</div>#}
-
-    {#</div>#}
-    {#<div class="col-sm-12 col-xs-12 mb-3 ftrbtm">#}
-        {#<p>© {{ "now"|date('Y') }} - {{ lang.site_footer }} {{ site_name }}</p>#}
-    {#</div>#}
-{#</footer>#}
