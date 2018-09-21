@@ -124,7 +124,7 @@ ul.nav.nav-pills.pages-menu {
 	}
 
 /* Fix sticky navbar in Firefox */
-li .search-products {
+.navbar>.hidden-xs li .search-products {
 	position: absolute;
 	top: 0;
 	left: 0;
