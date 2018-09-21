@@ -287,6 +287,8 @@ li .search-products {
 	position: fixed;
 	top: 0;
 	z-index: 1000;
+    /* fallback width */
+    width: 62%;
 }
 
 /* Filter box */

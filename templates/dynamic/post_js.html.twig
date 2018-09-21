@@ -22,8 +22,8 @@
             $footerHeight = $("#footer").outerHeight();
             $('#bodyContent').css('margin-bottom', -$footerHeight);
 
-            $('#fixednavbar').css('width', $containerWidth);
             $containerWidth = $("#container").width();
+            $('#fixednavbar').css('width', $containerWidth);
         });
     </script>
 {% endblock %}
