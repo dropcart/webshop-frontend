@@ -127,6 +127,7 @@ ul.nav.nav-pills.pages-menu {
 li .search-products {
 	position: absolute;
 	top: 0;
+	left: 0;
 	width: 100%;
 	padding: 8px;
 }
