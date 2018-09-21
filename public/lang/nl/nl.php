@@ -44,7 +44,14 @@ return [
         'search' => 'Zoeken',
     ],
 
-    'site_footer' => 'Alle prijzen zijn inclusief BTW - Merknamen zijn alleen gebruikt om de toepasbaarheid van producten aan te geven en dienen verder niet te worden geassocieerd met',
+    'site_footer' => [
+        'bottom_bar_text' => 'Alle prijzen zijn inclusief BTW - Merknamen zijn alleen gebruikt om de toepasbaarheid van producten aan te geven en dienen verder niet te worden geassocieerd met',
+        'column_text' => 'Telefonisch bereikbaar van maandag tot en met zondag: 09.00 tot 17.00 uur',
+        'column_street' => 'Teststraat 2b',
+        'column_address' => '1234 AB Amsterdam',
+        'column_phone' => '072-1234567',
+        'column_email' => ' info@gmail.com',
+    ],
 
     'page_titles' => [
         '404' => 'Hier gaat iets helemaal 404-fout',

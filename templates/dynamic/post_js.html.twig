@@ -20,9 +20,9 @@
         // Get height of footer
         $(document).ready(function() {
             $footerHeight = $("#footer").outerHeight();
-            $containerWidth = $("#container").width();
+            $('#bodyContent').css('margin-bottom', -$footerHeight);
 
-            $('#body').css('margin-bottom', -$footerHeight);
+            $containerWidth = $("#container").width();
             $('#fixednavbar').css('width', $containerWidth);
         });
     </script>
