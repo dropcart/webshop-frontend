@@ -47,10 +47,10 @@ return [
     'site_footer' => [
         'bottom_bar_text' => 'Alle prijzen zijn inclusief BTW - Merknamen zijn alleen gebruikt om de toepasbaarheid van producten aan te geven en dienen verder niet te worden geassocieerd met',
         'column_text' => 'Telefonisch bereikbaar van maandag tot en met zondag: 09.00 tot 17.00 uur',
-        'column_street' => 'Teststraat 2b',
-        'column_address' => '1234 AB Amsterdam',
-        'column_phone' => '072-1234567',
-        'column_email' => ' info@gmail.com',
+        'column_street' => 'Prof. van der Waalsstraat 2',
+        'column_address' => '1821 BT Alkmaar',
+        'column_phone' => '(+31) (0) 72 - 5675055',
+        'column_email' => ' info@inktweb.nl',
     ],
 
     'page_titles' => [
@@ -98,23 +98,21 @@ return [
     'page_home' => 	[
         'lead_title'            => 'Uw titel hier',
         'lead_text'             => 'ondertitel',
-        'left_block'            => '',
-        'right_block'           => '',
     ],
 
     'page_contact' => 	[
         'title' => 'Onze contactgegevens',
         'content' => '@Default::dynamic.page-contact',
         'emailaddress_desc' => 'E-mailadres',
-        'emailaddress' => 'uw@emailadres.nl',
+        'emailaddress' => 'info@inktweb.nl',
         'phone_desc' => 'Telefoonnummer',
-        'phone' => '(+31) (0) 12-345678',
+        'phone' => '(+31) (0) 72 - 5675055',
         'address_desc' => 'Adres',
-        'address' => 'Uw straat 2, POSTCODE Plaats, Land',
+        'address' => 'Prof. van der Waalsstraat 2, 1821 BT Alkmaar, Nederland',
         'vat_desc' => 'BTW-nummer',
-        'vat' => 'Uw BTW-nummer',
+        'vat' => 'NL854012965B01',
         'coc_desc' => 'KvK-nummer',
-        'coc' => 'Uw KvK-nummer',
+        'coc' => '60680326',
     ],
 
     'page_support' => [
@@ -136,16 +134,16 @@ return [
         /** Product range description used in the Terms and Conditions. We used an example below. */
         'product_range_description' => 'onder andere maar niet uitsluitend printerbenodigdheden en kantoorartikelen',
         'store_name' => config('site_name'),
-        'store_location' => '',
-        'store_address' => '',
-        'store_postal_code' => '',
-        'store_chamber_of_commerce_number' => '',
-        'store_vat_number' => '',
-        'store_email' => '',
-        'store_phone_number' => '',
-        'store_url' => 'https://',
-        'court_province' => '',
-        'court_location' => '',
+        'store_location' => 'Alkmaar',
+        'store_address' => 'Prof. van der Waalsstraat 2',
+        'store_postal_code' => '1821 BT',
+        'store_chamber_of_commerce_number' => '60680326',
+        'store_vat_number' => 'NL854012965B01',
+        'store_email' => 'info@inktweb.nl',
+        'store_phone_number' => '(+31) (0) 72 - 5675055',
+        'store_url' => 'https://www.inktweb.nl',
+        'court_province' => 'Noord-Holland',
+        'court_location' => 'Alkmaar',
     ],
 
     'http_errors' => [
