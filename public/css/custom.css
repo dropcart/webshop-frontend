@@ -145,9 +145,6 @@ ul.nav.nav-pills.pages-menu {
 	font-size: 1.1em;
 	font-weight: bold;
 }
-.shopping-bag > tbody > tr {
-	border-bottom: 1px solid #999;
-}
 .shopping-bag input {
 	width: 6em;
 }
