@@ -112,6 +112,10 @@ function lang($key = null)
 function base64_encode_image(string $url) {
     $type = pathinfo($url, PATHINFO_EXTENSION);
     $data = file_get_contents($url);
-    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-    return $base64;
+
+    if (!$data) {
+        $data = file_get_contents(__BASEDIR__ . '/public/images/no_image.gif');
+    }
+
+    return 'data:image/' . $type . ';base64,' . base64_encode($data);
 }
