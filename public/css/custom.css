@@ -122,6 +122,16 @@ html, body {
 ul.nav.nav-pills.pages-menu {
 		font-size: 12px;
 	}
+
+/* Fix sticky navbar in Firefox */
+.navbar>.hidden-xs li .search-products {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 8px;
+}
+
 .product-id-table td, .product-id-table th {
 	padding: 1px;
 }
@@ -134,9 +144,6 @@ ul.nav.nav-pills.pages-menu {
 .shopping-bag th {
 	font-size: 1.1em;
 	font-weight: bold;
-}
-.shopping-bag > tbody > tr {
-	border-bottom: 1px solid #999;
 }
 .shopping-bag input {
 	width: 6em;
@@ -156,7 +163,6 @@ ul.nav.nav-pills.pages-menu {
 }
 .next-step > * {
 	margin-top: 8pt;
-	width: 70%;
 }
 .table>tfoot>tr>td:not(.totals-column), .table>tfoot>tr>th {
 	border: 0;
@@ -278,6 +284,8 @@ ul.nav.nav-pills.pages-menu {
 	position: fixed;
 	top: 0;
 	z-index: 1000;
+    /* fallback width */
+    width: 62%;
 }
 
 /* Filter box */
