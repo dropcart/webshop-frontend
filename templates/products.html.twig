@@ -137,19 +137,23 @@
                     <div class="col-md-2 price-box round-border">
 
                         {% if product.price_details %}
-                            <div class="small-price">
-                                <h3 class="price">
+                            <div class="small-price select-quantity">
+                                <h3 class="price float-left" style="margin: 0;">
                                     &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
                                     {#<div class="float-right"><span#}
                                     {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
                                     {#</div>#}
                                 </h3>
-                                <p class="float-clear" style="margin: 15px 0;">
-                                    <small><em>Inclusief BTW</em></small>
+                                <p style="margin: 5px 0 0 5px; float: left; position: absolute; right: 0;">
+                                    <small><em>Incl. BTW</em></small>
                                 </p>
+
+                                <input class="form-control product-quantity" min="1" value="1" type="number" style="width: 50%; margin: 5px 0; float: left;">
                             </div>
-                            <div class="order">
-                                <a id="{{ product.id }}" href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow">
+
+                            <div class="order float-left full-width">
+                                <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
+                                   data-product-id="{{ product.id }}" data-product-price="{{ (product.price_details.piece_price.in) }}">
                                     In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
                                 </a>
                             </div>
@@ -255,4 +259,9 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block post_js %}
+    {{ parent() }}
+    {% include 'blocks/ajax_shoppingcart.html.twig' %}
 {% endblock %}

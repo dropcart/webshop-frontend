@@ -77,11 +77,13 @@
 
                     <p class="fill" style="padding: 15px 0; margin-bottom: 0;">Verkoop door {{ site_name }}</p>
 
-                    <div class="col-xs-12 col-md-8 product-buy-amount">
-                        <input class="form-control product-amount" min="1" value="1" type="number" style="">
+                    <div class="col-xs-12 col-md-8 product-buy-amount select-quantity">
+                        <input class="form-control product-quantity" min="1" value="1" type="number" style="">
 
                         <div class="col-xs-8 no-padding">
-                            <a id="{{ product.id }}" href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link">
+                            <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" data-product-id="{{ product.id }}"
+                               data-product-price="{{ (product.price_details.piece_price.in) }}"
+                               class="btn btn btn-block btn-success order-link">
                                 Bestellen <span class="glyphicon glyphicon-shopping-cart"></span>
                             </a>
                         </div>
@@ -116,4 +118,25 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block post_js %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $productInfo = $('.product-left-column').outerHeight();
+
+        $(".show-more").on('click', function () {
+            $(".product-info").css('height', $productInfo + 40);
+            $(this).addClass('hidden');
+            $('.show-less').removeClass('hidden');
+        });
+
+        $(".show-less").on('click', function () {
+            $(".product-info").css('height', '300px');
+            $(this).addClass('hidden');
+            $('.show-more').removeClass('hidden');
+        });
+    </script>
+
+    {% include 'blocks/ajax_shoppingcart.html.twig' %}
 {% endblock %}
