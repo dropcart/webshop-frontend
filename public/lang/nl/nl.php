@@ -93,6 +93,23 @@ return [
         'lead_text'             => 'ondertitel',
         'left_block'            => '',
         'right_block'           => '',
+        'carousel' =>   [
+            '0' =>          [
+                'url' => '',
+                'header' => '',
+                'desc' => '',
+            ],
+            '1' =>          [
+                'url' => '',
+                'header' => '',
+                'desc' => '',
+            ],
+            '2' =>          [
+                'url' => '',
+                'header' => '',
+                'desc' => '',
+            ],
+        ],
     ],
 
     'page_contact' => 	[
