@@ -138,17 +138,17 @@
 
                         {% if product.price_details %}
                             <div class="small-price select-quantity">
-                                <h3 class="price float-left" style="margin: 0;">
+                                <h3 class="price float-left">
                                     &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
                                     {#<div class="float-right"><span#}
                                     {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
                                     {#</div>#}
                                 </h3>
-                                <p style="margin: 5px 0 0 5px; float: left;">
+                                <p>
                                     <small><em>Incl. BTW</em></small>
                                 </p>
 
-                                <input class="form-control product-quantity" min="1" value="1" type="number" style="width: 65%; margin: 5px 0; float: left;">
+                                <input class="form-control product-quantity" min="1" value="1" type="number">
 
                                 <div class="order float-left full-width">
                                     <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"

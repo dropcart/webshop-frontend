@@ -621,6 +621,18 @@ p.pdescfull {
 	padding: 15px 10px;
 	text-align: left;
 }
+.price-box input {
+	width: 65%;
+	margin: 10px 0;
+	float: left;
+}
+.price-box h3 {
+	margin:0;
+}
+.price-box p {
+	margin: 5px 0 0 5px;
+	float: left;
+}
 
 
 .ui-effects-transfer {
