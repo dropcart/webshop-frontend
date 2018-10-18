@@ -1,9 +1,12 @@
 {% block ajax_shoppingcart %}
     <script type="text/javascript">
         $(".product-quantity").on('change', function () {
-
-            var currentValue = $(this).val();
-            $(this).val(currentValue);
+            if($.isNumeric(this.value)) {
+                var currentValue = $(this).val();
+                $(this).val(currentValue);
+            } else {
+                $(this).val(1);
+            }
         });
 
         $('.order-link').on('click', function (event) {
