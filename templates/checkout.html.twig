@@ -1,5 +1,15 @@
 {% extends "layouts/layout.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .bodyContent {
+        position:relative;
+        z-index: 10;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 
     <h1>{{ page_title }}</h1>
