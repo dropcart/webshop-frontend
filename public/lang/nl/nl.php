@@ -42,6 +42,12 @@ return [
     'site_header' => [
         'search_in_products' => 'Zoek binnen assortiment',
         'search' => 'Zoeken',
+        'top_bar_column_1' => '',
+        'top_bar_column_2' => '',
+        'top_bar_column_3' => '',
+        'top_bar_glyphicon_1' => '',
+        'top_bar_glyphicon_2' => '',
+        'top_bar_glyphicon_3' => '',
     ],
 
     'site_footer' => [
