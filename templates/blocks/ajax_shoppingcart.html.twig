@@ -1,7 +1,7 @@
 {% block ajax_shoppingcart %}
     <script type="text/javascript">
         $(".product-quantity").on('change', function () {
-            if($.isNumeric(this.value)) {
+            if($.isNumeric(this.value) && this.value > 0) {
                 var currentValue = $(this).val();
                 $(this).val(currentValue);
             } else {
