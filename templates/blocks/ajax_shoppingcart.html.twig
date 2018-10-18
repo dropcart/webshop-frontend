@@ -1,0 +1,73 @@
+{% block ajax_shoppingcart %}
+    <script type="text/javascript">
+        function formatNumber($number) {
+            $number = $number.toFixed(2);
+            var x = $number.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? ',' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + '.' + '$2');
+            }
+            return x1 + x2;
+        }
+
+        $('.order-link').on('click', function (event) {
+            event.preventDefault();
+
+            // Checks if cart is empty
+            if($(".cart-no-products").length) {
+                $cartReplaceContent = "<span class=\"cart-items\"><span class=\"total-quantity\">0</span> artikel(en)</span>\n" +
+                    "        - <span class=\"cart-total\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
+                $(".cart-content").html($cartReplaceContent);
+            }
+
+            // Gives ID and Price of clicked element
+            $productId = event.target.getAttribute('data-product-id');
+            $productPrice = parseFloat(event.target.getAttribute('data-product-price')).toFixed(2);
+
+            // Change current cart content to float
+            $cartTotalAmount = ($(".cart-total-amount").html().replace('.', '')).replace(',', '.');
+            $cartTotalAmount = parseFloat($cartTotalAmount);
+
+            // Only allow numeric and positive quantities
+            $quantity = parseInt($(this).closest('.select-quantity').find('.product-quantity').val());
+            if (!$.isNumeric($quantity) || $quantity < 0) {
+                $quantity = 1;
+            } else {
+                $quantity = parseInt($quantity);
+            }
+
+            // Calculations for quantity and price in cart
+            $productTotalPrice = $quantity * $productPrice;
+            $cartPlusProduct = formatNumber(parseFloat($cartTotalAmount + $productTotalPrice));
+            $productTotalQuantity = parseInt($('.total-quantity').html()) + $quantity;
+
+            // Replace cart content
+            $(".total-quantity").html($productTotalQuantity);
+            $(".cart-total-amount").html($cartPlusProduct);
+
+            // Scroll page to top
+            $('html, body').animate({
+                'scrollTop': $(".colorgraph").position().top
+            });
+
+            // Animation to cart
+            $(this).effect(
+                "transfer", {
+                    to: $('.glyphicon-shopping-cart')
+                },
+                1000
+            );
+
+            $.ajax({
+                url: '{{ lang.url.shopping_cart_add }}' + $productId + '/' + $quantity,
+                type: "POST", //send it through get method
+                success: function (data) {
+                    // Success
+
+                }
+            });
+        });
+    </script>
+{% endblock %}
