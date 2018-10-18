@@ -169,11 +169,11 @@
                 <td colspan="5" align="center">
                     <div class="next-step">
                         {% if transaction is defined and transaction %}
-                            <a href="{{ lang.url.checkout }}" class="btn btn btn-block btn-primary">Naar afrekenen <span
-                                        class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <button onclick="location.href='{{ lang.url.checkout }}'" class="btn btn btn-block btn-primary">Naar afrekenen <span
+                                        class="glyphicon glyphicon-shopping-cart"></span></button>
                         {% else %}
-                            <a href="{{ lang.url.customer_details }}" class="btn btn btn-block btn-primary customer-link">Naar klantgegevens <span
-                                        class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <button onclick="location.href='{{ lang.url.customer_details }}'" class="btn btn btn-block btn-primary customer-link">Naar klantgegevens <span
+                                        class="glyphicon glyphicon-shopping-cart"></span></button>
                         {% endif %}
                     </div>
                 </td>
