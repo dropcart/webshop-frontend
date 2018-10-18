@@ -42,9 +42,22 @@ return [
     'site_header' => [
         'search_in_products' => 'Zoek binnen assortiment',
         'search' => 'Zoeken',
+        'top_bar_column_1' => '',
+        'top_bar_column_2' => '',
+        'top_bar_column_3' => '',
+        'top_bar_glyphicon_1' => '',
+        'top_bar_glyphicon_2' => '',
+        'top_bar_glyphicon_3' => '',
     ],
 
-    'site_footer' => 'Alle prijzen zijn inclusief BTW - Merknamen zijn alleen gebruikt om de toepasbaarheid van producten aan te geven en dienen verder niet te worden geassocieerd met',
+    'site_footer' => [
+        'bottom_bar_text' => 'Alle prijzen zijn inclusief BTW - Merknamen zijn alleen gebruikt om de toepasbaarheid van producten aan te geven en dienen verder niet te worden geassocieerd met',
+        'column_text' => 'Optioneel tekstvak boven adresgegevens',
+        'column_street' => 'Uw straat',
+        'column_address' => 'POSTCODE Plaats, Land',
+        'column_phone' => '(+31) (0) 12-345678',
+        'column_email' => 'uw@emailadres.nl',
+    ],
 
     'page_titles' => [
         '404' => 'Hier gaat iets helemaal 404-fout',
