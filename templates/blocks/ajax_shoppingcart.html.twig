@@ -1,5 +1,17 @@
 {% block ajax_shoppingcart %}
     <script type="text/javascript">
+        function formatNumber($number) {
+            $number = $number.toFixed(2);
+            var x = $number.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? ',' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + '.' + '$2');
+            }
+            return x1 + x2;
+        }
+
         $('.order-link').on('click', function (event) {
             event.preventDefault();
 
@@ -15,8 +27,8 @@
             $productPrice = parseFloat(event.target.getAttribute('data-product-price')).toFixed(2);
 
             // Change current cart content to float
-            $cartReplaceComma = $(".cart-total-amount").html().replace(',','.');
-            $cartTotalAmount = parseFloat($cartReplaceComma);
+            $cartTotalAmount = ($(".cart-total-amount").html().replace('.', '')).replace(',', '.');
+            $cartTotalAmount = parseFloat($cartTotalAmount);
 
             // Only allow numeric and positive quantities
             $quantity = parseInt($(this).closest('.select-quantity').find('.product-quantity').val());
@@ -28,10 +40,9 @@
 
             // Calculations for quantity and price in cart
             $productTotalPrice = $quantity * $productPrice;
-            $cartPlusProduct = parseFloat($cartTotalAmount + $productTotalPrice).toFixed(2).replace('.',',');
+            $cartPlusProduct = formatNumber(parseFloat($cartTotalAmount + $productTotalPrice));
             $productTotalQuantity = parseInt($('.total-quantity').html()) + $quantity;
 
-            console.log($cartTotalAmount);
             // Replace cart content
             $(".total-quantity").html($productTotalQuantity);
             $(".cart-total-amount").html($cartPlusProduct);
