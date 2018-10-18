@@ -9,59 +9,50 @@
         $('.order-link').on('click', function (event) {
             event.preventDefault();
 
-            $header = $(".colorgraph");
-            $cart = $("#cart");
-            $cartContent = $(".cart-content");
-            $cartEmpty = $(".cart-no-products");
-            $cartReplaceContent = "<span class=\"cart-items\"><span class=\"total-quantity\">{{ shopping_cart_overview.total_products }}</span> artikel(en)</span>\n" +
-                "        - <span class=\"cart-total\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ shopping_cart_overview.total_price|number_format(2, ',', '.') }}</span></span>";
-            $cartTotalPrice = parseFloat($(".cart-total-amount").html());
-            $cartIcon = $('.glyphicon-shopping-cart');
-            $buyButton = $('.order-link');
-            $productId = event.target.getAttribute('data-product-id');
-            $productPrice = parseFloat(event.target.getAttribute('data-product-price'));
-            $productAmount = parseFloat($('.product-quantity').val());
-            $productTotalPrice = $productAmount * $productPrice;
-            $cartPlusProduct = parseFloat($cartTotalPrice + $productTotalPrice).toFixed(2);
-            $productTotalAmount = parseFloat($('.total-quantity').html()) + $productAmount;
-
-            if($cartEmpty.length) {
-                $cartContent.html($cartReplaceContent);
-                // $(".total-quantity").html($productTotalAmount);
-                // $(".cart-total-amount").html($cartPlusProduct);
-
-            } else {
-                $(".total-quantity").html($productTotalAmount);
-                $(".cart-total-amount").html($cartPlusProduct);
+            // Checks if cart is empty
+            if($(".cart-no-products").length) {
+                $cartReplaceContent = "<span class=\"cart-items\"><span class=\"total-quantity\">0</span> artikel(en)</span>\n" +
+                    "        - <span class=\"cart-total\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
+                $(".cart-content").html($cartReplaceContent);
             }
 
+            // Gives ID and Price of clicked element
+            $productId = event.target.getAttribute('data-product-id');
+            $productPrice = parseFloat(event.target.getAttribute('data-product-price')).toFixed(2);
+
+            // Change current cart content to float
+            $cartReplaceComma = $(".cart-total-amount").html().replace(',','.');
+            $cartTotalAmount = parseFloat($cartReplaceComma);
+
+            // Calculations for quantity and price in cart
+            $quantity = parseInt($(this).closest('.select-quantity').find('.product-quantity').val());
+            $productTotalPrice = $quantity * $productPrice;
+            $cartPlusProduct = parseFloat($cartTotalAmount + $productTotalPrice).toFixed(2).replace('.',',');
+            $productTotalQuantity = parseInt($('.total-quantity').html()) + $quantity;
+
+            // Replace cart content
+            $(".total-quantity").html($productTotalQuantity);
+            $(".cart-total-amount").html($cartPlusProduct);
+
+            // Scroll page to top
             $('html, body').animate({
-                'scrollTop': $header.position().top
+                'scrollTop': $(".colorgraph").position().top
             });
 
+            // Animation to cart
             $(this).effect(
                 "transfer", {
-                    to: $cartIcon
+                    to: $('.glyphicon-shopping-cart')
                 },
                 1000
             );
-
-            $quantity = 1;
-
-            $('.select-quantity').each(function () {
-                var isHidden = $(this).hasClass('hidden');
-
-                if (!isHidden) {
-                    $quantity = $(this).find('.product-quantity').val();
-                }
-            });
 
             $.ajax({
                 url: '{{ lang.url.shopping_cart_add }}' + $productId + '/' + $quantity,
                 type: "POST", //send it through get method
                 success: function (data) {
                     // Success
-                    // $cart.load(location.href + " #cart>*", '');
+
                 }
             });
         });

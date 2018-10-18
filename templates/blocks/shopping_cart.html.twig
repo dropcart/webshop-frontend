@@ -6,7 +6,7 @@
 <div class="cart-content">
     {% if shopping_cart_overview is defined and shopping_cart_overview.total_products > 0 %}
         <span class="cart-items"><span class="total-quantity">{{ shopping_cart_overview.total_products }}</span> artikel(en)</span>
-        - <span class="cart-total">&euro;&nbsp;<span class="cart-total-amount">{{ shopping_cart_overview.total_price|number_format(2, ',', '.') }}</span></span>
+        - <span class="cart-total">&euro;&nbsp;<span class="cart-total-amount">{{ shopping_cart_overview.subtotal_price|number_format(2, ',', '.') }}</span></span>
     {% else %}
         <small class="cart-no-products"><i>Geen producten</i></small>
     {% endif %}

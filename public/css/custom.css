@@ -649,6 +649,10 @@ p.pdescfull {
 	.price-box {
 		margin-left: -15px;
 	}
+    .small-price p {
+        position: absolute;
+        right: 5px;
+    }
 }
 
 @media screen and (max-width: 768px) and (min-width: 469px) {
@@ -809,9 +813,13 @@ p.pdescfull {
 		margin: 0 !important;
 	}
 	.small-price {
-		width: 35%;
+		width: 100%;
 		float: left;
 	}
+    .small-price input {
+        float: right !important;
+        width: 25% !important;
+    }
 	.small-price p {
 		margin:0 !important;
 	}
