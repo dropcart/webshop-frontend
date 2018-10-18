@@ -7,43 +7,7 @@
     <div class="col-xs-12 product-page no-padding">
         <div class="col-md-6 float-left">
             <img src="{{ product.images|length > 0 ? product.images[0].url : '/images/no_image.gif' }}" class="featured-img fill">
-            <div class="product-info float-left">
-                <div class="product-left-column">
-                    <div style="padding-bottom: 10px;">
-                        <h4>Product beschrijving</h4>
-                        <!-- PRODUCT DESCRIPTION -->
-                        <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
-                    </div>
-
-                    <div class="specs">
-                        <h4>Productspecificaties</h4>
-                        <b>Productkenmerken</b>
-                        <dl class="specs-list">
-                            <dt>Merk</dt>
-                            <dd>Brother</dd>
-                            <dt>Etc</dt>
-                            <dd>etc</dd>
-                        </dl>
-                        <b>EAN</b>
-                        <dl class="specs-list">
-                            <dt>EAN</dt>
-                            <dd>{{ product.ean }}</dd>
-                        </dl>
-                        <b>SKU</b>
-                        <dl class="specs-list">
-                            <dt>SKU</dt>
-                            <dd>{{ product.sku }}</dd>
-                        </dl>
-                    </div>
-                    <a href="javascript:" class="fill float-left show-more text-center brand-primary">Toon details
-                        <span class="glyphicon glyphicon-chevron-down pos-inline"></span></a>
-                    <a href="javascript:" class="fill float-left show-less text-center brand-primary hidden">Verberg details
-                        <span class="glyphicon glyphicon-chevron-up pos-inline"></span></a>
-                </div>
-            </div>
-
         </div>
-
 
         <div class="col-md-6 float-left">
             <div class="float-left fill">
@@ -52,7 +16,7 @@
                         <h1 class="price-details bold float-left">
                             &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
                         </h1>
-                        <span class="price-btw">Incl. BTW</span>
+                        <span class="price-btw">&nbsp;Incl. BTW</span>
                     </div>
 
                     <!-- PRODUCT STOCK -->
@@ -74,9 +38,7 @@
                             <div class="label label-warning">Niet op voorraad</div>
                         {% endif %}
                     </div>
-
-                    <p class="fill" style="padding: 15px 0; margin-bottom: 0;">Verkoop door {{ site_name }}</p>
-
+                    <br />
                     <div class="col-xs-12 col-md-8 product-buy-amount select-quantity">
                         <input class="form-control product-quantity" min="1" value="1" type="number" style="">
 
@@ -91,30 +53,24 @@
                 {% endif %}
             </div>
 
-            <ul class="product-checklist float-left">
-                <li>Inktpatronen voor verschillende type printers</li>
-                <li>Foto's en tekst van laserkwaliteit</li>
-                <li>Inkt op pigmentbasis i.p.v. waterbasis (dit is kleurvaster en vervaagt minder snel)</li>
-                <li>Inclusief chip</li>
-                <li>Kleur en zwart verkrijgbaar</li>
-                <li>Extra lang print-plezier</li>
-                <li>Top kwaliteit inktpatronen</li>
-                <li>Extra inkt in huis; altijd handig!</li>
-                <li>Verzendkosten: € 8,19</li>
-            </ul>
+            <div class="specs">
+                <h4>Productspecificaties</h4>
+                <dl class="specs-list">
+                    <dt>EAN</dt>
+                    <dd>{{ product.ean }}</dd>
+                    <hr>
+                    <dt>SKU</dt>
+                    <dd>{{ product.sku }}</dd>
+                </dl>
+                <br />
+                <br />
+            </div>
 
-            <h4>Gerelateerde producten</h4>
-            {% for product in products %}
-                <div class="row">
-
-                </div>
-                <hr>
-
-            {% else %}
-                <div class="alert alert-info">
-                    Geen producten beschikbaar
-                </div>
-            {% endfor %}
+            <div>
+                <h4>Product beschrijving</h4>
+                <!-- PRODUCT DESCRIPTION -->
+                <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
+            </div>
         </div>
     </div>
 
