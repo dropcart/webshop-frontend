@@ -117,6 +117,9 @@ html, body {
 	width: 1px;
 	white-space: nowrap;
 }
+.relative {
+	position: relative;
+}
 .product-list .fill {
 	max-height: 12em;
 }
