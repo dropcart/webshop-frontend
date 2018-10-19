@@ -1,9 +1,3 @@
-{# TEMPLATES/DYNAMIC/STYLES.HTML.TWIG #}
-<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-
-{# TEMPLATES/DYNAMIC/PRE_JS.HTML.TWIG #}
-<script src="/js/cookieconsent.min.js"></script>
-
 {% block styles %}
     <style type="text/css" rel="stylesheet" media="screen">
         .cc-revoke {
@@ -31,6 +25,15 @@
                         "button": {
                             "background": "#777"
                         }
+                    },
+                    "content": {
+                        "header": "{{ lang.cookie_consent_bar.header }}",
+                        "message": "{{ lang.cookie_consent_bar.message }}",
+                        "dismiss": "{{ lang.cookie_consent_bar.dismiss }}",
+                        "allow": "{{ lang.cookie_consent_bar.allow }}",
+                        "deny": "{{ lang.cookie_consent_bar.deny }}",
+                        "link": "{{ lang.cookie_consent_bar.link }}",
+                        "href": "{{ lang.cookie_consent_bar.href }}",
                     },
                     "type": "opt-in"
                 })
