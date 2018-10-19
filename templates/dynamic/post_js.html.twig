@@ -19,6 +19,9 @@
 
         // Get height of footer
         $(document).ready(function() {
+            $headerbarHeight = $("#header-bar").outerHeight();
+            $('#bodyContent').css('padding-top', $headerbarHeight);
+
             $footerHeight = $("#footer").outerHeight();
             $('#bodyContent').css('margin-bottom', -$footerHeight);
 
