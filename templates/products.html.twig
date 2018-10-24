@@ -11,7 +11,11 @@
                     <h5 class="panel-title">Filter resultaten</h5>
                 </div>
                 <div class="panel-body">
-                    <form action="{{ query_string }}" class="form-horizontal">
+                    <form class="form-horizontal">
+
+                        {% if search_query %}
+                            <input type="hidden" name="query" value="{{ search_query }}"/>
+                        {% endif %}
 
                         <div class="form-group">
                             <div class=" col-sm-12">

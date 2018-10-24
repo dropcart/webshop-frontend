@@ -84,7 +84,7 @@ foreach ($products->products as $key => $product) {
 }
 
 // Collect all Brands for the Store (for filtering purpose)
-$brands = request([], 'catalog', 'brands');
+$brands = request([], 'catalog', 'brands', $filters);
 
 // Add additional Twig variables here
 $extra_twig_variables = [
