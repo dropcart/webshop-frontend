@@ -11,7 +11,11 @@
                     <h5 class="panel-title">Filter resultaten</h5>
                 </div>
                 <div class="panel-body">
-                    <form action="{{ query_string }}" class="form-horizontal">
+                    <form class="form-horizontal">
+
+                        {% if search_query %}
+                            <input type="hidden" name="query" value="{{ search_query }}"/>
+                        {% endif %}
 
                         <div class="form-group">
                             <div class=" col-sm-12">
@@ -138,23 +142,27 @@
 
                         {% if product.price_details %}
                             <div class="small-price select-quantity">
-                                <h3 class="price float-left">
-                                    &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
-                                    {#<div class="float-right"><span#}
-                                    {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
-                                    {#</div>#}
-                                </h3>
-                                <p>
-                                    <small><em>Incl. BTW</em></small>
-                                </p>
+                                <div class="small-box-left">
+                                    <h3 class="price">
+                                        &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
+                                        {#<div class="float-right"><span#}
+                                        {#class="flag-icon flag-icon-<?= strtolower($product['price']['price_for_country']) ?>"></span>#}
+                                        {#</div>#}
+                                    </h3>
+                                    <p>
+                                        <small><em>Incl. BTW</em></small>
+                                    </p>
+                                </div>
 
-                                <input class="form-control product-quantity" min="1" value="1" type="number">
+                                <div class="small-box-right">
+                                    <input class="form-control product-quantity" min="1" value="1" type="number">
 
-                                <div class="order float-left full-width">
-                                    <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
-                                       data-product-id="{{ product.id }}" data-product-price="{{ (product.price_details.piece_price.in) }}">
-                                        In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
-                                    </a>
+                                    <div class="order float-left full-width">
+                                        <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
+                                           data-product-id="{{ product.id }}" data-product-price="{{ (product.price_details.piece_price.in) }}">
+                                            In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         {% endif %}

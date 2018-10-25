@@ -171,6 +171,16 @@ return [
         'court_location' => '',
     ],
 
+    'cookie_consent_bar' => [
+        'header' => 'Dropcart.nl gebruikt cookies!',
+        'message' => 'Dropcart.nl gebruikt cookies om het bezoek en winkelen bij Dropcart.nl voor jou nog makkelijker en persoonlijker te maken.',
+        'dismiss' => 'Ik snap het!',
+        'allow' => 'Cookies toestaan',
+        'deny' => 'Afwijzen',
+        'link' => 'Lees meer',
+        'href' => '/disclaimer-en-privacy',
+    ],
+
     'http_errors' => [
         '404' => [
             'page_title' => 'Hier gaat iets helemaal 404-fout',

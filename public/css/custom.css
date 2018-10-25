@@ -70,13 +70,19 @@ html, body {
 
 .bodyContent {
 	min-height: 100%;
-	padding-top: 5px;
 }
-
+#content {
+	padding: 0 15px;
+}
+#header-bar {
+	float: left;
+	width: 100%;
+	position: absolute;
+}
 .logo {
 	max-height: 130px;
 	max-width: 270px;
-	width: auto;
+	width: 100%;
 	height: auto;
 }
 
@@ -88,7 +94,7 @@ html, body {
 }
 
 .bottom-logo {
-	padding-left: 0px;
+	padding-left: 0;
 }
 
 .bold {
@@ -124,7 +130,9 @@ html, body {
 	position: relative;
 }
 .product-list .fill {
-	max-height: 12em;
+	max-height: 10em;
+	max-width: 100%;
+	width: auto;
 }
 .price .flag {
 	margin-top: -5px;
@@ -214,16 +222,6 @@ ul.nav.nav-pills.pages-menu {
 	padding-right: 12pt;
 }
 
-/*!* Override Bootstrap *!*/
-/*.nav-justified {*/
-/*max-height: none !important;*/
-/*border-radius: 2px;*/
-/*}*/
-/*.nav > li.disabled > a:hover {*/
-/*cursor: default;*/
-/*border-color: transparent;*/
-/*}*/
-
 /* Override Bootstrap */
 .navbar {
 	border: 0;
@@ -253,14 +251,10 @@ ul.nav.nav-pills.pages-menu {
 .nav-plain>.nav>li>a:focus, .nav>li>a:hover {
 	text-decoration: none;
 	background-color: #ddd;
-	box-shadow: inset 1px 1px 1px 0px #aaa;
 }
 .nav-plain > li {
 	border: 0;
 }
-/*.nav-2 .search-products {*/
-/*border-top:1px solid #ddd;*/
-/*}*/
 .nav-plain > li:first-child, .nav-justified > li:first-child > a {
 	border-left: 0;
 	border-radius: 2px 0 0 2px;
@@ -278,9 +272,6 @@ ul.nav.nav-pills.pages-menu {
 	border: 1px solid #ddd;
 	background-image: none;
 }
-.nav-plain #shoppingcart {
-	/*text-align: center;*/
-}
 .nav-plain #shoppingcart a {
 	color: #777;
 }
@@ -291,7 +282,6 @@ ul.nav.nav-pills.pages-menu {
 #cart {
 	text-align: right;
 	margin-top: -4px;
-	/*margin-bottom: 10px;*/
 }
 
 .sticky {
@@ -359,8 +349,6 @@ p.totals-paragraph {
 }
 .social a:focus {
 	color: #fff;
-	/*box-shadow: inset 0px 0px 8px 4px #337ab7;*/
-	/*background: #23527c;*/
 	text-decoration: none;
 }
 .fa {
@@ -396,6 +384,10 @@ p.totals-paragraph {
 .fa-linkedin {
 	background: #007bb5;
 	color: white;
+}
+
+.glyphicon-remove-circle {
+	color: firebrick;
 }
 
 /** Footer styling */
@@ -487,10 +479,6 @@ footer li a {
 	/* bg color = bg color under block */
 	background: white;
 }
-/* Product description */
-.product-list .fill {
-	max-height: 12em;
-}
 .border-shadow-img {
 	box-shadow: 4px 4px 5px 0 #777;
 	border: 2px inset #fff;
@@ -545,8 +533,9 @@ footer li a {
 }
 .product-page .featured-img {
 	padding-bottom: 10px;
-	max-height: 415px;
-	width: 100%;
+	max-height: 395px;
+	width: auto;
+	max-width: 100%;
 }
 .product-buy-amount {
 	padding: 10px;
@@ -632,22 +621,28 @@ p.pdescfull {
 }
 .price-box {
 	height: 140px;
-	padding: 15px 10px;
+	padding: 15px 0;
 	text-align: left;
 }
 .price-box input {
-	width: 65%;
-	margin: 10px 0;
-	float: left;
+	width: 45%;
+	margin: 0 0 5px 0;
+	float: right;
 }
 .price-box h3 {
 	margin:0;
 }
 .price-box p {
-	margin: 5px 0 0 5px;
+	/*margin: 5px 0 0 5px;*/
 	float: left;
+	width: 45%;
 }
-
+.price-box .order {
+	width: 100%;
+}
+.price-box .order a {
+	padding: 8px;
+}
 
 .ui-effects-transfer {
 
@@ -672,20 +667,12 @@ p.pdescfull {
 	.slogan {
 		height: 40px;
 	}
-	.price-box {
-		margin-left: -15px;
+	.product-list .col-sm-12 {
+		padding-right: 0;
 	}
-    .small-price p {
-        position: absolute;
-        right: 5px;
-    }
 }
 
 @media screen and (max-width: 768px) and (min-width: 469px) {
-	.sticky {
-		/*left: 0;*/
-		/*right: 0;*/
-	}
 	.content {
 		padding-top: 52px !important;
 	}
@@ -695,32 +682,42 @@ p.pdescfull {
 
 	.price-box {
 		height:auto;
-		padding:10px 15px 0;
+		padding: 20px 15px 0 15px;
 		float: left;
 		width:100%;
 	}
 	.price-box .order {
 		width:65%;
 		float: left;
-		padding: 3px 10px;
+		padding: 3px 0;
 	}
 	.price-box .order a {
-		width: fit-content;
+		width: 100%;
 	}
 	.price {
+		font-size: 25px;
 		margin: 0 !important;
 	}
 	.small-price {
-		width: 35%;
+		width: 100%;
 		float: left;
-		padding-right: 15px;
 	}
-	.small-price .price {
-		float: right;
+	.small-price input {
+		width: 25% !important;
 	}
 	.small-price p {
 		margin:0 !important;
-		float: right;
+	}
+
+	.small-box-left {
+		float: left;
+		width: 35%;
+	}
+
+	.small-box-right {
+		float: left;
+		width: 65%;
+		padding: 0 15px;
 	}
 	.product-middle {
 		padding-right: 15px;
@@ -752,6 +749,16 @@ p.pdescfull {
 	.product-list .product-details {
 		float: left !important;
 	}
+
+	.product-page .featured-img {
+		padding-bottom: 10px;
+		max-height: 300px;
+		width: auto;
+		max-width: 100%;
+	}
+	ul.nav.nav-pills.pages-menu {
+		padding-top: 10px;
+	}
 }
 
 @media screen and (max-width: 468px) {
@@ -765,9 +772,7 @@ p.pdescfull {
 		width: 100% !important;
 	}
 	.logo {
-		max-height: 130px;
-		max-width: 180px;
-		width: auto;
+		width: 100%;
 		height: auto;
 	}
 	.header {
@@ -789,9 +794,6 @@ p.pdescfull {
 		font-size:20px;
 	}
 
-	.nav-plain #shoppingcart .dropdown-menu {
-		/*margin-left: -80px;*/
-	}
 	.nav-pills>li>a {
 		padding: 5px 10px;
 	}
@@ -823,19 +825,20 @@ p.pdescfull {
 
 	.price-box {
 		height:auto;
-		padding:10px 15px 0;
+		padding: 20px 15px 0 15px;
 		float: left;
 		width:100%;
 	}
 	.price-box .order {
 		width:65%;
 		float: left;
-		padding: 3px 10px;
+		padding: 3px 0;
 	}
 	.price-box .order a {
-		width: fit-content;
+		width: 100%;
 	}
 	.price {
+		font-size: 25px;
 		margin: 0 !important;
 	}
 	.small-price {
@@ -843,11 +846,21 @@ p.pdescfull {
 		float: left;
 	}
     .small-price input {
-        float: right !important;
-        width: 25% !important;
+        width: 35% !important;
+		margin-top: -20px;
     }
 	.small-price p {
 		margin:0 !important;
+	}
+	.small-box-left {
+		float: left;
+		width: 35%;
+	}
+
+	.small-box-right {
+		float: left;
+		width: 65%;
+		padding: 0 15px;
 	}
 	.product-middle {
 		padding-right: 15px;
@@ -877,6 +890,16 @@ p.pdescfull {
 	}
 	.product-list .product-details {
 		float: left !important;
+	}
+
+	.product-page .featured-img {
+		padding-bottom: 10px;
+		max-height: 250px;
+		width: auto;
+		max-width: 100%;
+	}
+	ul.nav.nav-pills.pages-menu {
+		padding-top: 10px;
 	}
 }
 

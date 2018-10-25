@@ -107,7 +107,7 @@ route(lang('url.product') . '(.*)/(.*)', 'product');
 route(lang('url.shopping_cart'), 'shopping_cart');
 // Shopping cart add / remove
 route(lang('url.shopping_cart_add') . '(.*)/(.*)', 'shopping_cart_update');
-route(lang('url.shopping_cart_remove') . '(.*)/(.*)', 'shopping_cart_update');
+route(lang('url.shopping_cart_remove') . '(.*)/?(.*)?', 'shopping_cart_update');
 
 // Order routes
 route(lang('url.customer_details'), 'customer_details');
