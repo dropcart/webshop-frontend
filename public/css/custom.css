@@ -82,7 +82,7 @@ html, body {
 .logo {
 	max-height: 130px;
 	max-width: 270px;
-	width: auto;
+	width: 100%;
 	height: auto;
 }
 
@@ -94,7 +94,7 @@ html, body {
 }
 
 .bottom-logo {
-	padding-left: 0px;
+	padding-left: 0;
 }
 
 .bold {
@@ -131,7 +131,7 @@ html, body {
 }
 .product-list .fill {
 	max-height: 10em;
-	width: auto;
+	max-width: 100%;
 }
 .price .flag {
 	margin-top: -5px;
@@ -533,7 +533,7 @@ footer li a {
 .product-page .featured-img {
 	padding-bottom: 10px;
 	max-height: 395px;
-	width: auto;
+	width: 100%;
 }
 .product-buy-amount {
 	padding: 10px;
@@ -619,7 +619,7 @@ p.pdescfull {
 }
 .price-box {
 	height: 140px;
-	padding: 15px 10px;
+	padding: 15px 0;
 	text-align: left;
 }
 .price-box input {
@@ -665,8 +665,8 @@ p.pdescfull {
 	.slogan {
 		height: 40px;
 	}
-	.price-box {
-		margin-left: -15px;
+	.product-list .col-sm-12 {
+		padding-right: 0;
 	}
 }
 
@@ -680,32 +680,42 @@ p.pdescfull {
 
 	.price-box {
 		height:auto;
-		padding:10px 15px 0;
+		padding: 20px 15px 0 15px;
 		float: left;
 		width:100%;
 	}
 	.price-box .order {
 		width:65%;
 		float: left;
-		padding: 3px 10px;
+		padding: 3px 0;
 	}
 	.price-box .order a {
-		width: fit-content;
+		width: 100%;
 	}
 	.price {
+		font-size: 25px;
 		margin: 0 !important;
 	}
 	.small-price {
-		width: 35%;
+		width: 100%;
 		float: left;
-		padding-right: 15px;
 	}
-	.small-price .price {
-		float: right;
+	.small-price input {
+		width: 35% !important;
 	}
 	.small-price p {
 		margin:0 !important;
-		float: right;
+	}
+
+	.small-box-left {
+		float: left;
+		width: 35%;
+	}
+
+	.small-box-right {
+		float: left;
+		width: 65%;
+		padding: 0 15px;
 	}
 	.product-middle {
 		padding-right: 15px;
@@ -741,7 +751,10 @@ p.pdescfull {
 	.product-page .featured-img {
 		padding-bottom: 10px;
 		max-height: 300px;
-		width: auto;
+		width: 100%;
+	}
+	ul.nav.nav-pills.pages-menu {
+		padding-top: 10px;
 	}
 }
 
@@ -756,9 +769,7 @@ p.pdescfull {
 		width: 100% !important;
 	}
 	.logo {
-		max-height: 130px;
-		max-width: 180px;
-		width: auto;
+		width: 100%;
 		height: auto;
 	}
 	.header {
@@ -811,7 +822,7 @@ p.pdescfull {
 
 	.price-box {
 		height:auto;
-		padding:10px 15px 0;
+		padding: 20px 15px 0 15px;
 		float: left;
 		width:100%;
 	}
@@ -824,6 +835,7 @@ p.pdescfull {
 		width: 100%;
 	}
 	.price {
+		font-size: 25px;
 		margin: 0 !important;
 	}
 	.small-price {
@@ -831,12 +843,21 @@ p.pdescfull {
 		float: left;
 	}
     .small-price input {
-        float: right !important;
         width: 25% !important;
 		margin-top: -20px;
     }
 	.small-price p {
 		margin:0 !important;
+	}
+	.small-box-left {
+		float: left;
+		width: 35%;
+	}
+
+	.small-box-right {
+		float: left;
+		width: 65%;
+		padding: 0 15px;
 	}
 	.product-middle {
 		padding-right: 15px;
@@ -871,7 +892,10 @@ p.pdescfull {
 	.product-page .featured-img {
 		padding-bottom: 10px;
 		max-height: 250px;
-		width: auto;
+		width: 100%;
+	}
+	ul.nav.nav-pills.pages-menu {
+		padding-top: 10px;
 	}
 }
 
