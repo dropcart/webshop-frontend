@@ -5,11 +5,12 @@
     <h2 class="text-capitalize bold col-xs-12">{{ page_title }}</h2>
 
     <div class="col-xs-12 product-page no-padding">
-        <div class="col-md-6 float-left">
+        <div class="col-md-6 center">
             <img src="{{ product.images|length > 0 ? product.images[0].url : '/images/no_image.gif' }}" class="featured-img fill">
         </div>
 
         <div class="col-md-6 float-left">
+            <br />
             <div class="float-left fill">
                 {% if product.price_details %}
                     <div class="float-left fill relative">
@@ -66,7 +67,7 @@
                 <br />
             </div>
 
-            <div>
+            <div class="specs">
                 <h4>Product beschrijving</h4>
                 <!-- PRODUCT DESCRIPTION -->
                 <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
