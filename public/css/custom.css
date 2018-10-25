@@ -132,6 +132,7 @@ html, body {
 .product-list .fill {
 	max-height: 10em;
 	max-width: 100%;
+	width: auto;
 }
 .price .flag {
 	margin-top: -5px;
@@ -533,7 +534,8 @@ footer li a {
 .product-page .featured-img {
 	padding-bottom: 10px;
 	max-height: 395px;
-	width: 100%;
+	width: auto;
+	max-width: 100%;
 }
 .product-buy-amount {
 	padding: 10px;
@@ -701,7 +703,7 @@ p.pdescfull {
 		float: left;
 	}
 	.small-price input {
-		width: 35% !important;
+		width: 25% !important;
 	}
 	.small-price p {
 		margin:0 !important;
@@ -751,7 +753,8 @@ p.pdescfull {
 	.product-page .featured-img {
 		padding-bottom: 10px;
 		max-height: 300px;
-		width: 100%;
+		width: auto;
+		max-width: 100%;
 	}
 	ul.nav.nav-pills.pages-menu {
 		padding-top: 10px;
@@ -843,7 +846,7 @@ p.pdescfull {
 		float: left;
 	}
     .small-price input {
-        width: 25% !important;
+        width: 35% !important;
 		margin-top: -20px;
     }
 	.small-price p {
@@ -892,7 +895,8 @@ p.pdescfull {
 	.product-page .featured-img {
 		padding-bottom: 10px;
 		max-height: 250px;
-		width: 100%;
+		width: auto;
+		max-width: 100%;
 	}
 	ul.nav.nav-pills.pages-menu {
 		padding-top: 10px;
