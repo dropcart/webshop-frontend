@@ -94,6 +94,7 @@ $extra_twig_variables = [
 	'per_page' => $products->per_page,
 	'current_page' => $current_page,
 	'total_pages' => ceil($products->total / $products->per_page),
+    'total_on_current_page' => $products->total_on_current_page = count($products->products),
 
 	// Query / filter input
 	'selected_brands' => (isset($_GET['brands']) ? $_GET['brands'] : []),

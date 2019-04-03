@@ -97,13 +97,15 @@ $Twig = (object) [
 	'default' => [
 		'site_name'                 => config('site_name'),
 		'site_slug'                 => config('site_slug'),
+        'product_overview'          => config('product_overview'),
+        'payment_provider'          => config('payment_provider'),
+        'container'                 => config('full_width'),
 		//'page_title'                => '',
 		'categories'                => request([], 'catalog', 'categories'),
 		'customer_details'          => customer()->get(),
 		'shopping_cart_overview'    => shopping_cart()->overview(),
         // Translations
         'lang'                      => lang(),
-        'container'                 => config('full_width'),
 	]
 ];
 

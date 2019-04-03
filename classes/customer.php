@@ -72,7 +72,7 @@ class customer {
             'first_name' => (isset($post_data['billing_first_name']) ? $post_data['billing_first_name'] : null),
             'last_name' => (isset($post_data['billing_last_name']) ? $post_data['billing_last_name'] : null),
             'email' => (isset($post_data['email']) ? $post_data['email'] : null),
-            'telephone' => (isset($post_data['telephone']) ? $post_data['telephone'] : null),
+            'telephone' => (isset($post_data['telephone']) && $post_data['telephone'] !== '' ? $post_data['telephone'] : '06'),
 
             // Billing address
             'billing_address' => [

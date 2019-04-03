@@ -1,14 +1,19 @@
-<div class="row">
+<div class="fill">
     {% for question in lang.page_support.faq %}
-        <div class="col-xs-12">
+        <div class="fill">
             <br>
             <ul class="list card">
                 <li class="faq-question card-header" id="faq-question-{{ loop.index }}" data-open="{{ loop.index }}">
                     <a href="#question-{{ loop.index }}">{{ question.q }}</a>
-                    <p class="faq-answer card-block" id="faq-answer-{{ loop.index }}">
-                        {{ question.a }}
-                    </p>
                 </li>
+                <div class="card-body">
+
+                    <blockquote class="blockquote mb-0">
+                        <p class="faq-answer card-block" id="faq-answer-{{ loop.index }}">
+                            {{ question.a }}
+                        </p>
+                    </blockquote>
+                </div>
             </ul>
         </div>
     {% endfor %}
@@ -18,7 +23,6 @@
     <script type="text/javascript">
         $(document).ready(function()
         {
-            console.log('works');
             if(window.location.hash !== '')
             {
                 $('#faq-answer-' + window.location.hash.substring(window.location.hash.indexOf('-') + 1)).addClass('open');
@@ -37,6 +41,11 @@
 
 {% block styles %}
     <style type="text/css" rel="stylesheet" media="screen">
+        .card {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 50px;
+        }
         .faq-question {
             cursor: pointer;
         }

@@ -172,8 +172,8 @@ return [
     ],
 
     'cookie_consent_bar' => [
-        'header' => 'Dropcart.nl gebruikt cookies!',
-        'message' => 'Dropcart.nl gebruikt cookies om het bezoek en winkelen bij Dropcart.nl voor jou nog makkelijker en persoonlijker te maken.',
+        'header' => config('site_name').' gebruikt cookies!',
+        'message' => config('site_name').' gebruikt cookies om het bezoek en winkelen bij '.config('site_name').' voor jou nog makkelijker en persoonlijker te maken.',
         'dismiss' => 'Ik snap het!',
         'allow' => 'Cookies toestaan',
         'deny' => 'Afwijzen',

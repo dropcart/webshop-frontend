@@ -1,3 +1,4 @@
+<?php
 /**
  * =========================================================
  * DROPCART
@@ -25,7 +26,7 @@
  *
  * ---------------------------------------------------------
  *
- * File: customer_details.html.css
+ * File: config.php.example
  * Date: 27-02-18 12:00
  *
  * @author Dropcart <info@dropcart.nl>
@@ -36,6 +37,35 @@
  * =========================================================
  */
 
-.delivery {
-    display: none;
-}
+return [
+
+    // App config
+    "APP_ENV" => "live",
+    "APP_DEBUG" => true,
+    "APP_TIMEZONE" => "CET",
+    "APP_LOCALE" => "NL",
+
+    // Dropcart config
+    "DROPCART_KEY" => "df1f275336755a27c92c39e541f75bb859912387c4c5c28981f5c06619125c31",
+    "DROPCART_SECRET" => "20d023436fb0347426cfc1a242f41541401a16eede9a9fbe4e5963cf43ad5558",
+    "DROPCART_ENDPOINT" => "https://rest-api.v3.dropcart.nl/v3",
+    "TIMEOUT" => 15,
+
+    // Site global config
+    "SITE_NAME" => "Dropcart.nl",
+    "SITE_SLUG" => "",
+    "BASE_URL" => "dropcart.app/",
+    "MULTILINGUAL" => false,
+    "COUNTRIES" => "Nederland",
+    "PRODUCT_OVERVIEW" => "list",   // OPTIONS: LIST   / BLOCKS
+    "PAYMENT_PROVIDER" => "mollie", // OPTIONS: MOLLIE / STRIPE
+    // Website layout in full width
+    "FULL_WIDTH" => false,
+
+    // Twig config
+    // Note: set the path relative from the public folder
+    "TEMPLATE_PATH" => __BASEDIR__ . "/templates",
+    "CACHE_PATH" => __BASEDIR__ . "/templates/compilation_cache",
+    "AUTO_RELOAD" => true,
+
+];

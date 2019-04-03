@@ -1,32 +1,89 @@
 {% block post_js %}
     <script type="text/javascript">
-        var header = document.getElementById("navbar");
-        var fixedheader = document.getElementById("fixednavbar");
-        var content = document.getElementById("content");
-        var sticky = header.offsetTop;
 
-        $(window).scroll(function(){
-            if (window.pageYOffset >= sticky) {
-                header.classList.add("hidden");
-                fixedheader.classList.remove("hidden");
-                content.classList.add("content");
-            } else {
-                header.classList.remove("hidden");
-                fixedheader.classList.add("hidden");
-                content.classList.remove("content");
+        // Mobile nav expand buttons
+        $('.nav-search').click(function() {
+            $('.xs-search').slideToggle();
+        });
+        $('.nav-shopping-cart').click(function() {
+            $('.xs-shopping-cart').slideToggle();
+        });
+        $('.expand-filter').click(function() {
+            $('.panel-body').slideToggle();
+        });
+
+        // Animate to top of page
+        $('.return-to-top').on('click',function() {
+            $('body,html').animate({
+                scrollTop : 0
+            }, 500);
+        });
+
+        // Change dropdown to input field when value >= 10
+        $("#amount-select").on('change', function() {
+            var currentValue = $(this).val();
+
+            if (currentValue > 9) {
+                $("#amount-text").val(currentValue);
+                $(".qty-select").addClass("hidden");
+                $(".qty-text").removeClass("hidden");
             }
         });
 
-        // Get height of footer
-        $(document).ready(function() {
-            $headerbarHeight = $("#header-bar").outerHeight();
-            $('#bodyContent').css('padding-top', $headerbarHeight);
+        // Change input field to dropdown when value < 10
+        $("#amount-text").on('change', function() {
+            var currentValue = $(this).val();
 
-            $footerHeight = $("#footer").outerHeight();
-            $('#bodyContent').css('margin-bottom', -$footerHeight);
+            if ($(this).currentValue < 10) {
+                $(this)("#amount-select").val(currentValue);
+                $(".qty-select").removeClass("hidden");
+                $(".qty-text").addClass("hidden");
+            } else {
+                $("#amount-text").attr('value', currentValue);
+            }
+        });
 
-            $containerWidth = $("#container").width();
-            $('#fixednavbar').css('width', $containerWidth);
+        // Create sticky elements
+        var content = document.getElementById('content');
+        var shoppingCart = document.getElementById('shopping-cart');
+        var xsMenu = document.getElementById('xs-menu');
+
+        $(window).scroll(function() {
+            if (window.pageYOffset >= content.offsetTop) {
+                shoppingCart.classList.add('sticky-cart');
+                $('.return-to-top').slideDown(200);
+
+                if($(window).width() < 768) {
+                    xsMenu.classList.add('sticky-nav');
+                    $(".content").css("padding-top", 80);
+                }
+            } else {
+                shoppingCart.classList.remove('sticky-cart');
+                $('.return-to-top').slideUp(200);
+
+                if($(window).width() < 768) {
+                    xsMenu.classList.remove('sticky-nav');
+                    $(".content").css("padding-top", 30);
+                }
+            }
+        });
+
+        // Make footer stick to bottom of screen
+        $(window).on('load', function() {
+            $footerHeight = $('footer').outerHeight();
+            $contentHeight = $('header').outerHeight()      +
+                            $('.content').outerHeight()     +
+                            $('.masthead').outerHeight()    +
+                            $('.nav-blocks').outerHeight();
+
+            $pageMargin = $(window).height() - $contentHeight;
+
+            if($('.full-page').height() <= $(window).height() && $pageMargin > $footerHeight) {
+                $('.full-page').css('margin-bottom', -$footerHeight);
+            } else if ($pageMargin < $footerHeight && $pageMargin > 0) {
+                $('.full-page').css('margin-bottom', -$pageMargin);
+            }
+
         });
     </script>
 {% endblock %}

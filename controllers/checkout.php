@@ -37,7 +37,7 @@
  * =========================================================
  */
 
-include __DIR__.'/../classes/transaction.php';
+include __DIR__ . '/../classes/transaction.php';
 
 // Initialize new transaction
 $transaction = new transaction([]);
@@ -46,6 +46,11 @@ $transaction = new transaction([]);
 $price_changed = shopping_cart()->productPricesChanged();
 if ($price_changed) {
     flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
+}
+
+//return from ideal authorization
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['source']) && $_GET['source']) {
+    sendPayment($transaction->get()['order_id'], $_GET['source']);
 }
 
 // POST actions
@@ -85,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
             header('Location: '.$payment_url);
             exit();
         } catch (InputException $e) {
-	        flash_messages()->setWarningMessages($e->getErrors());
+            flash_messages()->setWarningMessages($e->getErrors());
             back();
         } catch (\Exception $e) {
             die();
@@ -98,17 +103,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
 
 // Collect all countries
 $countries = request([], 'management', 'countries');
+$psp_public_key = 'pk_test_D8DcTVzfSeykYPKQeAb6gRXi';
 
-// Collect the store his payment methods
 $payment_methods = json_decode(request([], 'payment', 'payment'));
+//$payment_methods = json_decode('[
+//                                    {"id":1,"name":"iDEAL","active":1,"type":"ideal","psp":"stripe","mandate":0,"redirect":1,"cost":29,"variable_cost":0,"logo":"/images/payment/ideal.svg","extra":null},
+//                                    {"id":2,"name":"Bancontact","active":1,"type":"bancontact","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":1.4,"logo":"/images/payment/bancontact.svg","extra":[{"id":1,"type":"selectable","paymentMethodsId":2,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]},
+//                                    {"id":3,"name":"Giropay","active":1,"type":"giropay","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":1.4,"logo":"/images/payment/giropay.svg","extra":[{"id":2,"type":"selectable","paymentMethodsId":3,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]},
+//                                    {"id":4,"name":"Sofort","active":1,"type":"sofort","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":1.4,"logo":"/images/payment/sofort.svg","extra":[{"id":3,"type":"selectable","paymentMethodsId":4,"fieldId":"country","fieldName":"country","pspVarName":"sofort[country]"}]},
+//                                    {"id":5,"name":"SEPA direct debit","active":1,"type":"sepa_debit","psp":"stripe","mandate":1,"redirect":0,"cost":35,"variable_cost":0,"logo":"/images/payment/sepa.svg","extra":[{"id":4,"type":"selectable","paymentMethodsId":5,"fieldId":"iban","fieldName":"iban","pspVarName":"sepa_debit[iban]"},{"id":5,"type":"selectable","paymentMethodsId":5,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]},
+//                                    {"id":6,"name":"MultiBanco","active":1,"type":"multibanco","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":2.95,"logo":"/images/payment/multibanco.svg","extra":[{"id":6,"type":"selectable","paymentMethodsId":6,"fieldId":"email","fieldName":"email","pspVarName":"owner[email]"}]},
+//                                    {"id":7,"name":"Przelewy24","active":1,"type":"p24","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":2.2,"logo":"/images/payment/przelewy24.svg","extra":[{"id":7,"type":"selectable","paymentMethodsId":7,"fieldId":"email","fieldName":"email","pspVarName":"owner[email]"},
+//                                    {"id":8,"type":"selectable","paymentMethodsId":7,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]}
+//                                    ]');
 
 echo view('checkout.html.twig', [
     // Reset shopping cart and overview (in case update occured)
     'shopping_cart' => shopping_cart()->get(),
     'shopping_cart_overview'    => shopping_cart()->overview(),
-	// Payment methods for the store
-	'payment_methods' => $payment_methods,
-	// Warnings and errors
-	'flash_messages' => flash_messages()->get(),
+    // Payment methods for the store
+    'payment_methods' => $payment_methods,
+    // Warnings and errors
+    'flash_messages' => flash_messages()->get(),
     'page_title' => lang('page_titles.checkout'),
+    'psp_public_key' => $psp_public_key,
+    'countries'=>$countries,
 ]);
+
+function sendPayment($order_id, $source): void
+{
+    try {
+        $order = request([], 'payment', 'orderPayment', [
+            'order_id' => $order_id,
+            'payment_method' => 'ideal',
+            'payment_attributes' => $source,
+        ], 'get');
+    } catch (\Exception $e) {
+        var_dump($e->getPrevious());
+        die();
+    }
+    header('location: ' . $order);
+    exit();
+}

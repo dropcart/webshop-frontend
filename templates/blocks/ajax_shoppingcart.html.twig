@@ -17,8 +17,8 @@
 
             // Checks if cart is empty
             if($(".cart-no-products").length) {
-                $cartReplaceContent = "<span class=\"cart-items\"><span class=\"total-quantity\">0</span> artikel(en)</span>\n" +
-                    "        - <span class=\"cart-total\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
+                $cartReplaceContent = "<span class=\"cart-items fill\"><span class=\"total-quantity\">0</span> artikelen</span>\n" +
+                    "<span class=\"cart-total fill\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
                 $(".cart-content").html($cartReplaceContent);
             }
 
@@ -48,17 +48,27 @@
             $(".cart-total-amount").html($cartPlusProduct);
 
             // Scroll page to top
-            $('html, body').animate({
-                'scrollTop': $("body").position().top
-            });
+            // $('html, body').animate({
+            //     'scrollTop': $("body").position().top
+            // });
 
             // Animation to cart
-            $(this).effect(
-                "transfer", {
-                    to: $('.glyphicon-shopping-cart')
-                },
-                1000
-            );
+            if($(window).width() >= 768) {
+                $(this).effect(
+                    "transfer", {
+                        to: $('.nav-blocks').find('.fa-shopping-cart')
+                    },
+                    1000
+                );
+            } else {
+                $(this).effect(
+                    "transfer", {
+                        to: $('.masthead').find('.fa-shopping-cart')
+                    },
+                    1000
+                );
+            }
+
 
             $.ajax({
                 url: '{{ lang.url.shopping_cart_add }}' + $productId + '/' + $quantity,
@@ -68,6 +78,84 @@
 
                 }
             });
+        });
+
+        function mutateCart(action_element, product_id, price, quantity)
+        {
+            $productQuantity = parseInt(action_element.closest('.shopping-bag-item').find('.product-quantity').val());
+            $inputQuantity = $productQuantity + quantity;
+
+            // Change current cart content to float
+            $cartTotalAmount = ($(".cart-total-amount").html().replace('.', '')).replace(',', '.');
+            $cartTotalAmount = parseFloat($cartTotalAmount);
+
+            $productTotalPrice = quantity * price;
+            $cartPlusProduct = parseFloat($cartTotalAmount + $productTotalPrice);
+            $productTotalQuantity = parseInt($('.total-quantity').html()) + quantity;
+
+            $shippingCosts = ($(".shipping-cost").html().replace(',', '.'));
+            $shippingCosts = parseFloat($shippingCosts);
+
+            $finalPrice = formatNumber(parseFloat($cartPlusProduct + $shippingCosts));
+
+            action_element.closest('.shopping-bag-item').find('.product-quantity').val($inputQuantity);
+            action_element.closest('.shopping-bag-item').find('.product-subtotal').html(formatNumber($inputQuantity * price));
+
+            // Replace cart content
+            $(".total-quantity").html($productTotalQuantity);
+            $(".cart-total-amount").html(formatNumber($cartPlusProduct));
+
+            $(".subtotal-cost").html(formatNumber($cartPlusProduct));
+            $(".total-cost").html($finalPrice);
+
+            if($inputQuantity < 1) {
+                $('div.' + product_id).remove();
+            } else {
+                action_element.closest('.shopping-bag-item').find('.cart-empty-product').data('quantity', ($inputQuantity * -1));
+            }
+
+            if (quantity > 0) {
+                var url = '{{ lang.url.shopping_cart_add }}' + product_id + '/' + quantity;
+            } else if (quantity == $productQuantity) {
+                // == product value, delete whole product
+                var url = '{{ lang.url.shopping_cart_remove }}' + product_id;
+            } else {
+                // < 0
+                var url = '{{ lang.url.shopping_cart_remove }}' + product_id + '/' + -quantity;
+            }
+
+            if($('.shopping-bag-content').height() < 5) {
+                // Change content of page
+                $('.shopping-bag').html('<div class="alert alert-info center"><span>Uw winkelwagen is leeg</span></div>');
+                // Change content of cart div
+                $('.cart-content').html('<span class="cart-items fill"><span class="total-quantity">0</span> artikelen</span><span class="cart-total fill">&euro;&nbsp;<span class="cart-total-amount">{{ 0|number_format(2, ",", ".") }}</span></span>');
+                // Disable customer details
+                $('.order-tabs .order-tab:nth-last-of-type(3)').html(' <a href="javascript:void(0);"><strong>Stap 2 - </strong>Uw gegevens</a>');
+                $('.order-tabs .order-tab:nth-last-of-type(3)').addClass('disabled');
+                // Disable checkout
+                $('.order-tabs .order-tab:nth-last-of-type(2)').html(' <a href="javascript:void(0);"><strong>Stap 3 - </strong>Bevestigen en betalen</a>');
+                $('.order-tabs .order-tab:nth-last-of-type(2)').addClass('disabled');
+                // Make footer stick to bottom
+                $('.full-page').css('margin-bottom', -$('footer').outerHeight());
+            }
+
+            $.ajax({
+                url: url,
+                type: "POST", //send it through get method
+                success: function (data) {
+                    // Success
+                }
+            });
+        }
+
+        $('.cart-add-product, .cart-remove-product, .cart-empty-product').on('click', function (event) {
+            event.preventDefault();
+            mutateCart(
+                $(this),
+                this.id,
+                parseFloat(document.getElementById(this.id).getAttribute('data-piece-price')).toFixed(2),
+                $(this).data('quantity')
+            );
         });
     </script>
 {% endblock %}

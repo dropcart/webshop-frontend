@@ -1,0 +1,16 @@
+<a href="{{ lang.url.shopping_cart }}" class="col-3 cart-icon no-padding">
+    <i class="fa fa-shopping-cart"></i>
+</a>
+<div class="cart-content col-5">
+    {% if shopping_cart_overview is defined and shopping_cart_overview.total_products > 0 %}
+        <span class="cart-items fill"><span class="total-quantity">{{ shopping_cart_overview.total_products }}</span> artikel(en)</span>
+        <span class="cart-total fill">&euro;&nbsp;<span class="cart-total-amount">{{ shopping_cart_overview.subtotal_price|number_format(2, ',', '.') }}</span></span>
+    {% else %}
+        {#<small class="cart-no-products"><i>Geen producten</i></small>#}
+        <span class="cart-items fill"><span class="total-quantity">0</span> artikelen</span>
+        <span class="cart-total fill">&euro;&nbsp;<span class="cart-total-amount">{{ 0|number_format(2, ',', '.') }}</span></span>
+    {% endif %}
+</div>
+<a href="{{ lang.url.shopping_cart }}" class="btn btn btn-block btn-success col-4">
+    Afrekenen
+</a>

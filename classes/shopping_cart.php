@@ -90,10 +90,10 @@ class shopping_cart {
     public function removeProduct($product_id, $quantity = null)
     {
         if ($quantity) {
+            $_SESSION['shopping_cart'][$product_id]['quantity'] -= $quantity;
+
             if ($_SESSION['shopping_cart'][$product_id]['quantity'] <= 1) {
                 unset($_SESSION['shopping_cart'][$product_id]);
-            } else {
-                $_SESSION['shopping_cart'][$product_id]['quantity'] -= 1;
             }
         } else {
             unset($_SESSION['shopping_cart'][$product_id]);
