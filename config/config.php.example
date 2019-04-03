@@ -58,7 +58,7 @@ return [
     Can be left blank, unless you want to run the site on a sub folder.
     For example:
     If you want to run the site on mywebshop.com/mysite/,  change this value to "/mysite" */
-    "BASE_URL" => "/lol",
+    "BASE_URL" => "",
 
     "MULTILINGUAL" => false,
     "COUNTRIES" => "Nederland",
