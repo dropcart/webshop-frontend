@@ -56,11 +56,12 @@ $Config = new Config(__BASEDIR__ . '/config/config.php');
 if(! function_exists('config') )
 {
 	function config($name = null, $default = null)
-	{
-		global $Config;
+    {
+        global $Config;
 
-		if(is_null($name))
-			return $Config;
+        if (is_null($name)) {
+            return $Config;
+        }
 
 		return $Config->get($name, $default);
 	}
@@ -104,8 +105,9 @@ $Twig = (object) [
 		'categories'                => request([], 'catalog', 'categories'),
 		'customer_details'          => customer()->get(),
 		'shopping_cart_overview'    => shopping_cart()->overview(),
-        // Translations
+        // Translations and translated URLS
         'lang'                      => lang(),
+        'urls'                      => urls(config('base_url')),
 	]
 ];
 

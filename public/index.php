@@ -40,40 +40,9 @@
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../classes/static_page.php';
 
-function route($route, $file, $static_page = false, $view = null, $view_vars = []) {
-
-    $route = str_replace('/', '\/', $route);
-
-    // Split get / post variables
-    $_SERVER['REQUEST_URI'] = strtok($_SERVER['REQUEST_URI'], '?');
-
-    $is_match =(bool) preg_match('/^' . ($route) . '$/',
-	                    $_SERVER['REQUEST_URI'],
-	                $matches, PREG_OFFSET_CAPTURE);
-
-
-    if ($is_match && $static_page) {
-        header ('HTTP/1.0 200 Found');
-        $page = new static_page($view, $view_vars);
-        echo $page->render();
-        flash_messages()->reset();
-        $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
-        exit;
-    } elseif ($is_match && $file && file_exists(__DIR__ . '/../controllers/' . $file . '.php')) {
-    	twig()->default['page_title'] = ucwords(str_replace(['-', '_', '  '], ' ', $file));
-
-    	header ('HTTP/1.0 200 Found');
-        include_once __DIR__ . '/../controllers/' . $file . '.php';
-	    flash_messages()->reset();
-	    $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
-        exit;
-    }
-}
-
 // Home
-route('/',null, true, 'home.html.twig', [
+route(lang('url.home'),null, true, 'home.html.twig', [
     'page_title' => lang('page_titles.home'),
-    'base_uri' => url()
 ]);
 
 // Default pages
@@ -94,7 +63,7 @@ route(lang('url.support'),null,true,'support.html.twig', [
 ]);
 
 // @todo
-route(lang('url.account'), null, null, null, []);
+route(lang('url.account'), null, false, null, []);
 
 // Products
 route(lang('url.products'), 'products');
@@ -119,6 +88,44 @@ route('/assets/images/(.*)', 'images');
 
 // Include package routes
 include_once __DIR__ . '/../packages/index.php';
+
+function route(
+    string $route,
+    string $file = null,
+    bool $static_page = false,
+    string $view = null,
+    array $view_vars = []
+) {
+    $route = str_replace('/', '\/', $route);
+
+    $base_url = rtrim(config('base_url'), '/');
+    $request_uri = str_replace($base_url, '', $_SERVER['REQUEST_URI']);
+    if ($request_uri == false) { $request_uri = '/'; }
+    // Split get / post variables
+    $request_uri = strtok($request_uri, '?');
+
+    $is_match = (bool) preg_match('/^' . ($route) . '$/',
+        $request_uri,
+        $matches, PREG_OFFSET_CAPTURE);
+
+    if ($is_match === true) {
+        header ('HTTP/1.0 200 Found');
+        $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
+
+        if ($file !== null && file_exists(__DIR__ . '/../controllers/' . $file . '.php')) {
+            // Page
+            twig()->default['page_title'] = ucwords(str_replace(['-', '_', '  '], ' ', $file));
+            include_once __DIR__ . '/../controllers/' . $file . '.php';
+        } elseif ($static_page === true) {
+            $page = new static_page($view, $view_vars);
+            echo $page->render();
+        }
+
+        $_SESSION['previous_url'] = $_SERVER['REQUEST_URI'];
+        flash_messages()->reset();
+        exit;
+    }
+}
 
 // Catch a 404
 header ('HTTP/1.0 404 Not Found');

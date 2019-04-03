@@ -71,7 +71,7 @@
 
 
             $.ajax({
-                url: '{{ lang.url.shopping_cart_add }}' + $productId + '/' + $quantity,
+                url: '{{ urls.shopping_cart_add }}' + $productId + '/' + $quantity,
                 type: "POST", //send it through get method
                 success: function (data) {
                     // Success
@@ -115,13 +115,13 @@
             }
 
             if (quantity > 0) {
-                var url = '{{ lang.url.shopping_cart_add }}' + product_id + '/' + quantity;
+                var url = '{{ urls.shopping_cart_add }}' + product_id + '/' + quantity;
             } else if (quantity == $productQuantity) {
                 // == product value, delete whole product
-                var url = '{{ lang.url.shopping_cart_remove }}' + product_id;
+                var url = '{{ urls.shopping_cart_remove }}' + product_id;
             } else {
                 // < 0
-                var url = '{{ lang.url.shopping_cart_remove }}' + product_id + '/' + -quantity;
+                var url = '{{ urls.shopping_cart_remove }}' + product_id + '/' + -quantity;
             }
 
             if($('.shopping-bag-content').height() < 5) {

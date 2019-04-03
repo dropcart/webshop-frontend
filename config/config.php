@@ -38,7 +38,6 @@
  */
 
 return [
-
     // App config
     "APP_ENV" => "live",
     "APP_DEBUG" => true,
@@ -48,17 +47,25 @@ return [
     // Dropcart config
     "DROPCART_KEY" => "df1f275336755a27c92c39e541f75bb859912387c4c5c28981f5c06619125c31",
     "DROPCART_SECRET" => "20d023436fb0347426cfc1a242f41541401a16eede9a9fbe4e5963cf43ad5558",
-    "DROPCART_ENDPOINT" => "https://rest-api.v3.dropcart.nl/v3",
+    "DROPCART_ENDPOINT" => "http://api.local.dropcart.app/v3",
     "TIMEOUT" => 15,
 
     // Site global config
     "SITE_NAME" => "Dropcart.nl",
     "SITE_SLUG" => "",
-    "BASE_URL" => "dropcart.app/",
+
+    /* Base URL:
+    @note:
+    For example:
+    If you want to run the site on mywebshop.com/mysite/,  change this value to "/mysite" or "/mysite/" */
+    "BASE_URL" => "",
+
     "MULTILINGUAL" => false,
     "COUNTRIES" => "Nederland",
+
     "PRODUCT_OVERVIEW" => "list",   // OPTIONS: LIST   / BLOCKS
     "PAYMENT_PROVIDER" => "mollie", // OPTIONS: MOLLIE / STRIPE
+
     // Website layout in full width
     "FULL_WIDTH" => false,
 

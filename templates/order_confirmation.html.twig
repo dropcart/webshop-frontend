@@ -7,7 +7,7 @@
             <h1>Bedankt voor uw bestelling!</h1>
             <p>
                 We hebben uw betaling ontvangen en u een betalingsbewijs toegezonden. Uw bestelling zal zo spoedig mogelijk worden geleverd.<br>
-                Als u nog vragen heeft kunt u <a href="/contact">hier</a> contact met ons opnemen.
+                Als u nog vragen heeft kunt u <a href="{{ urls.contact }}">hier</a> contact met ons opnemen.
             </p>
         </div>
 
@@ -16,7 +16,7 @@
             <h1>Bedankt voor uw bestelling!</h1>
             <p>
                 We hebben uw betaling ontvangen, maar deze is nog niet verwerkt. Controlleer goed uw opgegeven e-mail voor ontvangen berichten: zodra uw betaling geslaagd, ontvangt u een betalingsbevestiging.<br>
-                Als u nog vragen heeft kunt u <a href="/contact">hier</a> contact met ons opnemen.
+                Als u nog vragen heeft kunt u <a href="{{ urls.contact }}">hier</a> contact met ons opnemen.
             </p>
         </div>
 
@@ -25,11 +25,11 @@
             <h1>Er ging iets fout</h1>
             <p>
                 Er is iets misgegaan tijdens uw betaling. Controlleer goed uw opgegeven e-mail voor ontvangen berichten: als de betaling toch geslaagd is, ontvangt u een betalingsbevestiging.<br>
-                Als u vragen heeft kunt u <a href="/contact">hier</a> contact met ons opnemen.
+                Als u vragen heeft kunt u <a href="{{ urls.contact }}">hier</a> contact met ons opnemen.
             </p>
         </div>
 
-        <form action="{{ lang.url.checkout }}" method="post">
+        <form action="{{ urls.checkout }}" method="post">
             <p>
                 <button class="btn btn-link" type="submit">U kunt de betaling ook opnieuw proberen te doen.</button>
             </p>

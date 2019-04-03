@@ -2,7 +2,7 @@
     <div class="col-6 col-md-4 product-blocks">
         <!-- PRODUCT IMAGE -->
         <div class="fill center product-image">
-            <a href="{{ lang.url.product ~ product.name|url_encode ~ '/' ~ product.id }}">
+            <a href="{{ urls.product ~ product.name|url_encode ~ '/' ~ product.id }}">
                 <img src="{{ product.images|length > 0 ? product.images[0].base_64 : '/images/no_image.gif' }}"
                      class="round-border box-shadow" alt="{{ product.name }}">
             </a>
@@ -12,7 +12,7 @@
             <!-- PRODUCT TITLE -->
             <h3 class="product-title-link">
                 <a class="product-link"
-                   href="{{ lang.url.product ~ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a>
+                   href="{{ urls.product ~ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a>
             </h3>
 
             <!-- PRODUCT STOCK -->
@@ -65,7 +65,7 @@
                     <input class="form-control col-4 col-sm-3 col-md-12 col-lg-6 product-quantity" min="1" max="99" value="1" type="number">
 
                     <div class="order col-8 offset-sm-1 offset-md-0 col-md-12 no-padding">
-                        <a href="{{ lang.url.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
+                        <a href="{{ urls.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
                            data-product-id="{{ product.id }}" data-product-price="{{ (product.price_details.piece_price.in) }}">
                             In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
                         </a>

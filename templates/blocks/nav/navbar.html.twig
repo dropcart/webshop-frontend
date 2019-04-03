@@ -1,14 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light d-print">
     <ul class="nav navbar-nav nav-justified d-none d-md-flex">
         <li class="nav-item no-stretch">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="{{ urls.home }}">
                 <b class="fa fa-home"></b>
             </a>
         </li>
 
         {% for category in categories[0:6] %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ lang.url.category_products ~ category.id }}">{{ category.name }}</a>
+                <a class="nav-link" href="{{ urls.category_products ~ category.id }}">{{ category.name }}</a>
             </li>
         {% else %}
             {#<li style="text-align: center; font-weight: bold">Geen categorieën</li>#}
@@ -23,7 +23,7 @@
                 <ul class="dropdown-menu">
                     {% for category in categories[6:] %}
                         <li>
-                            <a class="nav-link" href="{{ lang.url.category_products ~ category.id }}">
+                            <a class="nav-link" href="{{ urls.category_products ~ category.id }}">
                                 {{ category.name }}
                             </a>
                         </li>
@@ -36,7 +36,7 @@
     {# Mobiel menu #}
     <ul id="xs-menu" class="nav navbar-nav nav-justified d-md-none">
         <li class="nav-item no-stretch">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="{{ urls.home }}">
                 <b class="fa fa-home"></b>
             </a>
         </li>
@@ -50,7 +50,7 @@
                 <ul class="dropdown-menu">
                     {% for category in categories[0:] %}
                         <li>
-                            <a class="nav-link" href="{{ lang.url.category_products ~ category.id }}">
+                            <a class="nav-link" href="{{ urls.category_products ~ category.id }}">
                                 {{ category.name }}
                             </a>
                         </li>
@@ -70,7 +70,7 @@
         </li>
         <div class="xs-search fill hidden">
             <form class="form-horizontal fill search-products" method="get"
-                  action="{{ lang.url.products }}">
+                  action="{{ urls.products }}">
 
                 {% if selected_brands is defined %}
                     {% for brand in selected_brands %}
