@@ -38,27 +38,25 @@
  */
 
 include __DIR__ . '/../classes/transaction.php';
-
 // Initialize new transaction
 $transaction = new transaction([]);
+$payment_provider = config('payment_provider');
 
 // Check / validate prices and notify user if they have changed
 $price_changed = shopping_cart()->productPricesChanged();
 if ($price_changed) {
     flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
 }
-
+//this is stripe code
 //return from ideal authorization
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['source']) && $_GET['source']) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['source'])) {
     sendPayment($transaction->get()['order_id'], $_GET['source']);
 }
-
+//end stripe code
 // POST actions
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
-{
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
     // Check if the order is confirmed
     if (isset($_POST['conditions']) && $_POST['conditions']) {
-
         try {
             // Insert and confirm
             $order = request([], 'order', 'orders', [
@@ -68,10 +66,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
             ], 'post');
 
             $transaction = $transaction->confirm($order->id)->setPaymentMethod($_POST)->get();
+            //if stripe is the sender and the redirect is given, redirect to authenticate the source
+            if (isset($_POST['redirect']) && $payment_provider === 'stripe') {
+                //save source to db?
+                header('location: ' . $_POST['redirect']);
+                exit();
+            }
             // Generate payment link for the Order
             $payment_url = request([], 'payment', 'orderPayment', $transaction);
-
-            header('Location: '.$payment_url);
+            header('Location: ' . $payment_url);
             exit();
         } catch (InputException $e) {
             flash_messages()->setWarningMessages($e->getErrors());
@@ -81,13 +84,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
         }
 
     } elseif (isset($transaction->get()['order_id'])) {
+        //if stripe is the sender and the redirect is given, redirect to authenticate the source
 
+        if (isset($_POST['redirect']) && $payment_provider === 'stripe') {
+            //save source to db?
+            header('location: ' . $_POST['redirect']);
+            exit();
+        }
         try {
             $transaction = $transaction->setPaymentMethod($_POST)->get();
             // Generate payment link for the Order
             $payment_url = request([], 'payment', 'orderPayment', $transaction);
-
-            header('Location: '.$payment_url);
+            header('Location: ' . $payment_url);
             exit();
         } catch (InputException $e) {
             flash_messages()->setWarningMessages($e->getErrors());
@@ -97,15 +105,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
         }
 
     }
-
     header('location: ' . lang('url.checkout'));
 }
 
 // Collect all countries
 $countries = request([], 'management', 'countries');
-$psp_public_key = 'pk_test_D8DcTVzfSeykYPKQeAb6gRXi';
-
-$payment_methods = json_decode(request([], 'payment', 'payment'));
+$psp_public_key = request([], 'payment', 'key')->id;
+$payment_methods = request([], 'payment', 'payment');
 //$payment_methods = json_decode('[
 //                                    {"id":1,"name":"iDEAL","active":1,"type":"ideal","psp":"stripe","mandate":0,"redirect":1,"cost":29,"variable_cost":0,"logo":"/images/payment/ideal.svg","extra":null},
 //                                    {"id":2,"name":"Bancontact","active":1,"type":"bancontact","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":1.4,"logo":"/images/payment/bancontact.svg","extra":[{"id":1,"type":"selectable","paymentMethodsId":2,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]},
@@ -117,17 +123,24 @@ $payment_methods = json_decode(request([], 'payment', 'payment'));
 //                                    {"id":8,"type":"selectable","paymentMethodsId":7,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]}
 //                                    ]');
 
+//set the redirect url for stripe
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+    $redirect_url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+} else {
+    $redirect_url="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+}
 echo view('checkout.html.twig', [
     // Reset shopping cart and overview (in case update occured)
     'shopping_cart' => shopping_cart()->get(),
-    'shopping_cart_overview'    => shopping_cart()->overview(),
+    'shopping_cart_overview' => shopping_cart()->overview(),
     // Payment methods for the store
     'payment_methods' => $payment_methods,
     // Warnings and errors
     'flash_messages' => flash_messages()->get(),
     'page_title' => lang('page_titles.checkout'),
     'psp_public_key' => $psp_public_key,
-    'countries'=>$countries,
+    'countries' => $countries,
+    'redirect_url' =>$redirect_url
 ]);
 
 function sendPayment($order_id, $source): void
