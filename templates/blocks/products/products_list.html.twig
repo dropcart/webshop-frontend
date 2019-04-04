@@ -1,30 +1,45 @@
-{% for product in products %}
+{% for store_product in store_products %}
+    <!--
+    Twig helper variables for easy data access
+    ------------------------------------------>
+    <!-- Product details -->
+    {% set product = store_product.product %}
+    <!-- Product translation -->
+    {% set product_translation = attribute(product.translations, locale_id) %}
+    {% if product_translation is null %}
+        {% set product_translation = product.translations|first %}
+    {% endif %}
+    <!-- Product price -->
+    {% set product_price = store_product.price_details|first %}
+    <!-- Product shipping details -->
+    {% set product_shipping_details = attribute(product_price.shipping_costs, shipping_country_id) %}
+
     <div class="fill">
         <!-- PRODUCT IMAGE -->
         <div class="col-4 col-md-3 center product-image">
             <img src="{{ product.images|length > 0 ? product.images[0].base_64 : '/images/no_image.gif' }}"
-                 class="round-border box-shadow" alt="{{ product.name }}">
+                 class="round-border box-shadow" alt="{{ product_translation.name }}">
         </div>
 
         <div class="col-8 col-md-6 col-xl-7 product-information">
             <!-- PRODUCT TITLE -->
             <h3 class="product-title-link">
                 <a class="product-link"
-                   href="{{ urls.product ~ product.name|url_encode ~ '/' ~ product.id }}">{{ product.name }}</a>
+                   href="{{ urls.product ~ store_product.id ~ '/' ~ product_translation.name|url_encode }}">{{ product_translation.name }}</a>
             </h3>
 
             <!-- PRODUCT STOCK -->
             <div class="fill stock-shipping-status">
-                {% if product.stock %}
+                {% if product_price.supplier_stock %}
 
-                    {% if product.stock > 10 %}
+                    {% if product_price.supplier_stock > 10 %}
                         <div class="badge badge-success">Ruimschoots op voorraad</div>
                     {% else %}
                         <div class="badge badge-success">Op voorraad</div>
                     {% endif %}
 
-                    {% if product.shipping_details.shipping_days %}
-                        <div class="badge badge-info">Levertijd {{ product.shipping_details.shipping_days }}
+                    {% if product_shipping_details.shipping_days %}
+                        <div class="badge badge-info">Levertijd {{ product_shipping_details.shipping_days }}
                             werkdag(en)
                         </div>
                     {% else %}
@@ -43,33 +58,38 @@
             </div>
 
             <!-- PRODUCT DESCRIPTION -->
-            <p class="product-description">{{ (product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!')|raw }}</p>
+            <p class="product-description">{{ (product_translation.description ? product_translation.description : product_translation.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!')|raw }}</p>
         </div>
 
         <!-- PRODUCT PRICE -->
         <div class="col-12 col-md-3 col-xl-2 product-price">
 
-            {% if product.price_details %}
-                <div class="price-listing col-4 col-md-12 no-padding">
-                    <h3 class="price">
-                        &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
-                    </h3>
-                    <p class="mb-0">
-                        <small><em>Incl. BTW</em></small>
-                    </p>
-                </div>
+            <div class="price-listing col-4 col-md-12 no-padding">
+                <h3 class="price">
+                    &euro;&nbsp;{{ (product_price.total_price_in)|number_format(2, ',', '.') }}
+                </h3>
+                <p class="mb-0">
+                    <small><em>Incl. BTW</em></small>
+                </p>
+            </div>
 
-                <div class="order-quantity select-quantity col-8 col-md-12 no-padding">
-                    <input class="form-control col-4 col-sm-3 col-md-12 col-lg-6 product-quantity" min="1" max="99" value="1" type="number">
+            <div class="order-quantity select-quantity col-8 col-md-12 no-padding">
+                <input class="form-control col-4 col-sm-3 col-md-12 col-lg-6 product-quantity" min="1" max="99" value="1" type="number">
 
-                    <div class="order col-8 offset-sm-1 offset-md-0 col-md-12 no-padding">
-                        <a href="{{ urls.shopping_cart_add ~ product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
-                           data-product-id="{{ product.id }}" data-product-price="{{ (product.price_details.piece_price.in) }}">
+                <div class="order col-8 offset-sm-1 offset-md-0 col-md-12 no-padding">
+                    {% if product_shipping_details is not null %}
+                        <a href="{{ urls.shopping_cart_add ~ store_product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
+                           data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}">
                             In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
                         </a>
-                    </div>
+                    {% else %}
+                        <a class="btn btn btn-block btn-warning box-shadow"
+                           data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" disabled="true">
+                            Niet beschikbaar <span class="glyphicon glyphicon-shopping-cart"></span>
+                        </a>
+                    {% endif %}
                 </div>
-            {% endif %}
+            </div>
 
         </div>
 

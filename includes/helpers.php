@@ -128,3 +128,39 @@ function base64_encode_image(string $url) {
 
     return 'data:image/' . $type . ';base64,' . base64_encode($data);
 }
+
+if (!function_exists('get_locale')) {
+    function get_locale()
+    {
+        return locale_get_default();
+    }
+}
+
+if (!function_exists('get_locale_id')) {
+    function get_locale_id()
+    {
+        global $locale_id;
+        return $locale_id;
+    }
+}
+
+if (!function_exists('object_to_array')) {
+    /**
+     * Recursively casts an object to array.
+     *
+     * @param object $object
+     * @return array
+     */
+    function object_to_array(object $object): array
+    {
+        return json_decode(json_encode($object), true);
+    }
+}
+
+if (!function_exists('request_uri')) {
+    function request_uri(string $base_uri): string
+    {
+        $base_url = rtrim(config('base_url'), '/');
+        return str_replace($base_url, '', $_SERVER['REQUEST_URI']);
+    }
+}

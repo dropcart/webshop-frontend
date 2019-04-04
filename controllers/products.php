@@ -51,7 +51,7 @@ if (isset($_GET['page'])) {
 };
 
 // Explode request URI
-$uri = trim( $_SERVER['REQUEST_URI'], "/" );
+$uri = trim(request_uri(config('base_url')), "/" );
 $uri = explode('/', $uri);
 
 // Set get variable(s)
@@ -74,13 +74,13 @@ $filters = [
 ];
 
 // Collect the products
-$products = request([], 'catalog', 'products', $filters);
-foreach ($products->products as $key => $product) {
+$store_products = request([], 'catalog', 'products', $filters);
+foreach ($store_products->data as $key => $product) {
     // Base64 encode all image urls
     if (isset($product->images[0])) {
         $product->images[0]->base_64 = base64_encode_image($product->images[0]->url);
     }
-    $products->products[$key] = $product;
+    $store_products->data[$key] = $product;
 }
 
 // Collect all Brands for the Store (for filtering purpose)
@@ -88,13 +88,13 @@ $brands = request([], 'catalog', 'brands', $filters);
 
 // Add additional Twig variables here
 $extra_twig_variables = [
-	'products' => $products->products,
+	'store_products' => object_to_array($store_products)['data'],
 	'brands' => $brands,
-	'total' => $products->total,
-	'per_page' => $products->per_page,
+	'total' => $store_products->total,
+	'per_page' => $store_products->per_page,
 	'current_page' => $current_page,
-	'total_pages' => ceil($products->total / $products->per_page),
-    'total_on_current_page' => $products->total_on_current_page = count($products->products),
+	'total_pages' => $store_products->last_page,
+    'total_on_current_page' => count($store_products->data),
 
 	// Query / filter input
 	'selected_brands' => (isset($_GET['brands']) ? $_GET['brands'] : []),
@@ -105,7 +105,8 @@ $extra_twig_variables = [
 ];
 
 // Form the page_title variable
-if (isset($category))
-    $extra_twig_variables['page_title'] = 'Producten in '.$category->name;
+if (isset($category)) {
+    $extra_twig_variables['page_title'] = 'Producten in ' . $category->translations->{get_locale_id()}->name;
+}
 
 echo view('products.html.twig', $extra_twig_variables);

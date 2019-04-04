@@ -44,17 +44,17 @@ if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) {
 }
 
 // Explode request URI
-$uri = trim( $_SERVER['REQUEST_URI'], "/" );
+$uri = trim( request_uri(config('base_url')), "/" );
 $uri = explode('/', $uri);
 
 // Set product ID
-$product_id = $uri[2];
+$product_id = $uri[1];
 
 // Collect the products
-$product = request([], 'catalog', 'products', $product_id);
+$store_product = request([], 'catalog', 'products', $product_id);
 
 echo view('product.html.twig', [
 	// Overwrite default page title
-	'page_title' => $product->name,
-	'product' => $product,
+	'page_title' => $store_product->product->translations->{get_locale_id()}->name,
+	'store_product' => object_to_array($store_product),
 ]);

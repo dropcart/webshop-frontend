@@ -1,57 +1,76 @@
 {% extends "layouts/layout.html.twig" %}
 
 {% block content %}
+    <!--
+    Twig helper variables for easy data access
+    ------------------------------------------>
+    <!-- Product details -->
+    {% set product = store_product.product %}
+    <!-- Product translation -->
+    {% set product_translation = attribute(product.translations, locale_id) %}
+    {% if product_translation is null %}
+        {% set product_translation = product.translations|first %}
+    {% endif %}
+    <!-- Product price -->
+    {% set product_price = store_product.price_details|first %}
+    <!-- Product shipping details -->
+    {% set product_shipping_details = attribute(product_price.shipping_costs, shipping_country_id) %}
 
     <h2 class="text-capitalize bold col-12">{{ page_title }}</h2>
 
     <div class="col-12 product-page no-padding">
         <div class="col-md-6 center mag">
-            <img src="{{ product.images|length > 0 ? product.images[0].url : '/images/no_image.gif' }}" class="featured-img" alt="{{ product.name }}" data-toggle="magnify">
+            <img src="{{ product.images|length > 0 ? product.images[0].url : '/images/no_image.gif' }}" class="featured-img" alt="{{ product_translation.name }}" data-toggle="magnify">
         </div>
 
         <div class="col-md-6">
             <br />
             <div class="fill">
-                {% if product.price_details %}
-                    <div class="price-details fill">
-                        <h1>
-                            &euro;&nbsp;{{ (product.price_details.piece_price.in)|number_format(2, ',', '.') }}
-                        </h1>
-                        <span>&nbsp;Incl. BTW</span>
-                    </div>
+                <div class="price-details fill">
+                    <h1>
+                        &euro;&nbsp;{{ (product_price.total_price_in)|number_format(2, ',', '.') }}
+                    </h1>
+                    <span>&nbsp;Incl. BTW</span>
+                </div>
 
-                    <!-- PRODUCT STOCK -->
-                    <div class="stock-shipping-status">
-                        {% if product.stock %}
+                <!-- PRODUCT STOCK -->
+                <div class="stock-shipping-status">
+                    {% if product_price.supplier_stock %}
 
-                            {% if product.stock > 10 %}
-                                <div class="badge badge-success">Ruimschoots op voorraad</div>
-                            {% else %}
-                                <div class="badge badge-success">Op voorraad</div>
-                            {% endif %}
-
-                            {% if product.shipping_details.shipping_days %}
-                                <div class="badge badge-info">Levertijd {{ product.shipping_details.shipping_days }} werkdag(en)</div>
-                            {% else %}
-                                <div class="badge badge-info">Levertijd 1-3 werkdag(en)</div>
-                            {% endif %}
+                        {% if product_price.supplier_stock > 10 %}
+                            <div class="badge badge-success">Ruimschoots op voorraad</div>
                         {% else %}
-                            <div class="badge badge-warning">Niet op voorraad</div>
+                            <div class="badge badge-success">Op voorraad</div>
                         {% endif %}
-                    </div>
-                    <br />
-                    <div class="col-12 col-md-8 product-buy-amount select-quantity">
-                        <input class="form-control product-quantity" min="1" value="1" type="number">
 
-                        <div class="col-8 no-padding">
-                            <a href="{{ urls.shopping_cart_add ~ product.id }}/1" data-product-id="{{ product.id }}"
-                               data-product-price="{{ (product.price_details.piece_price.in) }}"
+                        {% if product_shipping_details.shipping_days %}
+                            <div class="badge badge-info">Levertijd {{ product_shipping_details.shipping_days }} werkdag(en)</div>
+                        {% else %}
+                            <div class="badge badge-info">Levertijd 1-3 werkdag(en)</div>
+                        {% endif %}
+                    {% else %}
+                        <div class="badge badge-warning">Niet op voorraad</div>
+                    {% endif %}
+                </div>
+                <br />
+                <div class="col-12 col-md-8 product-buy-amount select-quantity">
+                    <input class="form-control product-quantity" min="1" value="1" type="number">
+
+                    <div class="col-8 no-padding">
+                        {% if product_shipping_details is not null %}
+                            <a href="{{ urls.shopping_cart_add ~ store_product.id }}/1" data-product-id="{{ store_product.id }}"
+                               data-product-price="{{ (product_price.total_price_in) }}"
                                class="btn btn btn-block btn-success order-link">
                                 In winkelmand
                             </a>
-                        </div>
+                        {% else %}
+                            <a class="btn btn btn-block btn-warning box-shadow"
+                               data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" disabled="true">
+                                Niet beschikbaar <span class="glyphicon glyphicon-shopping-cart"></span>
+                            </a>
+                        {% endif %}
                     </div>
-                {% endif %}
+                </div>
             </div>
 
             <div class="product-specs fill">
@@ -70,7 +89,7 @@
             <div class="product-description">
                 <h4>Product beschrijving</h4>
                 <!-- PRODUCT DESCRIPTION -->
-                <p>{{ product.description ? product.description : product.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
+                <p>{{ product_translation.description ? product_translation.description : product_translation.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!' }}</p>
             </div>
         </div>
     </div>

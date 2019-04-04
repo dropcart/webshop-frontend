@@ -8,10 +8,10 @@
 
         {% for category in categories[0:6] %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ urls.category_products ~ category.id }}">{{ category.name }}</a>
+                <a class="nav-link" href="{{ urls.category_products ~ category.id }}">{{ attribute(category.translations, locale_id).name }}</a>
             </li>
         {% else %}
-            {#<li style="text-align: center; font-weight: bold">Geen categorieën</li>#}
+{#            <li style="text-align: center; font-weight: bold">Geen categorieën</li>#}
         {% endfor %}
 
         <!-- Add additional categories to a dropdown -->

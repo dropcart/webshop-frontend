@@ -209,6 +209,8 @@ class DropcartClient {
 			]
 		];
 
+//		die('Bearer ' . static::getToken());
+
 
 		if(strtolower(substr($base_url, 0, 5)) == 'https')
 		{
@@ -298,7 +300,7 @@ class DropcartClient {
 
 		return  (new Builder())->setIssuer(static::options()->getPublicKey())
 								->setAudience(static::options()->getUrl($url))
-								->setExpiration(time() + 60) // Max time is 1,5 minutes (see line below)
+								->setExpiration(time() + 3600) // Max time is 1,5 minutes (see line below)
 								->setIssuedAt(time() - 30) // Set issues at time() - 30 sec for minor server time out of synch correction
 								->sign((new Sha256()), static::options()->getPrivateKey())
 								->getToken();

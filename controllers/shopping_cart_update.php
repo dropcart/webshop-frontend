@@ -38,7 +38,7 @@
  */
 
 // Explode request URI
-$uri = trim( $_SERVER['REQUEST_URI'], "/" );
+$uri = trim( request_uri(config('base_url')), "/" );
 $uri = explode('/', $uri);
 
 // Skip adding / removing product if transaction status == confirmed

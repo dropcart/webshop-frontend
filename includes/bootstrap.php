@@ -86,21 +86,33 @@ if(!function_exists('customer')) { function customer() { global $Customer; retur
 $Messages       = new flash_messages([]);
 if(!function_exists('flash_messages')) { function flash_messages() { global $Messages; return $Messages; } }
 
-// Set locale
+// Set locale and default language ID
 Locale::setDefault(strtolower(config('APP_LOCALE', 'NL')));
+global $locale_id;
+$locale_id = 1;
+// Set default shipping country. This value might change once a customer fills in details or through switchbox (not implemented yet)
+global $shipping_country_id;
+$shipping_country_id = 1;
 
+
+$twig_environment =  new Twig_Environment(new Twig_Loader_Filesystem(config('template_path')), array(
+    'cache' => config('cache_path'),
+    'auto_reload' => config('auto_reload'),
+    'debug' => config('app_debug'),
+));
+if (config('app_debug') === true) {
+    $twig_environment->addExtension(new Twig_Extension_Debug());
+}
 $Twig = (object) [
-	'environment' => new Twig_Environment(new Twig_Loader_Filesystem(config('template_path')), array(
-		'cache' => config('cache_path'),
-		'auto_reload' => config('auto_reload'),
-		'debug' => config('config.APP_DEBUG'),
-	)),
+	'environment' => $twig_environment,
 	'default' => [
 		'site_name'                 => config('site_name'),
 		'site_slug'                 => config('site_slug'),
         'product_overview'          => config('product_overview'),
         'payment_provider'          => config('payment_provider'),
         'container'                 => config('full_width'),
+        'locale_id'                 => $locale_id,
+        'shipping_country_id'       => $shipping_country_id,
 		//'page_title'                => '',
 		'categories'                => request([], 'catalog', 'categories'),
 		'customer_details'          => customer()->get(),
@@ -111,8 +123,9 @@ $Twig = (object) [
 	]
 ];
 
-if (isset($_SESSION['transaction']))
-	$Twig->default['transaction'] = $_SESSION['transaction'];
+if (isset($_SESSION['transaction'])) {
+    $Twig->default['transaction'] = $_SESSION['transaction'];
+}
 
 if(! function_exists('twig') )
 {

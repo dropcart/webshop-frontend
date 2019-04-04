@@ -98,8 +98,7 @@ function route(
 ) {
     $route = str_replace('/', '\/', $route);
 
-    $base_url = rtrim(config('base_url'), '/');
-    $request_uri = str_replace($base_url, '', $_SERVER['REQUEST_URI']);
+    $request_uri = request_uri(config('base_url'));
     if ($request_uri == false) { $request_uri = '/'; }
     // Split get / post variables
     $request_uri = strtok($request_uri, '?');
