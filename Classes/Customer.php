@@ -26,7 +26,7 @@
  *
  * ---------------------------------------------------------
  *
- * File: flash_messages.php
+ * File: Customer.php
  * Date: 27-02-18 12:00
  *
  * @author Dropcart <info@dropcart.nl>
@@ -37,8 +37,8 @@
  * =========================================================
  */
 
-class customer {
-
+class Customer
+{
     /**
      * @var array $customer
      */
@@ -51,23 +51,46 @@ class customer {
 
     public function __construct($config)
     {
+        global $shipping_country_id;
         $this->config = $config;
 
         if (!isset($_SESSION['customer'])) {
-            $_SESSION['customer'] = [];
+            $_SESSION['customer'] = [
+                // Set to global (default) shipping country ID
+                'shipping_country_id' => $shipping_country_id
+            ];
         }
 
         $this->customer = $_SESSION['customer'];
     }
 
     /**
+     * Returns the customer from the session.
+     *
+     * @return array
+     */
+    public function get()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @param array $customer
+     */
+    public function setToSession(array $customer): void
+    {
+        $_SESSION['customer'] = $customer;
+    }
+
+    /**
      * Adds the customer details provided in the POST data to the session.
      *
-     * @param $post_data
+     * @param array $post_data
+     * @throws \Exception
      */
-    public function fill($post_data)
+    public function fill(array $post_data): void
     {
-        $_SESSION['customer'] = [
+        $this->customer = [
             'customer_id' => (isset($post_data['customer_id']) ? $post_data['customer_id'] : null),
             'first_name' => (isset($post_data['billing_first_name']) ? $post_data['billing_first_name'] : null),
             'last_name' => (isset($post_data['billing_last_name']) ? $post_data['billing_last_name'] : null),
@@ -84,17 +107,17 @@ class customer {
                 'address_house_nr' => (isset($post_data['billing_house_nr']) ? $post_data['billing_house_nr'] : null),
                 'city' => (isset($post_data['billing_city']) ? $post_data['billing_city'] : null),
                 'postcode' => (isset($post_data['billing_postcode']) ? $post_data['billing_postcode'] : null),
-                'country_id' => (isset($post_data['billing_country']) ? $post_data['billing_country'] : null),
-                'country_name' => (isset($post_data['billing_country']) ? request($this->config, 'management', 'countries', $post_data['billing_country'])->name : null),
+                'country_id' => (isset($post_data['billing_country_id']) ? $post_data['billing_country_id'] : null),
+                'country_name' => (isset($post_data['billing_country']) ? $post_data['billing_country'] : null),
             ],
 
             'shipping_is_billing' => ($post_data['has_delivery']) ? false : true,
         ];
 
         // Set shipping address if necessary
-        if (!$_SESSION['customer']['shipping_is_billing']) {
+        if ($this->customer['shipping_is_billing'] === false) {
             // Shipping address
-            $_SESSION['customer']['shipping_address'] = [
+            $this->customer['shipping_address'] = [
                 'company' => (isset($post_data['shipping_company']) ? $post_data['shipping_company'] : null),
                 'first_name' => (isset($post_data['shipping_first_name']) ? $post_data['shipping_first_name'] : null),
                 'last_name' => (isset($post_data['shipping_last_name']) ? $post_data['shipping_last_name'] : null),
@@ -103,21 +126,15 @@ class customer {
                 'address_house_nr' => (isset($post_data['shipping_house_nr']) ? $post_data['shipping_house_nr'] : null),
                 'city' => (isset($post_data['shipping_city']) ? $post_data['shipping_city'] : null),
                 'postcode' => (isset($post_data['shipping_postcode']) ? $post_data['shipping_postcode'] : null),
-                'country_id' => (isset($post_data['shipping_country']) ? $post_data['shipping_country'] : null),
-                'country_name' => (isset($post_data['shipping_country']) ? request($this->config, 'management', 'countries', $post_data['shipping_country'])->name : null),
+                'country_id' => (isset($post_data['shipping_country_id']) ? $post_data['shipping_country_id'] : null),
+                'country_name' => (isset($post_data['shipping_country']) ? $post_data['shipping_country'] : null),
             ];
+
+            $this->customer['shipping_country_id'] = $this->customer['shipping_address']['country_id'];
+        } else {
+            $this->customer['shipping_country_id'] = $this->customer['billing_address']['country_id'];
         }
 
-        $this->customer = $_SESSION['customer'];
-    }
-
-    /**
-     * Returns the customer from the session.
-     *
-     * @return array
-     */
-    public function get()
-    {
-        return $this->customer;
+        $this->setToSession($this->customer);
     }
 }

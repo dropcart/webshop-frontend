@@ -15,16 +15,25 @@
         $('.order-link').on('click', function (event) {
             event.preventDefault();
 
+            // Gives ID and Price of clicked element
+            $productId = event.target.getAttribute('data-product-id');
+            $productPrice = parseFloat(event.target.getAttribute('data-product-price')).toFixed(2);
+            // Collect store product and JSON encode it to append to the POST request
+            var store_product = {{ store_product|json_encode|raw }};
+            if (store_product === null) {
+                var array_key = event.target.getAttribute('data-store-product-array-key');
+                var store_products = {{ store_products|json_encode|raw }};
+                store_product = store_products[array_key];
+            }
+            store_product = JSON.stringify(store_product);
+            var supplier_id = event.target.getAttribute('data-supplier-id');
+
             // Checks if cart is empty
             if($(".cart-no-products").length) {
                 $cartReplaceContent = "<span class=\"cart-items fill\"><span class=\"total-quantity\">0</span> artikelen</span>\n" +
                     "<span class=\"cart-total fill\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
                 $(".cart-content").html($cartReplaceContent);
             }
-
-            // Gives ID and Price of clicked element
-            $productId = event.target.getAttribute('data-product-id');
-            $productPrice = parseFloat(event.target.getAttribute('data-product-price')).toFixed(2);
 
             // Change current cart content to float
             $cartTotalAmount = ($(".cart-total-amount").html().replace('.', '')).replace(',', '.');
@@ -72,10 +81,13 @@
 
             $.ajax({
                 url: '{{ urls.shopping_cart_add }}' + $productId + '/' + $quantity,
-                type: "POST", //send it through get method
+                type: "POST", //send it through post method
+                data: {
+                    "supplier_id": supplier_id,
+                    "store_product": store_product
+                },
                 success: function (data) {
                     // Success
-
                 }
             });
         });
@@ -115,7 +127,7 @@
             }
 
             if (quantity > 0) {
-                var url = '{{ urls.shopping_cart_add }}' + product_id + '/' + quantity;
+                var url = '{{ urls.shopping_cart_update }}' + product_id + '/' + quantity;
             } else if (quantity == $productQuantity) {
                 // == product value, delete whole product
                 var url = '{{ urls.shopping_cart_remove }}' + product_id;

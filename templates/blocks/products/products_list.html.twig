@@ -1,4 +1,4 @@
-{% for store_product in store_products %}
+{% for key, store_product in store_products %}
     <!--
     Twig helper variables for easy data access
     ------------------------------------------>
@@ -79,12 +79,11 @@
                 <div class="order col-8 offset-sm-1 offset-md-0 col-md-12 no-padding">
                     {% if product_shipping_details is not null %}
                         <a href="{{ urls.shopping_cart_add ~ store_product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
-                           data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}">
+                           data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" data-supplier-id="{{ (product_price.supplier_id) }}" data-store-product-array-key="{{ key }}">
                             In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
                         </a>
                     {% else %}
-                        <a class="btn btn btn-block btn-warning box-shadow"
-                           data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" disabled="true">
+                        <a class="btn btn btn-block btn-warning box-shadow" disabled="true">
                             Niet beschikbaar <span class="glyphicon glyphicon-shopping-cart"></span>
                         </a>
                     {% endif %}

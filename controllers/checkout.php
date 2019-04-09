@@ -37,21 +37,28 @@
  * =========================================================
  */
 
-include __DIR__ . '/../classes/transaction.php';
-// Initialize new transaction
-$transaction = new transaction([]);
+include __DIR__ . '/../Classes/Transaction.php';
+
+// Initialize new Transaction
+$transaction = new Transaction([]);
 $payment_provider = config('payment_provider');
+
+$additional_twig_variables = [];
 
 // Check / validate prices and notify user if they have changed
 $price_changed = shopping_cart()->productPricesChanged();
-if ($price_changed) {
+if ($price_changed === true) {
     flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
 }
-//this is stripe code
-//return from ideal authorization
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['source'])) {
-    sendPayment($transaction->get()['order_id'], $_GET['source']);
+
+if ($payment_provider === 'stripe') {
+    //this is stripe code
+    //return from ideal authorization
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['source'])) {
+        sendPayment($transaction->get()['order_id'], $_GET['source']);
+    }
 }
+
 //end stripe code
 // POST actions
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
@@ -60,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
         try {
             // Insert and confirm
             $order = request([], 'order', 'orders', [
-                'shopping_cart' => shopping_cart()->get(),
+                'order_products' => shopping_cart()->getOrderProducts(),
                 'customer_details' => customer()->get(),
                 'payment_return_url' => url() . lang('url.confirmation'),
             ], 'post');
@@ -72,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
                 header('location: ' . $_POST['redirect']);
                 exit();
             }
+
             // Generate payment link for the Order
             $payment_url = request([], 'payment', 'orderPayment', $transaction);
             header('Location: ' . $payment_url);
@@ -110,8 +118,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
 
 // Collect all countries
 $countries = request([], 'management', 'countries');
-$psp_public_key = request([], 'payment', 'key')->id;
-$payment_methods = request([], 'payment', 'payment');
+
+if ($payment_provider === 'stripe') {
+    $additional_twig_variables['psp_public_key'] = request([], 'payment', 'key')->id;
+}
+$payment_methods = json_decode(request([], 'payment', 'payment'));
+
 //$payment_methods = json_decode('[
 //                                    {"id":1,"name":"iDEAL","active":1,"type":"ideal","psp":"stripe","mandate":0,"redirect":1,"cost":29,"variable_cost":0,"logo":"/images/payment/ideal.svg","extra":null},
 //                                    {"id":2,"name":"Bancontact","active":1,"type":"bancontact","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":1.4,"logo":"/images/payment/bancontact.svg","extra":[{"id":1,"type":"selectable","paymentMethodsId":2,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]},
@@ -129,19 +141,19 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
 } else {
     $redirect_url="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 }
-echo view('checkout.html.twig', [
-    // Reset shopping cart and overview (in case update occured)
-    'shopping_cart' => shopping_cart()->get(),
-    'shopping_cart_overview' => shopping_cart()->overview(),
-    // Payment methods for the store
-    'payment_methods' => $payment_methods,
-    // Warnings and errors
-    'flash_messages' => flash_messages()->get(),
-    'page_title' => lang('page_titles.checkout'),
-    'psp_public_key' => $psp_public_key,
-    'countries' => $countries,
-    'redirect_url' =>$redirect_url
-]);
+echo view('checkout.html.twig', array_merge([
+        // Reset shopping cart and overview (in case update occured)
+        'shopping_cart' => shopping_cart()->get(),
+        'shopping_cart_overview' => shopping_cart()->overview(),
+        // Payment methods for the store
+        'payment_methods' => $payment_methods,
+        // Warnings and errors
+        'flash_messages' => flash_messages()->get(),
+        'page_title' => lang('page_titles.checkout'),
+        'countries' => $countries,
+        'redirect_url' =>$redirect_url
+    ], $additional_twig_variables)
+);
 
 function sendPayment($order_id, $source): void
 {

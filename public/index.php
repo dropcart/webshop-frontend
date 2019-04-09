@@ -38,7 +38,7 @@
  */
 
 require_once __DIR__ . '/../includes/bootstrap.php';
-require_once __DIR__ . '/../classes/static_page.php';
+require_once __DIR__ . '/../Classes/StaticPage.php';
 
 // Home
 route(lang('url.home'),null, true, 'home.html.twig', [
@@ -76,6 +76,7 @@ route(lang('url.product') . '(.*)/(.*)', 'product');
 route(lang('url.shopping_cart'), 'shopping_cart');
 // Shopping cart add / remove
 route(lang('url.shopping_cart_add') . '(.*)/(.*)', 'shopping_cart_update');
+route(lang('url.shopping_cart_update') . '(.*)/(.*)', 'shopping_cart_update');
 route(lang('url.shopping_cart_remove') . '(.*)/?(.*)?', 'shopping_cart_update');
 
 // Order routes
@@ -116,7 +117,7 @@ function route(
             twig()->default['page_title'] = ucwords(str_replace(['-', '_', '  '], ' ', $file));
             include_once __DIR__ . '/../controllers/' . $file . '.php';
         } elseif ($static_page === true) {
-            $page = new static_page($view, $view_vars);
+            $page = new StaticPage($view, $view_vars);
             echo $page->render();
         }
 

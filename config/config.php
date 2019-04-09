@@ -45,9 +45,9 @@ return [
     "APP_LOCALE" => "NL",
 
     // Dropcart config
-    "DROPCART_KEY" => "df1f275336755a27c92c39e541f75bb859912387c4c5c28981f5c06619125c31",
-    "DROPCART_SECRET" => "20d023436fb0347426cfc1a242f41541401a16eede9a9fbe4e5963cf43ad5558",
-    "DROPCART_ENDPOINT" => "http://api.local.dropcart.app/v3",
+    "DROPCART_KEY" => "",
+    "DROPCART_SECRET" => "",
+    "DROPCART_ENDPOINT" => "http://api.local.dropcart.app/v4/store",
     "TIMEOUT" => 15,
 
     // Site global config
@@ -55,7 +55,7 @@ return [
     "SITE_SLUG" => "",
 
     /* Base URL:
-    @note:
+    Left blank, unless you want to run the site on a sub folder.
     For example:
     If you want to run the site on mywebshop.com/mysite/,  change this value to "/mysite" or "/mysite/" */
     "BASE_URL" => "",

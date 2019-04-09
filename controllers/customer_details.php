@@ -51,7 +51,7 @@ $countries = request([], 'management', 'countries');
 
 echo view('customer_details.html.twig', [
     // Reset shopping cart and overview (in case update occured)
-    'shopping_cart' => shopping_cart()->get(),
+    'shopping_cart' => object_to_array(shopping_cart()->get()),
     'shopping_cart_overview'    => shopping_cart()->overview(),
     'countries' => $countries,
     // POST data

@@ -60,6 +60,19 @@ function dd(array $array)
 }
 
 /**
+ * @return string
+ */
+function url()
+{
+    $base_url = rtrim(config('base_url'), '/');
+    return sprintf(
+        "%s://%s",
+        ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http',
+        $_SERVER['SERVER_NAME'] . $base_url
+    );
+}
+
+/**
  * Redirect user back to previous page
  */
 function back()
@@ -148,10 +161,10 @@ if (!function_exists('object_to_array')) {
     /**
      * Recursively casts an object to array.
      *
-     * @param object $object
+     * @param object|array $object
      * @return array
      */
-    function object_to_array(object $object): array
+    function object_to_array($object): array
     {
         return json_decode(json_encode($object), true);
     }

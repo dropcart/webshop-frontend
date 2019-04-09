@@ -45,12 +45,12 @@
 
         // Create sticky elements
         var content = document.getElementById('content');
-        var shoppingCart = document.getElementById('shopping-cart');
+        var shopping_cart = document.getElementById('shopping-cart');
         var xsMenu = document.getElementById('xs-menu');
 
         $(window).scroll(function() {
             if (window.pageYOffset >= content.offsetTop) {
-                shoppingCart.classList.add('sticky-cart');
+                shopping_cart.classList.add('sticky-cart');
                 $('.return-to-top').slideDown(200);
 
                 if($(window).width() < 768) {
@@ -58,7 +58,7 @@
                     $(".content").css("padding-top", 80);
                 }
             } else {
-                shoppingCart.classList.remove('sticky-cart');
+                shopping_cart.classList.remove('sticky-cart');
                 $('.return-to-top').slideUp(200);
 
                 if($(window).width() < 768) {

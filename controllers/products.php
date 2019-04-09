@@ -75,13 +75,6 @@ $filters = [
 
 // Collect the products
 $store_products = request([], 'catalog', 'products', $filters);
-foreach ($store_products->data as $key => $product) {
-    // Base64 encode all image urls
-    if (isset($product->images[0])) {
-        $product->images[0]->base_64 = base64_encode_image($product->images[0]->url);
-    }
-    $store_products->data[$key] = $product;
-}
 
 // Collect all Brands for the Store (for filtering purpose)
 $brands = request([], 'catalog', 'brands', $filters);

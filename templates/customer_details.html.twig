@@ -172,11 +172,11 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label class="col-form-label font-weight-bold" for="billing_country">Land <span class="font-weight-bold">*</span></label>
+                                <label class="col-form-label font-weight-bold" for="billing_country_id">Land <span class="font-weight-bold">*</span></label>
                                 <div class="fill">
-                                    <select id="billing_country" class="form-control"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} name="billing_country" required>
+                                    <select id="billing_country_id" class="form-control"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} name="billing_country_id" required>
                                         {% for country in countries %}
-                                            <option value="{{ country.id }}"{{ customer_details.billing_address.country_id == country.id ? ' selected' : '' }}>{{ country.name }}</option>
+                                            <option value="{{ country.id }}"{{ customer_details.billing_address.country_id == country.id ? ' selected' : '' }} data-country-name="{{ country.name }}">{{ country.name }}</option>
                                         {% endfor %}
                                     </select>
                                     <div class="invalid-feedback">
@@ -272,11 +272,11 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <label class="col-form-label font-weight-bold" for="shipping_country">Land <span class="font-weight-bold">*</span></label>
+                                <label class="col-form-label font-weight-bold" for="shipping_country_id">Land <span class="font-weight-bold">*</span></label>
                                 <div class="fill">
-                                    <select id="shipping_country" class="form-control"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} name="shipping_country">
+                                    <select id="shipping_country_id" class="form-control"{{ (transaction is defined and transaction.status == "CONFIRMED") ? ' disabled="disabled"' : '' }} name="shipping_country_id">
                                         {% for country in countries %}
-                                            <option value="{{ country.id }}"{{ customer_details.billing_address.country_id == country.id ? ' selected' : '' }}>{{ country.name }}</option>
+                                            <option value="{{ country.id }}"{{ customer_details.billing_address.country_id == country.id ? ' selected' : '' }} data-country-name="{{ country.name }}">{{ country.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -304,10 +304,19 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-
             if($('#deliveryAddress').is( ":checked" )) {
                 $(".shipping-address").slideToggle();
             }
+        });
+
+        $(".register-form").submit(function (event) {
+            // Add the selected country names as inputs to the form
+            var billing_country_name = $('#billing_country_id option:selected').data('country-name');
+            var shipping_country_name = $('#shipping_country_name option:selected').data('country-name');
+            $(".register-form").append('' +
+                '<input name="billing_country" type="hidden" value="' + billing_country_name + '" /> ' +
+                '<input name="shipping_country" type="hidden" value="' + shipping_country_name + '" /> ' +
+            '');
         });
 
         $("#deliveryAddress").click(function() {

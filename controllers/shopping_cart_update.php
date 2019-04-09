@@ -37,6 +37,10 @@
  * =========================================================
  */
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    throw new \Exception('Method not allowed');
+}
+
 // Explode request URI
 $uri = trim( request_uri(config('base_url')), "/" );
 $uri = explode('/', $uri);
@@ -46,10 +50,16 @@ if (isset($_SESSION['transaction']) && $_SESSION['transaction']['status'] == "CO
     back();
 }
 
-if ('/'.$uri[0].'/'.$uri[1].'/' == lang('url.shopping_cart_add')) {
-	shopping_cart()->addProduct($uri[2], $uri[3]);
+if ('/'.$uri[0].'/'.$uri[1].'/' === lang('url.shopping_cart_add')) {
+    $supplier_id = (isset($_POST['supplier_id'])) ? $_POST['supplier_id'] : null;
+    $store_product = (isset($_POST['store_product'])) ? json_decode($_POST['store_product']) : null;
+    shopping_cart()->addProduct($uri[2], $uri[3], $supplier_id, $store_product);
 }
-elseif ('/'.$uri[0].'/'.$uri[1].'/'== lang('url.shopping_cart_remove'))  {
+elseif ('/'.$uri[0].'/'.$uri[1].'/' === lang('url.shopping_cart_update'))
+{
+    shopping_cart()->updateProductQuantity($uri[2], $uri[3]);
+}
+elseif ('/'.$uri[0].'/'.$uri[1].'/' === lang('url.shopping_cart_remove'))  {
     $quantity = (isset($uri[3]) ? $uri[3] : null);
     shopping_cart()->removeProduct($uri[2], $quantity);
 }

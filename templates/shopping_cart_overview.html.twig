@@ -68,22 +68,38 @@
 
             <div class="col-12 shopping-bag-content no-padding">
                 {% for order_product in shopping_cart %}
-                    <div class="{{ order_product.product.id }} shopping-bag-item fill">
+                    <!--
+                    Twig helper variables for easy data access
+                    ------------------------------------------>
+                    <!-- Product details -->
+                    {% set store_product = order_product.store_product %}
+                    {% set product = store_product.product %}
+                    <!-- Product translation -->
+                    {% set product_translation = attribute(product.translations, locale_id) %}
+                    {% if product_translation is null %}
+                        {% set product_translation = product.translations|first %}
+                    {% endif %}
+                    <!-- Product price -->
+                    {% set product_price = attribute(store_product.price_details, order_product.supplier_id) %}
+                    <!-- Product shipping details -->
+                    {% set product_shipping_details = attribute(product_price.shipping_costs, shipping_country_id) %}
+
+                    <div class="{{ store_product.id }} shopping-bag-item fill">
                         <div class="col-md-1 d-none d-md-flex no-padding">
-                            <img src="{{ order_product.product.images|length > 0 ? order_product.product.images[0].url : '/images/no_image.gif' }}"
-                                 alt="{{ order_product.product.name }}">
+                            <img src="{{ product.images|length > 0 ? product.images[0].url : '/images/no_image.gif' }}"
+                                 alt="{{ product_translation.name }}">
                         </div>
                         <div class="col-md-6 col-sm-5 col-5">
-                            <strong><a href="{{ urls.product ~ order_product.product.name ~ '/' ~ order_product.product.id }}">{{ order_product.product.name }}</a></strong>
+                            <strong><a href="{{ urls.product ~ store_product.id ~ '/' ~ product_translation.name|url_encode }}">{{ product_translation.name }}</a></strong>
                             <br>
 
-                            {% if order_product.product.stock is defined and order_product.product.stock > 0 %}
+                            {% if product_price.supplier_stock is defined and product_price.supplier_stock > 0 %}
 
-                                {% if order_product.quantity > order_product.product.stock %}
+                                {% if order_product.quantity > product_price.supplier_stock %}
                                     <div class="badge badge-warning">Niet genoeg op voorraad, langere levertijd</div>
                                 {% else %}
                                     <div class="badge badge-success">
-                                        {% if order_product.product.stock > 10 %}
+                                        {% if product_price.supplier_stock > 10 %}
                                             <div class="badge badge-success">Ruimschoots op voorraad</div>
                                         {% else %}
                                             <div class="badge badge-success">Op voorraad</div>
@@ -91,8 +107,8 @@
                                     </div>
                                 {% endif %}
 
-                                {% if product.shipping_details.shipping_days %}
-                                    <div class="badge badge-info">Levertijd {{ product.shipping_details.shipping_days }}
+                                {% if product_shipping_details.shipping_days %}
+                                    <div class="badge badge-info">Levertijd {{ product_shipping_details.shipping_days }}
                                         werkdag(en)
                                     </div>
                                 {% else %}
@@ -109,7 +125,7 @@
                                 {#</tr>#}
                                 <tr>
                                     <th>SKU</th>
-                                    <td>{{ order_product.product.sku }}</td>
+                                    <td>{{ product.sku }}</td>
                                 </tr>
                             </table>
                         </div>
@@ -119,24 +135,24 @@
 
                             {% if transaction is not defined or transaction.status != 'CONFIRMED' %}
 
-                                <a href="javascript:void(0);" id="{{ order_product.product.id }}"
-                                   data-piece-price="{{ (order_product.product.price_details.piece_price.in) }}"
+                                <a href="javascript:void(0);" id="{{ store_product.id }}"
+                                   data-piece-price="{{ (product_price.total_price_in) }}"
                                    class="cart-add-product" data-quantity="1"><span class="fa fa-plus"></span></a>
-                                <a href="javascript:void(0);" id="{{ order_product.product.id }}"
+                                <a href="javascript:void(0);" id="{{ store_product.id }}"
                                    class="cart-remove-product" data-quantity="-1"><span class="fa fa-minus"></span></a>
 
                             {% endif %}
                         </div>
                         <div class="col-md-1 col-sm-2 col-2 text-right">
-                            &euro;&nbsp;<span class="product-piece">{{ (order_product.product.price_details.piece_price.in)|number_format(2, ',', '.') }}</span>
+                            &euro;&nbsp;<span class="product-piece">{{ (product_price.total_price_in)|number_format(2, ',', '.') }}</span>
                         </div>
                         <div class="col-md-2 col-sm-2 col-2 text-right">
-                            &euro;&nbsp;<span class="product-subtotal">{{ (order_product.product.price_details.piece_price.in * order_product.quantity)|number_format(2, ',', '.') }}</span>
+                            &euro;&nbsp;<span class="product-subtotal">{{ (product_price.total_price_in * order_product.quantity)|number_format(2, ',', '.') }}</span>
                         </div>
 
                         {% if transaction is not defined or transaction.status != 'CONFIRMED' %}
 
-                            <a href="javascript:void(0);" id="{{ order_product.product.id }}" class="cart-empty-product" data-quantity="-{{ order_product.quantity }}">
+                            <a href="javascript:void(0);" id="{{ store_product.id }}" class="cart-empty-product" data-quantity="-{{ order_product.quantity }}">
                                 <span title="Verwijder product" class="fa fa-times-circle"></span></a>
 
                         {% endif %}

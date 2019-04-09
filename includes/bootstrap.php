@@ -40,13 +40,13 @@
 session_start();
 
 define('__BASEDIR__', rtrim(realpath(__DIR__ . '/..'), '/'));
-require_once __BASEDIR__ . '/classes/Config.php';
+require_once __BASEDIR__ . '/Classes/Config.php';
 require_once __BASEDIR__ . '/includes/twig.php';
 require_once __BASEDIR__ . '/vendor/DropcartPhpClient/vendor/autoload.php';
 require_once __BASEDIR__ . '/includes/dropcart_client_helper.php';
-require_once __BASEDIR__ . '/classes/shopping_cart.php';
-require_once __BASEDIR__ . '/classes/customer.php';
-require_once __BASEDIR__ . '/classes/flash_messages.php';
+require_once __BASEDIR__ . '/Classes/ShoppingCart.php';
+require_once __BASEDIR__ . '/Classes/Customer.php';
+require_once __BASEDIR__ . '/Classes/FlashMessages.php';
 
 // Includes
 include __BASEDIR__ . '/includes/helpers.php';
@@ -67,10 +67,19 @@ if(! function_exists('config') )
 	}
 }
 
-if(config('app_debug', false))
-	ini_set('display_errors', 1);
-else
-	ini_set('display_errors', 0);
+if(config('app_debug', false)) {
+    ini_set('display_errors', 1);
+} else {
+    ini_set('display_errors', 0);
+}
+
+// Set locale and default language ID
+Locale::setDefault(strtolower(config('APP_LOCALE', 'NL')));
+global $locale_id; // @todo
+$locale_id = 1;
+// Set default shipping country. This value might change once a customer fills in details or through switchbox (not implemented yet)
+global $shipping_country_id; // @todo
+$shipping_country_id = 1;
 
 // Configure the Dropcart Client
 \Dropcart\PhpClient\DropcartClient::options()
@@ -79,30 +88,23 @@ else
 										->setPrivateKey(config('dropcart_secret'))
 										->setTimeout(config('timeout'));
 
-$ShoppingCart   = new shopping_cart([]);
+$ShoppingCart   = new ShoppingCart([]);
 if(!function_exists('shopping_cart')) { function shopping_cart() { global $ShoppingCart; return $ShoppingCart; } }
-$Customer       = new customer([]);
+$Customer       = new Customer([]);
 if(!function_exists('customer')) { function customer() { global $Customer; return $Customer; } }
-$Messages       = new flash_messages([]);
+$Messages       = new FlashMessages([]);
 if(!function_exists('flash_messages')) { function flash_messages() { global $Messages; return $Messages; } }
-
-// Set locale and default language ID
-Locale::setDefault(strtolower(config('APP_LOCALE', 'NL')));
-global $locale_id;
-$locale_id = 1;
-// Set default shipping country. This value might change once a customer fills in details or through switchbox (not implemented yet)
-global $shipping_country_id;
-$shipping_country_id = 1;
-
 
 $twig_environment =  new Twig_Environment(new Twig_Loader_Filesystem(config('template_path')), array(
     'cache' => config('cache_path'),
     'auto_reload' => config('auto_reload'),
     'debug' => config('app_debug'),
 ));
+
 if (config('app_debug') === true) {
     $twig_environment->addExtension(new Twig_Extension_Debug());
 }
+
 $Twig = (object) [
 	'environment' => $twig_environment,
 	'default' => [
