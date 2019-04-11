@@ -1,12 +1,13 @@
 {% block content %}
     <div class="fill pb-5">
         {% for payment_method in payment_methods[0:3] %}
-            <label class="fill mb-0">
+            <div class="fill mb-0">
                 <div class="payment-method fill">
-                    <input type="radio" name="paymentMethod" class="radio-{{ payment_method.id }} payment-method-radio" value="{{ payment_method.type }}">
+                    <input type="radio" name="paymentMethod" class="radio-{{ payment_method.id }} payment-method-radio"
+                           value="{{ payment_method.type }}">
                     {% if payment_method.logo %}
                         <div class="payment-method-logo float-left">
-                            <img src="{{ payment_method.logo }}" alt="{{ payment_method.name }}" />
+                            <img src="{{ payment_method.logo }}" alt="{{ payment_method.name }}"/>
                         </div>
                     {% endif %}
                     <div class="payment-method-name">
@@ -14,7 +15,7 @@
                     </div>
                     {% if payment_method.psp =='stripe' %}
                         {% if payment_method.type =='ideal' %}
-                            <div class="col-12 col-sm-6 no-padding" id="paymentSelectable-{{ payment_method.type}}">
+                            <div class="col-12 col-sm-6 no-padding" id="paymentSelectable-{{ payment_method.type }}">
                             </div>
                         {% elseif payment_method.type =='sepa_debit' %}
                             <div id="iban-element">
@@ -37,17 +38,19 @@
                         {% endif %}
                     {% endif %}
                 </div>
-            </label>
+            </div>
         {% endfor %}
         {% if payment_methods|length > 3 %}
             <div class="more-payments hidden">
                 {% for payment_method in payment_methods[3:] %}
-                    <label class="fill mb-0">
+                    <div class="fill mb-0">
                         <div class="payment-method fill">
-                            <input type="radio" name="paymentMethod" class="radio-{{ payment_method.id }} payment-method-radio" value="{{ payment_method.type }}">
+                            <input type="radio" name="paymentMethod"
+                                   class="radio-{{ payment_method.id }} payment-method-radio"
+                                   value="{{ payment_method.type }}">
                             {% if payment_method.logo %}
                                 <div class="payment-method-logo float-left">
-                                    <img src="{{ payment_method.logo }}" alt="{{ payment_method.name }}" />
+                                    <img src="{{ payment_method.logo }}" alt="{{ payment_method.name }}"/>
                                 </div>
                             {% endif %}
                             <div class="payment-method-name">
@@ -55,7 +58,7 @@
                             </div>
                             {% if payment_method.psp =='stripe' %}
                                 {% if payment_method.type =='ideal' %}
-                                    <div class="col-12 col-sm-6 no-padding" id="paymentSelectable-{{ payment_method.type}}">
+                                    <div class="col-12 col-sm-6 no-padding" id="paymentSelectable-{{ payment_method.type }}">
                                     </div>
                                 {% elseif payment_method.type =='sepa_debit' %}
                                     <div id="iban-element">
@@ -78,7 +81,7 @@
                                 {% endif %}
                             {% endif %}
                         </div>
-                    </label>
+                    </div>
                 {% endfor %}
             </div>
             <a id="expandPayments" class="btn btn-secondary" href="javascript:">
@@ -90,8 +93,11 @@
         <div class="next-step">
             <div class="form-group checkbox has-feedback">
                 <div class="col-12">
-                    <label class="confirm"><input type="checkbox" name="conditions" {{ transaction is defined and transaction.status == "CONFIRMED" ? ' checked="checked" disabled="disabled"' : '' }} data-bv-field="conditions" class="i-agree-with-the-conditions">
-                        Ik ga akkoord met de algemene voorwaarden <a target="_blank" href="{{ urls.terms_and_conditions }}">(Bekijk)</a>
+                    <label class="confirm"><input type="checkbox"
+                                                  name="conditions" {{ transaction is defined and transaction.status == "CONFIRMED" ? ' checked="checked" disabled="disabled"' : '' }}
+                                                  data-bv-field="conditions" class="i-agree-with-the-conditions">
+                        Ik ga akkoord met de algemene voorwaarden <a target="_blank"
+                                                                     href="{{ urls.terms_and_conditions }}">(Bekijk)</a>
                     </label>
                 </div>
             </div>
@@ -101,12 +107,17 @@
         <div id="error-message"></div>
         <div class="next-step">
             {% if transaction is defined and transaction.status == "CONFIRMED" %}
-                <button type="submit" disabled class="btn btn btn-block btn-primary payment-link"><span class="fa fa-shopping-cart"></span>&nbsp;Opnieuw naar Betalen</button>
+                <button type="submit" disabled class="btn btn btn-block btn-primary payment-link"><span
+                            class="fa fa-shopping-cart"></span>&nbsp;Opnieuw naar Betalen
+                </button>
             {% else %}
-                <button type="submit" disabled class="btn btn btn-block btn-primary payment-link"><span class="fa fa-shopping-cart"></span>&nbsp;Bestelling plaatsen en Betalen</button>
+                <button type="submit" disabled class="btn btn btn-block btn-primary payment-link"><span
+                            class="fa fa-shopping-cart"></span>&nbsp;Bestelling plaatsen en Betalen
+                </button>
             {% endif %}
             <p>
                 U wordt omgeleid naar onze betaalpagina waar u het totaalbedrag direct kan voldoen.
+
             </p>
         </div>
         <div id="mandate-acceptance" class="fill hidden">
@@ -119,16 +130,17 @@
             within 8 weeks starting from the date on which your account was debited.
         </div>
     </div>
+
 {% endblock %}
 {% block post_js %}
     <script type="text/javascript">
 
-        $("#expandPayments").click(function() {
+        $("#expandPayments").click(function () {
             $(this).html($(this).html() === 'Minder betaalmethodes <span class="fa fa-chevron-up"></span>' ? 'Meer betaalmethodes <span class="fa fa-chevron-down"></span>' : 'Minder betaalmethodes <span class="fa fa-chevron-up"></span>');
             $(".more-payments").slideToggle();
         });
 
-        var countries =[];
+        var countries = [];
         {% for country in countries %}
         countries['{{ country.name }}'] = '{{ country.code }}';
         {% endfor %}
@@ -152,8 +164,11 @@
         var idealBank = elements.create('idealBank', options);
         // Add an instance of the idealBank Element into
         // the `ideal-bank-element` <div>.
-        idealBank.mount('#paymentSelectable-ideal');
-        idealBank.on('change', function(event) {
+
+        if ($("#paymentSelectable-ideal").length) {
+            idealBank.mount('#paymentSelectable-ideal');
+        }
+        idealBank.on('change', function (event) {
             var bank = event.value;
             createSourceAndSave();
         });
@@ -185,12 +200,13 @@
             supportedCountries: ['SEPA'],
         });
 
-        iban.mount('#iban-element');
+        if ($("#iban-element").length) {
+            iban.mount('#iban-element');
+        }
 
         var errorMessage = document.getElementById('error-message');
         var bankName = document.getElementById('bank-name');
-
-        iban.on('change', function(event) {
+        iban.on('change', function (event) {
             // Handle real-time validation errors from the iban Element.
             if (event.error) {
                 errorMessage.textContent = event.error.message;
@@ -208,33 +224,29 @@
             }
         });
 
-        $('input[name=paymentMethod]', '#paymentForm').change( function(){
-
+        $('input[name=paymentMethod]').change(function () {
             createSourceAndSave();
         });
-        // $("input").prop('disabled', true);
-        // $("input").prop('disabled', false);
-        // $('#submit').click(function(){console.log('test');submit();});
         function createSourceAndSave() {
-            $('button[type=submit]', '#paymentForm').attr("disabled", 'disabled');
-            var paymentType = $('input[name=paymentMethod]:checked', '#paymentForm').val();
+            $('button[type=submit]').attr("disabled", 'disabled');
+            var paymentType = $('input[name=paymentMethod]:checked').val();
             var sourceData = {
                 type: paymentType,
                 amount: amount,
                 currency: 'eur',
-                owner:{name:null,email:null},
-                sepa_debit:{iban:null},
-                sofort:{country:null},
+                owner: {name: null, email: null},
+                sepa_debit: {iban: null},
+                sofort: {country: null},
                 // Specify the URL to which the customer should be redirected after paying.
                 redirect: {
-                    return_url: 'http://dropcart.app/bestellen/bevestiging',
+                    return_url: '{{ redirect_url }}',
                 },
             };
             sourceData.owner.name = document.getElementById('paymentName').innerHTML;
             sourceData.owner.email = document.getElementById('paymentEmail').innerHTML;
             sourceData.sofort.country = countries[document.getElementById('paymentCountry').innerHTML];
-            if(paymentType === 'ideal'){
-                stripe.createSource(idealBank, sourceData).then(function(result) {
+            if (paymentType === 'ideal') {
+                stripe.createSource(idealBank, sourceData).then(function (result) {
                     if (result.error) {
                         // Inform the customer that there was an error.
                         var errorElement = document.getElementById('error-message');
@@ -244,13 +256,12 @@
                         success(result)
                     }
                 });
-            }else{
-                stripe.createSource(sourceData).then(function(result) {
+            } else {
+                stripe.createSource(sourceData).then(function (result) {
                     if (result.error) {
                         // Inform the customer that there was an error.
                         var errorElement = document.getElementById('error-message');
                         errorElement.innerHTML = result.error.message;
-
                     } else {
                         // Redirect the customer to the authorization URL.
                         success(result)
@@ -259,30 +270,26 @@
             }
         }
 
-        //todo hide button if no payment method is chosen. show again
-        function success(result){
-            var paymentForm =$('#paymentForm');
-            if ($('input[name=payment_source]', '#paymentForm').length === 0) {
+        function success(result) {
+            var paymentForm = $('#paymentForm');
+            if ($('input[name=payment_source]').length === 0) {
                 var input = $("<input>")
                     .attr("type", "hidden")
                     .attr("name", "payment_source").val(result.source.id);
                 paymentForm.append(input);
-            }
-            else {
-                $('input[name=payment_source]', '#paymentForm').val(result.source.id)
+            } else {
+                $('input[name=payment_source]').val(result.source.id)
             }
 
-            if ($('input[name=redirect]', '#paymentForm').length === 0) {
+            if ($('input[name=redirect]').length === 0) {
                 var input = $("<input>")
                     .attr("type", "hidden")
                     .attr("name", "redirect").val(result.source.redirect.url);
                 paymentForm.append(input);
+            } else {
+                $('input[name=redirect]').val(result.source.redirect.url)
             }
-            else {
-                $('input[name=redirect]', '#paymentForm').val(result.source.redirect.url)
-            }
-
-            $('button[type=submit]', '#paymentForm').attr("disabled", null);
+            $('button[type=submit]').attr("disabled", null);
         }
 
     </script>

@@ -50,15 +50,27 @@ $price_changed = shopping_cart()->productPricesChanged();
 if ($price_changed === true) {
     flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
 }
-
 if ($payment_provider === 'stripe') {
     //this is stripe code
     //return from ideal authorization
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['source'])) {
-        sendPayment($transaction->get()['order_id'], $_GET['source']);
+
+        try {
+        $order = request([], 'payment', 'orderPayment', [
+            'order_id' => $transaction->get()['order_id'],
+            'payment_method' => 'ideal',
+            'payment_attributes' => $_GET['source'],
+            'return_url' => url() . lang('url.confirmation'),
+            'payment_provider' => config('payment_provider'),
+        ], 'get');
+        } catch (\Exception $e) {
+            var_dump($e->getPrevious());
+            die();
+        }
+        header('location: ' . $order);
+        exit();
     }
 }
-
 //end stripe code
 // POST actions
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
@@ -72,13 +84,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
                 'payment_return_url' => url() . lang('url.confirmation'),
             ], 'post');
 
-            $transaction = $transaction->confirm($order->id)->setPaymentMethod($_POST)->get();
+            $transaction = $transaction->confirm($order->id)->get();
             //if stripe is the sender and the redirect is given, redirect to authenticate the source
             if (isset($_POST['redirect']) && $payment_provider === 'stripe') {
                 //save source to db?
                 header('location: ' . $_POST['redirect']);
                 exit();
             }
+            $transaction = $transaction->setPaymentMethod($_POST)->get();
+
 
             // Generate payment link for the Order
             $payment_url = request([], 'payment', 'orderPayment', $transaction);
@@ -93,7 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
 
     } elseif (isset($transaction->get()['order_id'])) {
         //if stripe is the sender and the redirect is given, redirect to authenticate the source
-
         if (isset($_POST['redirect']) && $payment_provider === 'stripe') {
             //save source to db?
             header('location: ' . $_POST['redirect']);
@@ -120,9 +133,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed) {
 $countries = request([], 'management', 'countries');
 
 if ($payment_provider === 'stripe') {
-    $additional_twig_variables['psp_public_key'] = request([], 'payment', 'key')->id;
+    $additional_twig_variables['psp_public_key'] = request([], 'payment', 'publicKey')[0];
 }
-$payment_methods = json_decode(request([], 'payment', 'payment'));
+$payment_methods = (request([], 'payment', 'payment'));
 
 //$payment_methods = json_decode('[
 //                                    {"id":1,"name":"iDEAL","active":1,"type":"ideal","psp":"stripe","mandate":0,"redirect":1,"cost":29,"variable_cost":0,"logo":"/images/payment/ideal.svg","extra":null},
@@ -134,13 +147,6 @@ $payment_methods = json_decode(request([], 'payment', 'payment'));
 //                                    {"id":7,"name":"Przelewy24","active":1,"type":"p24","psp":"stripe","mandate":0,"redirect":1,"cost":25,"variable_cost":2.2,"logo":"/images/payment/przelewy24.svg","extra":[{"id":7,"type":"selectable","paymentMethodsId":7,"fieldId":"email","fieldName":"email","pspVarName":"owner[email]"},
 //                                    {"id":8,"type":"selectable","paymentMethodsId":7,"fieldId":"name","fieldName":"name","pspVarName":"owner[name]"}]}
 //                                    ]');
-
-//set the redirect url for stripe
-if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-    $redirect_url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-} else {
-    $redirect_url="http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-}
 echo view('checkout.html.twig', array_merge([
         // Reset shopping cart and overview (in case update occured)
         'shopping_cart' => shopping_cart()->get(),
@@ -151,22 +157,6 @@ echo view('checkout.html.twig', array_merge([
         'flash_messages' => flash_messages()->get(),
         'page_title' => lang('page_titles.checkout'),
         'countries' => $countries,
-        'redirect_url' =>$redirect_url
+        'redirect_url' =>url() . lang('url.checkout')
     ], $additional_twig_variables)
 );
-
-function sendPayment($order_id, $source): void
-{
-    try {
-        $order = request([], 'payment', 'orderPayment', [
-            'order_id' => $order_id,
-            'payment_method' => 'ideal',
-            'payment_attributes' => $source,
-        ], 'get');
-    } catch (\Exception $e) {
-        var_dump($e->getPrevious());
-        die();
-    }
-    header('location: ' . $order);
-    exit();
-}
