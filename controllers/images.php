@@ -51,7 +51,7 @@ for ($i = 2; $i < $no_of_parts ; $i++) {
 if (file_exists($path)) {
     $file = file_get_contents($path);
 } else {
-    $file = file_get_contents(__BASEDIR__ . '/images//no_image.gif');
+    $file = file_get_contents(__BASEDIR__ . '/images//no_image.png');
 }
 
 $ext = pathinfo($path, PATHINFO_EXTENSION);

@@ -20,17 +20,18 @@
  * =========================================================
  */
 
-function package_route($route, $file_path) {
-
+function package_route($route, $file_path)
+{
     $route = str_replace('/', '\/', $route);
 
+    $request_uri = request_uri(config('base_url'));
+    if ($request_uri == false) { $request_uri = '/'; }
     // Split get / post variables
-    $_SERVER['REQUEST_URI'] = strtok($_SERVER['REQUEST_URI'], '?');
+    $request_uri = strtok($request_uri, '?');
 
-    $is_match =(bool) preg_match('/^' . ($route) . '$/',
-        $_SERVER['REQUEST_URI'],
+    $is_match = (bool) preg_match('/^' . ($route) . '$/',
+        $request_uri,
         $matches, PREG_OFFSET_CAPTURE);
-
 
     if ($is_match && file_exists(__DIR__ . $file_path . '.php')) {
         twig()->default['page_title'] = ucwords(str_replace(['-', '_', '  '], ' ', $file_path));

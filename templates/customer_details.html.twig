@@ -312,7 +312,7 @@
         $(".register-form").submit(function (event) {
             // Add the selected country names as inputs to the form
             var billing_country_name = $('#billing_country_id option:selected').data('country-name');
-            var shipping_country_name = $('#shipping_country_name option:selected').data('country-name');
+            var shipping_country_name = $('#shipping_country_id option:selected').data('country-name');
             $(".register-form").append('' +
                 '<input name="billing_country" type="hidden" value="' + billing_country_name + '" /> ' +
                 '<input name="shipping_country" type="hidden" value="' + shipping_country_name + '" /> ' +

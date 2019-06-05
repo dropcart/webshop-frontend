@@ -136,7 +136,7 @@ function base64_encode_image(string $url) {
     $data = file_get_contents($url);
 
     if (!$data) {
-        $data = file_get_contents(__BASEDIR__ . '/public/images/no_image.gif');
+        $data = file_get_contents(__BASEDIR__ . '/public/images/no_image.png');
     }
 
     return 'data:image/' . $type . ';base64,' . base64_encode($data);

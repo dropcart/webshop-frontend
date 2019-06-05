@@ -45,9 +45,20 @@ return [
     "APP_LOCALE" => "NL",
 
     // Dropcart config
-    "DROPCART_KEY" => "",
-    "DROPCART_SECRET" => "",
+    // Local
     "DROPCART_ENDPOINT" => "http://api.local.dropcart.app/v4/store",
+////    "DROPCART_ENDPOINT" => "http://api.local.dropcart.app/v3",
+//    // Store
+    "DROPCART_KEY" => "11e77847602d32bdc500641e55c14888baa7065bb127a4fa7a1e37c45b53d95c",
+    "DROPCART_SECRET" => "19f66e9372ee161e1b3864e1b0d4b28d904287f4c6e1264e73088e41a17dd385",
+    // Supplier
+//    "DROPCART_KEY" => "eee383bdb07fec4a20b0f1e8db27eb80b0a58c030d2c14aa6ccb50eaf5254bbc",
+//    "DROPCART_SECRET" => "247d6b2c3e383dbbbe2660787c176a4af918ba4e7c0cbf6dfd42070191e97cee",
+
+    // GCS
+//    "DROPCART_KEY" => "df1f275336755a27c92c39e541f75bb859912387c4c5c28981f5c06619125c31",
+//    "DROPCART_SECRET" => "20d023436fb0347426cfc1a242f41541401a16eede9a9fbe4e5963cf43ad5558",
+//    "DROPCART_ENDPOINT" => "https://rest-api.staging.clusters.dropcart.nl/v4/store",
     "TIMEOUT" => 15,
 
     // Site global config
