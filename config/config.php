@@ -74,7 +74,7 @@ return [
     "MULTILINGUAL" => false,
     "COUNTRIES" => "Nederland",
 
-    "PRODUCT_OVERVIEW" => "list",   // OPTIONS: LIST   / BLOCKS
+    "PRODUCT_OVERVIEW" => "blocks",   // OPTIONS: LIST   / BLOCKS
     "PAYMENT_PROVIDER" => "mollie", // OPTIONS: MOLLIE / STRIPE
 
     // Website layout in full width
