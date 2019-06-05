@@ -1,0 +1,95 @@
+<div class="col-sm-5 shopping-bag-block float-right">
+    <div class="shopping-bag">
+        <div class="fill">
+            <div class="offset-md-7 col-md-2 col-sm-3 offset-sm-5 col-2 offset-7 text-right no-padding bold">
+                Aantal
+            </div>
+            <div class="col-md-3 col-sm-4 col-3 text-right no-padding bold">
+                Totaal
+            </div>
+        </div>
+        <div class="col-12 shopping-bag-content">
+            {% for order_product in shopping_cart %}
+                <!--
+                    Twig helper variables for easy data access
+                    ------------------------------------------>
+                <!-- Product details -->
+                {% set store_product = order_product.store_product %}
+                {% set product = store_product.product %}
+                <!-- Product translation -->
+                {% set product_translation = attribute(product.translations, locale_id) %}
+                {% if product_translation is null %}
+                    {% set product_translation = product.translations|first %}
+                {% endif %}
+                <!-- Product price -->
+                {% set product_price = attribute(store_product.price_details, order_product.supplier_id) %}
+                <!-- Product shipping details -->
+                {% set product_shipping_details = attribute(product_price.shipping_costs, shipping_country_id) %}
+                <div class="{{ store_product.id }} shopping-bag-item fill">
+                    <div class="col-2 d-sm-none d-md-flex no-padding">
+                        <img src="{{ product.images|length > 0 and product.images[0].url ? product.images[0].url : '/images/no_image.png' }}"
+                             alt="{{ product_translation.name }}">
+                    </div>
+                    <div class="col-lg-6 col-md-5 col-6">
+                        <strong><a href="{{ urls.product ~ store_product.id ~ '/' ~ product_translation.name|url_encode }}">{{ product_translation.name }}</a></strong>
+                    </div>
+                    <div class="col-md-1 col-sm-2 col-1 text-right no-padding">
+                        <span class="product-quantity">{{ order_product.quantity }}</span>
+                    </div>
+                    <div class="col-lg-3 col-sm-4 col-3 text-right no-padding">
+                        <span class="product-subtotal">&euro;&nbsp;{{ (product_price.total_price_in * order_product.quantity)|number_format(2, ',', '.') }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            <a href="javascript:" id="shopping-bag-expand" class="shopping-bag-toggle hidden">Toon alles <span class="fa fa-chevron-down"></span></a>
+            <a href="javascript:" id="shopping-bag-decrease" class="shopping-bag-toggle hidden">Toon minder <span class="fa fa-chevron-up"></span></a>
+        </div>
+        <div class="fill">
+            <div class="subtotal fill">
+                <p class="float-left">Subtotaal (incl. BTW)</p>
+                <p class="text-right">
+                    <span>&euro;&nbsp;{{ shopping_cart_overview.subtotal_price|number_format(2, ',', '.') }}</span>
+                </p>
+            </div>
+            <div class="shipping-costs fill">
+                <p class="float-left">Verzendkosten</p>
+                <p class="text-right">
+                    <span>&euro;&nbsp;{{ shopping_cart_overview.shipping_costs|number_format(2, ',', '.') }}</span>
+                </p>
+            </div>
+            <div class="total fill">
+                <p class="float-left bold mb-0">Totaal</p>
+                <h4 class="text-right mb-0">
+                    <span>&euro;&nbsp;{{ shopping_cart_overview.total_price|number_format(2, ',', '.') }}</span>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block post_js %}
+    <script type="text/javascript">
+
+        $bagContent = $('.shopping-bag-content').outerHeight();
+
+        $(document).ready(function() {
+            if($bagContent > 440) {
+                $('#shopping-bag-expand').toggleClass('hidden');
+                $('.shopping-bag-content').css('max-height', '440px');
+            } else {
+                $('.shopping-bag-content').css('padding-bottom', '0');
+            }
+        });
+
+        $("#shopping-bag-expand").click(function() {
+            $(this).toggleClass('hidden');
+            $('#shopping-bag-decrease').toggleClass('hidden');
+            $('.shopping-bag-content').css('max-height', $bagContent);
+        });
+        $("#shopping-bag-decrease").click(function() {
+            $(this).toggleClass('hidden');
+            $('#shopping-bag-expand').toggleClass('hidden');
+            $('.shopping-bag-content').css('max-height', '440px');
+        });
+    </script>
+{% endblock %}

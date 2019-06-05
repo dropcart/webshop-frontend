@@ -39,16 +39,12 @@
 
 require_once __DIR__ . '/../exceptions/InputException.php';
 
-class transaction {
+class Transaction {
 
-    /**
-     * @var array $transaction
-     */
-    private $transaction = [];
+    /** @var array $transaction */
+    private $transaction;
 
-    /**
-     * @var array $config
-     */
+    /** @var array $config */
     private $config;
 
     public function __construct($config)
@@ -60,6 +56,7 @@ class transaction {
             $_SESSION['transaction'] = [
                 'order_id' => null,
                 'status' => null,
+                'return_url' => url() . lang('url.confirmation'),
                 'payment_method' => null,
                 'payment_attributes' => [],
             ];
@@ -70,24 +67,28 @@ class transaction {
         }
     }
 
+    public function setToSession(): void
+    {
+        $_SESSION['transaction'] = $this->transaction;
+    }
+
     /**
      * After order insertion is completed, we set the transaction status to CONFIRMED and save the order ID to the transaction in the session.
      *
-     * @param $order_id
+     * @param int $order_id
      * @return null|$this
      */
-    public function confirm($order_id)
+    public function confirm(int $order_id): ?Transaction
     {
-        if (isset($_SESSION['transaction'])) {
-            $_SESSION['transaction']['order_id'] = $order_id;
-            $_SESSION['transaction']['status'] = 'CONFIRMED';
+        if (isset($this->transaction)) {
+            $this->transaction['order_id'] = $order_id;
+            $this->transaction['status'] = 'CONFIRMED';
 
-            $this->transaction = $_SESSION['transaction'];
-
+            $this->setToSession();
             return $this;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -102,8 +103,8 @@ class transaction {
     {
         if (isset($post_data['paymentMethod']) && isset($post_data['paymentMethodAttributes'])) {
 
-            $_SESSION['transaction']['payment_method'] = $post_data['paymentMethod'];
-            $_SESSION['transaction']['payment_attributes'] = $post_data['paymentMethodAttributes'];
+            $this->transaction['payment_method'] = $post_data['paymentMethod'];
+            $this->transaction['payment_attributes'] = $post_data['paymentMethodAttributes'];
 
         } else {
             throw new InputException ('', 0, null, [
@@ -111,8 +112,7 @@ class transaction {
             ]);
         }
 
-        $this->transaction = $_SESSION['transaction'];
-
+        $this->setToSession();
         return $this;
     }
 
@@ -123,11 +123,7 @@ class transaction {
      */
     public function get()
     {
-        if (isset($_SESSION['transaction'])) {
-            return $this->transaction;
-        } else {
-            return null;
-        }
+        return $this->transaction;
     }
 
 }

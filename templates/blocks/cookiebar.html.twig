@@ -5,39 +5,43 @@
             font-size: 14px !important;
             background: #777 !important;
             color: #f5f5f5 !important;
+            overflow: hidden;
         }
         .cc-banner {
             border-top: 1px solid #ddd;
+        }
+        @media screen and (max-width: 575px) {
+            .cc-revoke {
+                display: none;
+            }
         }
     </style>
 {% endblock %}
 
 {% block post_js %}
     <script type="text/javascript">
-        $(document).ready(function() {
-            // Cookie agreement
-            window.addEventListener("load", function(){
-                window.cookieconsent.initialise({
-                    "palette": {
-                        "popup": {
-                            "background": "#f1f1f1"
-                        },
-                        "button": {
-                            "background": "#777"
-                        }
+        // Cookie agreement
+        window.addEventListener("load", function(){
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {
+                        "background": "#f1f1f1"
                     },
-                    "content": {
-                        "header": "{{ lang.cookie_consent_bar.header }}",
-                        "message": "{{ lang.cookie_consent_bar.message }}",
-                        "dismiss": "{{ lang.cookie_consent_bar.dismiss }}",
-                        "allow": "{{ lang.cookie_consent_bar.allow }}",
-                        "deny": "{{ lang.cookie_consent_bar.deny }}",
-                        "link": "{{ lang.cookie_consent_bar.link }}",
-                        "href": "{{ lang.cookie_consent_bar.href }}",
-                    },
-                    "type": "opt-in"
-                })
-            });
+                    "button": {
+                        "background": "#777"
+                    }
+                },
+                "content": {
+                    "header": "{{ lang.cookie_consent_bar.header }}",
+                    "message": "{{ lang.cookie_consent_bar.message }}",
+                    "dismiss": "{{ lang.cookie_consent_bar.dismiss }}",
+                    "allow": "{{ lang.cookie_consent_bar.allow }}",
+                    "deny": "{{ lang.cookie_consent_bar.deny }}",
+                    "link": "{{ lang.cookie_consent_bar.link }}",
+                    "href": "{{ lang.cookie_consent_bar.href }}",
+                },
+                "type": "opt-in"
+            })
         });
     </script>
 {% endblock %}

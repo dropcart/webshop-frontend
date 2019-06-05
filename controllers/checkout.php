@@ -37,36 +37,37 @@
  * =========================================================
  */
 
-include __DIR__.'/../classes/transaction.php';
+include __DIR__ . '/../Classes/Transaction.php';
 
-// Initialize new transaction
-$transaction = new transaction([]);
+// Initialize new Transaction
+$transaction = new Transaction([]);
+$payment_provider = config('payment_provider');
+
+$additional_twig_variables = [];
 
 // Check / validate prices and notify user if they have changed
 $price_changed = shopping_cart()->productPricesChanged();
-if ($price_changed) {
+if ($price_changed === true) {
     flash_messages()->setWarningMessages('De prijs is voor één of meerdere producten veranderd.');
 }
 
 // POST actions
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$price_changed) {
     // Check if the order is confirmed
     if (isset($_POST['conditions']) && $_POST['conditions']) {
-
         try {
             // Insert and confirm
-            $order = request([], 'order', 'orders', [
-                'shopping_cart' => shopping_cart()->get(),
+            $order_id = request([], 'order', 'orders', [
+                'order_products' => shopping_cart()->getOrderProducts(),
                 'customer_details' => customer()->get(),
                 'payment_return_url' => url() . lang('url.confirmation'),
             ], 'post');
 
-            $transaction = $transaction->confirm($order->id)->setPaymentMethod($_POST)->get();
+            $transaction = $transaction->confirm($order_id)->setPaymentMethod($_POST)->get();
+
             // Generate payment link for the Order
             $payment_url = request([], 'payment', 'orderPayment', $transaction);
-
-            header('Location: '.$payment_url);
+            header('Location: ' . $payment_url);
             exit();
         } catch (InputException $e) {
             flash_messages()->setWarningMessages($e->getErrors());
@@ -76,39 +77,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$price_changed)
         }
 
     } elseif (isset($transaction->get()['order_id'])) {
-
         try {
             $transaction = $transaction->setPaymentMethod($_POST)->get();
             // Generate payment link for the Order
             $payment_url = request([], 'payment', 'orderPayment', $transaction);
-
-            header('Location: '.$payment_url);
+            header('Location: ' . $payment_url);
             exit();
         } catch (InputException $e) {
-	        flash_messages()->setWarningMessages($e->getErrors());
+            flash_messages()->setWarningMessages($e->getErrors());
             back();
         } catch (\Exception $e) {
             die();
         }
 
     }
-
     header('location: ' . lang('url.checkout'));
 }
 
 // Collect all countries
 $countries = request([], 'management', 'countries');
 
-// Collect the store his payment methods
 $payment_methods = json_decode(request([], 'payment', 'payment'));
 
-echo view('checkout.html.twig', [
-    // Reset shopping cart and overview (in case update occured)
-    'shopping_cart' => shopping_cart()->get(),
-    'shopping_cart_overview'    => shopping_cart()->overview(),
-	// Payment methods for the store
-	'payment_methods' => $payment_methods,
-	// Warnings and errors
-	'flash_messages' => flash_messages()->get(),
-    'page_title' => lang('page_titles.checkout'),
-]);
+echo view('checkout.html.twig', array_merge([
+        // Reset shopping cart and overview (in case update occured)
+        'shopping_cart' => shopping_cart()->get(),
+        'shopping_cart_overview' => shopping_cart()->overview(),
+        // Payment methods for the store
+        'payment_methods' => $payment_methods,
+        // Warnings and errors
+        'flash_messages' => flash_messages()->get(),
+        'page_title' => lang('page_titles.checkout'),
+        'countries' => $countries,
+    ], $additional_twig_variables)
+);

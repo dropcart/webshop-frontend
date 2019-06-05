@@ -38,7 +38,6 @@
  */
 
 return [
-
     'site_header' => [
         'search_in_products' => 'Zoek binnen assortiment',
         'search' => 'Zoeken',
@@ -76,29 +75,30 @@ return [
         'disclaimer_and_privacy' => 'Disclaimer & Privacy',
     ],
 
-    // CHANGES AT OWN RISK!
     'url' => [
-        // Default pages
+        // CHANGES AT OWN RISK!
+        'base'                      => config('base_url'),
+        'home'				        => '/',
         'contact'				    => '/contact',
         'about_us'				    => '/over-ons',
         'terms_and_conditions'	    => '/algemene-voorwaarden',
         'disclaimer_and_privacy'    => '/disclaimer-en-privacy',
         'support'				    => '/support',
         'account'				    => '/mijn-account',
-        // Products
         'products'	                => '/producten',
         'category_products'	        => '/producten/categorie/',
-        // Product overview
         'product'				    => '/product/',
-        // Shopping cart
-        'shopping_cart'			    => '/winkelmandje',
-        // Shopping cart add / remove
+        'shopping_cart'             => '/winkelmandje',
         'shopping_cart_add'		    => '/winkelmandje/toevoegen/',
+        'shopping_cart_update'		=> '/winkelmandje/update/',
         'shopping_cart_remove'	    => '/winkelmandje/verwijderen/',
-        // Order routes
         'customer_details'		    => '/klantgegevens',
         'checkout'				    => '/bestellen/afrekenen',
         'confirmation'			    => '/bestellen/bevestiging'
+    ],
+
+    'url_custom' => [
+        // Add custom URLs here
     ],
 
     'page_home' => 	[
@@ -141,7 +141,7 @@ return [
     ],
 
     'page_support' => [
-        'content'               => 'Hieronder vindt u de meest gestelde vragen. Staat uw vraag of gewenste antwoord er niet tussen? <a href="contact">Neem dan contact met ons op</a>',
+        'content'               => 'Hieronder vindt u de meest gestelde vragen. Staat uw vraag of gewenste antwoord er niet tussen? <a href="'.config('base_url').'/contact">Neem dan contact met ons op</a>',
 
         'faq' => 		[
             '0' => 			[
@@ -172,8 +172,8 @@ return [
     ],
 
     'cookie_consent_bar' => [
-        'header' => 'Dropcart.nl gebruikt cookies!',
-        'message' => 'Dropcart.nl gebruikt cookies om het bezoek en winkelen bij Dropcart.nl voor jou nog makkelijker en persoonlijker te maken.',
+        'header' => config('site_name').' gebruikt cookies!',
+        'message' => config('site_name').' gebruikt cookies om het bezoek en winkelen bij '.config('site_name').' voor jou nog makkelijker en persoonlijker te maken.',
         'dismiss' => 'Ik snap het!',
         'allow' => 'Cookies toestaan',
         'deny' => 'Afwijzen',
@@ -184,7 +184,7 @@ return [
     'http_errors' => [
         '404' => [
             'page_title' => 'Hier gaat iets helemaal 404-fout',
-            'content' => '<p><img src="/images/404_image.gif" style="width: 50%;"></p><p>De opgevraagde pagina bestaat niet.</p><p>Wellicht was u op zoek naar <a href="/">de homepagina</a> of <a href="/support">de support-pagina</a>?',
+            'content' => '<p><img src="/images/404_image.gif" style="width: 50%;"></p><p>De opgevraagde pagina bestaat niet.</p><p>Wellicht was u op zoek naar <a href="'.config('base_url').'/">de homepagina</a> of <a href="'.config('base_url').'/support">de support-pagina</a>?',
             'footer' => '<p>Technisch contact: <a href="mailto:info@example.com">info@example.com</a></p>',
         ],
         '500' => [

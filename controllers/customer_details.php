@@ -42,6 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     // Fill the customer details with the POST data
     customer()->fill($_POST);
+
+    dd([
+        customer()->get()
+    ]);
+
     header('location: ' . lang('url.checkout'));
     exit;
 }
@@ -50,10 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 $countries = request([], 'management', 'countries');
 
 echo view('customer_details.html.twig', [
-	'countries' => $countries,
-	// POST data
-	'post' => $_POST,
-	// Warnings and errors
-	'flash_messages' => flash_messages()->get(),
+    // Reset shopping cart and overview (in case update occured)
+    'shopping_cart' => object_to_array(shopping_cart()->get()),
+    'shopping_cart_overview'    => shopping_cart()->overview(),
+    'countries' => $countries,
+    // POST data
+    'post' => $_POST,
+    // Warnings and errors
+    'flash_messages' => flash_messages()->get(),
     'page_title' => lang('page_titles.customer_details'),
 ]);

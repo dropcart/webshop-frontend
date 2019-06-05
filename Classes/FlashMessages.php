@@ -37,7 +37,7 @@
  * =========================================================
  */
 
-class flash_messages {
+class FlashMessages {
 
     /**
      * @var array $flash_messages

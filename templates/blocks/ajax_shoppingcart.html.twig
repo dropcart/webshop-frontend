@@ -15,16 +15,25 @@
         $('.order-link').on('click', function (event) {
             event.preventDefault();
 
-            // Checks if cart is empty
-            if($(".cart-no-products").length) {
-                $cartReplaceContent = "<span class=\"cart-items\"><span class=\"total-quantity\">0</span> artikel(en)</span>\n" +
-                    "        - <span class=\"cart-total\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
-                $(".cart-content").html($cartReplaceContent);
-            }
-
             // Gives ID and Price of clicked element
             $productId = event.target.getAttribute('data-product-id');
             $productPrice = parseFloat(event.target.getAttribute('data-product-price')).toFixed(2);
+            // Collect store product and JSON encode it to append to the POST request
+            var store_product = {{ store_product|json_encode|raw }};
+            if (store_product === null) {
+                var array_key = event.target.getAttribute('data-store-product-array-key');
+                var store_products = {{ store_products|json_encode|raw }};
+                store_product = store_products[array_key];
+            }
+            store_product = JSON.stringify(store_product);
+            var supplier_id = event.target.getAttribute('data-supplier-id');
+
+            // Checks if cart is empty
+            if($(".cart-no-products").length) {
+                $cartReplaceContent = "<span class=\"cart-items fill\"><span class=\"total-quantity\">0</span> artikelen</span>\n" +
+                    "<span class=\"cart-total fill\">&euro;&nbsp;<span class=\"cart-total-amount\">{{ 0|number_format(2, ',', '.') }}</span></span>";
+                $(".cart-content").html($cartReplaceContent);
+            }
 
             // Change current cart content to float
             $cartTotalAmount = ($(".cart-total-amount").html().replace('.', '')).replace(',', '.');
@@ -48,26 +57,117 @@
             $(".cart-total-amount").html($cartPlusProduct);
 
             // Scroll page to top
-            $('html, body').animate({
-                'scrollTop': $("body").position().top
-            });
+            // $('html, body').animate({
+            //     'scrollTop': $("body").position().top
+            // });
 
             // Animation to cart
-            $(this).effect(
-                "transfer", {
-                    to: $('.glyphicon-shopping-cart')
-                },
-                1000
-            );
+            if($(window).width() >= 768) {
+                $(this).effect(
+                    "transfer", {
+                        to: $('.nav-blocks').find('.fa-shopping-cart')
+                    },
+                    1000
+                );
+            } else {
+                $(this).effect(
+                    "transfer", {
+                        to: $('.masthead').find('.fa-shopping-cart')
+                    },
+                    1000
+                );
+            }
+
 
             $.ajax({
-                url: '{{ lang.url.shopping_cart_add }}' + $productId + '/' + $quantity,
+                url: '{{ urls.shopping_cart_add }}' + $productId + '/' + $quantity,
+                type: "POST", //send it through post method
+                data: {
+                    "supplier_id": supplier_id,
+                    "store_product": store_product
+                },
+                success: function (data) {
+                    // Success
+                }
+            });
+        });
+
+        function mutateCart(action_element, product_id, price, quantity)
+        {
+            $productQuantity = parseInt(action_element.closest('.shopping-bag-item').find('.product-quantity').val());
+            $inputQuantity = $productQuantity + quantity;
+
+            // Change current cart content to float
+            $cartTotalAmount = ($(".cart-total-amount").html().replace('.', '')).replace(',', '.');
+            $cartTotalAmount = parseFloat($cartTotalAmount);
+
+            $productTotalPrice = quantity * price;
+            $cartPlusProduct = parseFloat($cartTotalAmount + $productTotalPrice);
+            $productTotalQuantity = parseInt($('.total-quantity').html()) + quantity;
+
+            $shippingCosts = ($(".shipping-cost").html().replace(',', '.'));
+            $shippingCosts = parseFloat($shippingCosts);
+
+            $finalPrice = formatNumber(parseFloat($cartPlusProduct + $shippingCosts));
+
+            action_element.closest('.shopping-bag-item').find('.product-quantity').val($inputQuantity);
+            action_element.closest('.shopping-bag-item').find('.product-subtotal').html(formatNumber($inputQuantity * price));
+
+            // Replace cart content
+            $(".total-quantity").html($productTotalQuantity);
+            $(".cart-total-amount").html(formatNumber($cartPlusProduct));
+
+            $(".subtotal-cost").html(formatNumber($cartPlusProduct));
+            $(".total-cost").html($finalPrice);
+
+            if($inputQuantity < 1) {
+                $('div.' + product_id).remove();
+            } else {
+                action_element.closest('.shopping-bag-item').find('.cart-empty-product').data('quantity', ($inputQuantity * -1));
+            }
+
+            if (quantity > 0) {
+                var url = '{{ urls.shopping_cart_update }}' + product_id + '/' + quantity;
+            } else if (quantity == $productQuantity) {
+                // == product value, delete whole product
+                var url = '{{ urls.shopping_cart_remove }}' + product_id;
+            } else {
+                // < 0
+                var url = '{{ urls.shopping_cart_remove }}' + product_id + '/' + -quantity;
+            }
+
+            if($('.shopping-bag-content').height() < 5) {
+                // Change content of page
+                $('.shopping-bag').html('<div class="alert alert-info center"><span>Uw winkelwagen is leeg</span></div>');
+                // Change content of cart div
+                $('.cart-content').html('<span class="cart-items fill"><span class="total-quantity">0</span> artikelen</span><span class="cart-total fill">&euro;&nbsp;<span class="cart-total-amount">{{ 0|number_format(2, ",", ".") }}</span></span>');
+                // Disable customer details
+                $('.order-tabs .order-tab:nth-last-of-type(3)').html(' <a href="javascript:void(0);"><strong>Stap 2 - </strong>Uw gegevens</a>');
+                $('.order-tabs .order-tab:nth-last-of-type(3)').addClass('disabled');
+                // Disable checkout
+                $('.order-tabs .order-tab:nth-last-of-type(2)').html(' <a href="javascript:void(0);"><strong>Stap 3 - </strong>Bevestigen en betalen</a>');
+                $('.order-tabs .order-tab:nth-last-of-type(2)').addClass('disabled');
+                // Make footer stick to bottom
+                $('.full-page').css('margin-bottom', -$('footer').outerHeight());
+            }
+
+            $.ajax({
+                url: url,
                 type: "POST", //send it through get method
                 success: function (data) {
                     // Success
-
                 }
             });
+        }
+
+        $('.cart-add-product, .cart-remove-product, .cart-empty-product').on('click', function (event) {
+            event.preventDefault();
+            mutateCart(
+                $(this),
+                this.id,
+                parseFloat(document.getElementById(this.id).getAttribute('data-piece-price')).toFixed(2),
+                $(this).data('quantity')
+            );
         });
     </script>
 {% endblock %}

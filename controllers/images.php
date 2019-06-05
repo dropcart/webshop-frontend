@@ -38,19 +38,20 @@
  */
 
 // Explode request URI
-$uri = trim( $_SERVER['REQUEST_URI'], "/" );
+$uri = trim( request_uri(config('base_url')), "/" );
 $uri = explode('/', $uri);
 
 // Build file location
 $path = __BASEDIR__ . '/images';
-for ($i = 2; $i < count($uri) ; $i++) {
+$no_of_parts = count($uri);
+for ($i = 2; $i < $no_of_parts ; $i++) {
     $path .= '/'.$uri[$i];
 }
 
 if (file_exists($path)) {
     $file = file_get_contents($path);
 } else {
-    $file = file_get_contents(__BASEDIR__ . '/images//no_image.gif');
+    $file = file_get_contents(__BASEDIR__ . '/images//no_image.png');
 }
 
 $ext = pathinfo($path, PATHINFO_EXTENSION);
