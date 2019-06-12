@@ -38,7 +38,6 @@
  */
 
 return [
-
     // App config
     "APP_ENV" => "live",
     "APP_DEBUG" => false,
@@ -48,15 +47,25 @@ return [
     // Dropcart config
     "DROPCART_KEY" => "",
     "DROPCART_SECRET" => "",
-    "DROPCART_ENDPOINT" => "https://rest-api.v3.dropcart.nl/v3",
+    "DROPCART_ENDPOINT" => "https://rest-api.v3.dropcart.nl/v4/store",
     "TIMEOUT" => 15,
 
     // Site global config
     "SITE_NAME" => "",
     "SITE_SLUG" => "",
-    "BASE_URL" => "/",
+
+    /* Base URL:
+    Can be left blank, unless you want to run the site on a sub folder.
+    For example:
+    If you want to run the site on mywebshop.com/mysite/,  change this value to "/mysite" */
+    "BASE_URL" => "",
+
     "MULTILINGUAL" => false,
     "COUNTRIES" => "Nederland",
+
+    "PRODUCT_OVERVIEW" => "list",   // options: "list" / "blocks"
+    "PAYMENT_PROVIDER" => "mollie", // options: only "mollie" for now
+
     // Website layout in full width
     "FULL_WIDTH" => false,
 

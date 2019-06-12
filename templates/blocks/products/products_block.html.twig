@@ -1,0 +1,150 @@
+{% for key, store_product in store_products %}
+    <!--
+    Twig helper variables for easy data access
+    ------------------------------------------>
+    <!-- Product details -->
+    {% set product = store_product.product %}
+    <!-- Product translation -->
+    {% set product_translation = attribute(product.translations, locale_id) %}
+    {% if product_translation is null %}
+        {% set product_translation = product.translations|first %}
+    {% endif %}
+    <!-- Product price -->
+    {% set product_price = store_product.price_details|first %}
+    <!-- Product shipping details -->
+    {% set product_shipping_details = attribute(product_price.shipping_costs, shipping_country_id) %}
+
+    <div class="col-6 col-md-4 product-blocks">
+        <!-- PRODUCT IMAGE -->
+        <div class="fill center product-image">
+            <a href="{{ urls.product ~ store_product.id ~ '/' ~ product_translation.name|url_encode }}">
+                <img src="{{ product.images|length > 0 and product.images[0].url ? product.images[0].url : '/images/no_image.png' }}"
+                     class="round-border box-shadow" alt="{{ product_translation.name }}">
+            </a>
+        </div>
+
+        <div class="fill product-information">
+            <!-- PRODUCT TITLE -->
+            <h3 class="product-title-link">
+                <a class="product-link"
+                   href="{{ urls.product ~ store_product.id ~ '/' ~ product_translation.name|url_encode }}">{{ product_translation.name }}</a>
+            </h3>
+
+            <!-- PRODUCT STOCK -->
+            <div class="fill stock-shipping-status">
+                {% if product_price.supplier_stock %}
+
+                    {% if product_price.supplier_stock > 10 %}
+                        <div class="badge badge-success">Ruimschoots op voorraad</div>
+                    {% else %}
+                        <div class="badge badge-success">Op voorraad</div>
+                    {% endif %}
+
+                    {% if product_shipping_details.shipping_days %}
+                        <div class="badge badge-info">Levertijd {{ product_shipping_details.shipping_days }}
+                            werkdag(en)
+                        </div>
+                    {% else %}
+                        <div class="badge badge-info">Levertijd 1-3 werkdag(en)</div>
+                    {% endif %}
+                {% else %}
+                    <div class="badge badge-warning">Niet op voorraad</div>
+                {% endif %}
+            </div>
+
+            <!-- PRODUCT INFO -->
+            <div class="float-left product-details">
+                <div class="float-left">
+                    <b>SKU</b><span>{{ product.sku }}</span>
+                </div>
+            </div>
+
+            <!-- PRODUCT DESCRIPTION -->
+            <p class="product-description hidden">{{ (product_translation.description ? product_translation.description : product_translation.name ~ ' wordt binnen 24 uur verzonden mits op voorraad. Dat is de service van ' ~ site_name ~ '!')|raw }}</p>
+        </div>
+
+        <!-- PRODUCT PRICE -->
+        <div class="fill product-price">
+
+            <div class="order-quantity select-quantity col-8 col-md-12 no-padding">
+
+                <div class="row price-listing">
+                    <div class="col-md-6">
+                        <h3 class="price float-left">
+                            &euro;&nbsp;{{ (product_price.total_price_in)|number_format(2, ',', '.') }}
+                        </h3>
+                        <p class="mb-0 float-left">
+                            <small><em>Incl. BTW</em></small>
+                        </p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input class="form-control product-quantity" min="1" max="99" value="1" type="number">
+                    </div>
+                </div>
+
+                <div class="order col-8 offset-sm-1 offset-md-0 col-md-12 no-padding">
+                    {% if product_shipping_details is not null %}
+                        <a href="{{ urls.shopping_cart_add ~ store_product.id }}/1" class="btn btn btn-block btn-success order-link box-shadow"
+                           data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" data-supplier-id="{{ (product_price.supplier_id) }}" data-store-product-array-key="{{ key }}">
+                            In winkelwagen <span class="glyphicon glyphicon-shopping-cart"></span>
+                        </a>
+                    {% else %}
+                        <a class="btn btn btn-block btn-warning box-shadow" disabled="true">
+                            Niet beschikbaar <span class="glyphicon glyphicon-shopping-cart"></span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% else %}
+    <div class="alert alert-info">
+        Geen producten beschikbaar
+    </div>
+{% endfor %}
+
+{% block styles %}
+    <style type="text/css" rel="stylesheet" media="screen">
+
+        .content .overview .product-blocks {
+            padding: 0 0 15px 15px;
+        }
+        .content .overview .product-blocks .product-image {
+            height: 7em;
+        }
+        .content .overview .product-blocks .product-information {
+            height: 7em;
+            padding: 10px 0;
+        }
+        .content .overview .product-blocks .product-information h3 {
+            font-size: 18px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #337ab7;
+        }
+        .content .overview .product-blocks .product-price {
+            background: none !important;
+            border: 0 !important;
+            border-bottom: 1px solid #d5d5d5 !important;
+            padding: 5px 0 !important;
+        }
+        .content .overview .product-blocks .product-price .price-listing {
+            border-bottom: 0 !important;
+            margin-bottom: 5px;
+        }
+        .content .overview .product-blocks .product-price .price-listing h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #d71515;
+        }
+        .content .overview .product-blocks .product-price .price-listing p {
+            padding: 4px 0 8px 4px;
+        }
+
+    </style>
+{% endblock %}

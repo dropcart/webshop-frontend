@@ -6,6 +6,11 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
+    # Uncomment and change this rule when running site in sub directory
+    #RewriteBase /your-subdirectory/
+    #RewriteCond %{REQUEST_URI} !your-subdirectory/public/
+    #RewriteRule (.*) /your-subdirectory/public/$1 [L]
+
     # Handle Front Controller...
     RewriteCond %{REQUEST_URI} !public/
     RewriteRule (.*) /public/$1 [L]

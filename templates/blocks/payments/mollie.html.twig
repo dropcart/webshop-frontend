@@ -1,0 +1,52 @@
+{% block content %}
+    <div class="fill">
+
+        {% for payment_method in payment_methods %}
+            <label class="col-12 mt-3">
+                <input type="radio" name="paymentMethod" class="radio-{{ payment_method.id }}" value="{{ payment_method.id }}" required>
+                {% if payment_method.logo %}
+                    <img src="{{ payment_method.logo }}" alt="{{ payment_method.name }}" draggable="false" />
+                {% endif %}
+
+                <strong>{{ payment_method.name }}</strong>
+
+                {% if payment_method.extra is defined %}
+                    {% for field in payment_method.extra.fields %}
+                        {% if field.type == 'selectable' %}
+                            <select class="ml-3" name="paymentMethodAttributes[{{ field.id }}]">
+                                {% for value in payment_method.extra.issuers %}
+                                    <option value="{{ value.id }}">{{ value.name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </label>
+        {% endfor %}
+
+    </div>
+    <div class="fill">
+        <div class="next-step">
+            <div class="form-group checkbox has-feedback">
+                <div class="col-sm-12">
+                    <label class="confirm"><input type="checkbox" name="conditions" {{ transaction is defined and transaction.status == "CONFIRMED" ? ' checked="checked" disabled="disabled"' : '' }} data-bv-field="conditions" class="i-agree-with-the-conditions" required>
+                        Ik ga akkoord met de algemene voorwaarden <a target="_blank" href="{{ urls.terms_and_conditions }}">(Bekijk)</a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fill">
+        <div id="error-message"></div>
+        <div class="next-step">
+            {% if transaction is defined and transaction.status == "CONFIRMED" %}
+                <button type="submit" class="btn btn btn-block btn-primary payment-link"><span class="fa fa-shopping-cart"></span>&nbsp;Opnieuw naar Betalen</button>
+            {% else %}
+                <button type="submit" class="btn btn btn-block btn-primary payment-link"><span class="fa fa-shopping-cart"></span>&nbsp;Bestelling plaatsen en Betalen</button>
+            {% endif %}
+            <p>
+                U wordt omgeleid naar onze betaalpagina waar u het totaalbedrag direct kan voldoen.
+            </p>
+        </div>
+    </div>
+{% endblock %}

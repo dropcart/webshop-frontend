@@ -20,7 +20,7 @@
  * =========================================================
  */
 
-class static_page {
+class StaticPage {
 
     /** @var   */
     private $view;

@@ -1,72 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="index,follow">
 
-    <title>
-        {% if page_title is defined %}
-            {{ page_title }} -
-        {% elseif title is defined %}
-            {{ title }} -
-        {% endif %}
-
-        {% if site_name is defined %}
-            {{ site_name }}
-        {% else %}
-            Een Dropcart webshop
-        {% endif %}
-    </title>
-
-    <!-- STYLES -->
-    {% block stylesheets %}
-        {% include 'dynamic/styles.html.twig' %}
-    {% endblock %}
-
-    <!-- PRE JS SCRIPTS -->
-    {% block pre_js %}
-        {% include 'dynamic/pre_js.html.twig' %}
-    {% endblock %}
-</head>
+{% include 'blocks/head.html.twig' %}
 
 <body>
-<div id="header-bar">
-    {% include 'blocks/top_bar.html.twig' %}
-</div>
-
-<!-- CONTAINER -->
-<div id="bodyContent" class="bodyContent">
-    <div id="container" class="{{ container == true ? 'container-fluid' : 'container' }}">
-
+    <div class="full-page">
         <!-- Include header.html.twig -->
         {% include 'layouts/header.html.twig' %}
 
-        <!-- Content block -->
-        <div id="content">
-            <!-- Content block -->
-            {% block content %}
-            {% endblock %}
+        <!-- Include nav.html.twig -->
+        {% include 'layouts/nav.html.twig' %}
+
+        <div id="content" class="content fill">
+            <div class="container">
+                <!-- Content block -->
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
     </div>
 
-    <div class="push"></div>
-</div>
+    <!-- Scroll back to top of page -->
+    <a href="javascript:void(0);" class="return-to-top"><i class="fa fa-chevron-up"></i></a>
 
-{#<div class="{{ container == true ? 'container-fluid' : 'container' }}">#}
-<div class="{{ container == true ? 'container-fluid' : 'container' }}">
+    <!-- Include footer.html.twig -->
     {% include 'layouts/footer.html.twig' %}
-</div>
 
-<!-- / CONTAINER -->
+    <!-- Cookieconsentbar -->
+    {% include 'blocks/cookiebar.html.twig' %}
 
-{% include 'blocks/cookiebar.html.twig' %}
-
-<!-- POST JS SCRIPTS -->
-{% block post_js %}
-    {% include 'dynamic/post_js.html.twig' %}
-{% endblock %}
-
+    <!-- POST JS SCRIPTS -->
+    {% block post_js %}
+        {% include 'dynamic/post_js.html.twig' %}
+    {% endblock %}
 </body>
 </html>

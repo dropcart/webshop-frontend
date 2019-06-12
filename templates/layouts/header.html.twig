@@ -1,71 +1,9 @@
-<div class="row header">
+<header class="fill">
+    {% include 'blocks/header/top_bar.html.twig' %}
 
-    <div class="col-md-12 hidden-xs">
-        <nav class="float-right hidden-xs">
-            <!-- Pages menu -->
-            {% include 'blocks/pages_menu.html.twig' %}
-        </nav>
-    </div>
-
-    <div class="col-sm-3 col-xs-6">
-        <a href="/"><img class="col-xs-12 no-padding logo"
-                         src="/images/logo/logo.png"
-                         alt="{% if site12px_name is defined %}{{ site_name }}{% endif %}"/></a>
-    </div>
-
-    <div class="col-sm-5 hidden-xs">
-        <form class="form-horizontal search-products" method="get"
-              action="{{ lang.url.products }}">
-
-            {% if selected_brands is defined %}
-                {% for brand in selected_brands %}
-                    <input type="hidden" name="brands[{{ loop.index0 }}]" value="{{ brand }}"/>
-                {% endfor %}
-            {% endif %}
-
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <h5 class="global-search-title">{{ lang.site_header.search_in_products }}</h5>
-                    <div class="search input-group" data-initialize="search" role="search">
-                        <input id="query" name="query" class="form-control"
-                               placeholder="Naam, beschrijving, EAN of SKU" type="search" value="">
-                        <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">
-        <span class="glyphicon glyphicon-search"></span>
-        <span class="sr-only">{{ lang.site_header.search }}</span>
-        </button>
-        </span>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="col-sm-4 col-xs-6">
-        <div class="push-right header-nav">
-            <!-- HEADER SOCIAL MEDIA ICONS -->
-            {#<div class="row">#}
-            {#<div class="col-md-12 hidden-xs">#}
-            {#<div class="pull-right social">#}
-            {#<a href="#" class="fa fa-facebook-square"></a>#}
-            {#<a href="#" class="fa fa-twitter-square"></a>#}
-            {#<a href="#" class="fa fa-google-plus-square"></a>#}
-            {#<a href="#" class="fa fa-linkedin"></a>#}
-            {#</div>#}
-            {#</div>#}
-            {#</div>#}
-
-            <div id="cart">
-                <!-- Shopping cart -->
-                {% include 'blocks/shopping_cart.html.twig' %}
-            </div>
+    <div class="header-main fill">
+        <div class="container no-padding">
+            {% include 'blocks/header/header_blocks.html.twig' %}
         </div>
     </div>
-
-</div>
-
-<!-- Main menu -->
-<div class="masthead">
-    {% include 'blocks/main_menu.html.twig' %}
-</div>
+</header>

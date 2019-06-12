@@ -1,0 +1,102 @@
+<nav class="navbar navbar-expand-lg navbar-light d-print">
+    <ul class="nav navbar-nav nav-justified d-none d-md-flex">
+        <li class="nav-item no-stretch">
+            <a class="nav-link" href="{{ urls.home }}">
+                <b class="fa fa-home"></b>
+            </a>
+        </li>
+
+        {% for category in categories[0:6] %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ urls.category_products ~ category.id }}">{{ attribute(category.translations, locale_id).name }}</a>
+            </li>
+        {% else %}
+{#            <li style="text-align: center; font-weight: bold">Geen categorieën</li>#}
+        {% endfor %}
+
+        <!-- Add additional categories to a dropdown -->
+        {% if categories|length > 6 %}
+            <li role="presentation" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Meer<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {% for category in categories[6:] %}
+                        <li>
+                            <a class="nav-link" href="{{ urls.category_products ~ category.id }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+    </ul>
+
+    {# Mobiel menu #}
+    <ul id="xs-menu" class="nav navbar-nav nav-justified d-md-none">
+        <li class="nav-item no-stretch">
+            <a class="nav-link" href="{{ urls.home }}">
+                <b class="fa fa-home"></b>
+            </a>
+        </li>
+
+        <!-- Add additional categories to a dropdown -->
+        {% if categories|length > 0 %}
+            <li role="presentation" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Categorieën<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {% for category in categories[0:] %}
+                        <li>
+                            <a class="nav-link" href="{{ urls.category_products ~ category.id }}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link nav-search" href="javascript:">
+                <span class="font-weight-bold fa fa-search"></span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-shopping-cart" href="javascript:">
+                <span class="font-weight-bold fa fa-shopping-cart"></span>
+            </a>
+        </li>
+        <div class="xs-search fill hidden">
+            <form class="form-horizontal fill search-products" method="get"
+                  action="{{ urls.products }}">
+
+                {% if selected_brands is defined %}
+                    {% for brand in selected_brands %}
+                        <input type="hidden" name="brands[{{ loop.index0 }}]" value="{{ brand }}"/>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="form-group">
+                    <div class="col-12">
+                        <div class="search input-group" data-initialize="search" role="search">
+                            <input id="query" name="query" class="form-control" placeholder="Zoek hier op naam, beschrijving, EAN of SKU" type="search" value="">
+                            <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span><i class="fa fa-search"></i></span>
+                            <span class="sr-only">{{ lang.site_header.search }}</span>
+                        </button>
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="xs-shopping-cart fill hidden">
+            <div class="cart col-12">
+                {% include 'blocks/nav/shopping_cart.html.twig' %}
+            </div>
+        </div>
+    </ul>
+</nav>
