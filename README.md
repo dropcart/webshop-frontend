@@ -44,7 +44,7 @@ Please check at least the emphasized options, those are mandatory.
 |    |   |
 | **DROPCART_KEY** | Here you have to paste your Dropcart public key. Please login to the management console and you'll find it in the settings of your store |
 | **DROPCART_SECRET** |  Please paste your Dropcart secret here. |
-| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.dropcart.nl/v3' |
+| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.dropcart.nl/v4/store' |
 | TIMEOUT | This is the max amount of time a request to the Dropcart servers may take. 5.0 is a good max amount |
 |      |    |
 | **SITE_NAME** | Set you desired store name. |
@@ -96,7 +96,7 @@ Bekijk in elk geval de dikgedrukte opties; deze zijn verplicht.
 |    |   |
 | **DROPCART_KEY** | Plak hier je Dropcart public key. Login op het managment console en je vind de sleutel onder de instellingen van je winkel. |
 | **DROPCART_SECRET** | Plak hier je Dropcart secret. (HOUD DEZE GEHEIM!) |
-| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.dropcart.nl/v3' |
+| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.dropcart.nl/v4/store' |
 | TIMEOUT | This is the max amount of time a request to the Dropcart servers may take. 5.0 is a good max amount |
 |      |    |
 | **SITE_NAME** | Geef je winkel een naam. |
