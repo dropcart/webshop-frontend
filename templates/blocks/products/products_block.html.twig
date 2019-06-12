@@ -18,7 +18,7 @@
         <!-- PRODUCT IMAGE -->
         <div class="fill center product-image">
             <a href="{{ urls.product ~ store_product.id ~ '/' ~ product_translation.name|url_encode }}">
-                <img src="{{ product.images|length > 0 and product.images[0].url ? product.images[0].url : '/images/no_image.png' }}"
+                <img src="{{ product.images|length > 0 and product.images.thumbnail.url ? product.images.thumbnail.url : '/images/no_image.png' }}"
                      class="round-border box-shadow" alt="{{ product_translation.name }}">
             </a>
         </div>

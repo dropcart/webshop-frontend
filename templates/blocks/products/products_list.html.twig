@@ -17,7 +17,7 @@
     <div class="fill">
         <!-- PRODUCT IMAGE -->
         <div class="col-4 col-md-3 center product-image">
-            <img src="{{ product.images|length > 0 and product.images[0].url ? product.images[0].url : '/images/no_image.png' }}"
+            <img src="{{ product.images|length > 0 and product.images.thumbnail.url ? product.images.thumbnail.url : '/images/no_image.png' }}"
                  class="round-border box-shadow" alt="{{ product_translation.name }}">
         </div>
 
