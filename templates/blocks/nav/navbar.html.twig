@@ -24,7 +24,7 @@
                     {% for category in categories[6:] %}
                         <li>
                             <a class="nav-link" href="{{ urls.category_products ~ category.id }}">
-                                {{ category.name }}
+                                {{ attribute(category.translations, locale_id).name }}
                             </a>
                         </li>
                     {% endfor %}
@@ -51,7 +51,7 @@
                     {% for category in categories[0:] %}
                         <li>
                             <a class="nav-link" href="{{ urls.category_products ~ category.id }}">
-                                {{ category.name }}
+                                {{ attribute(category.translations, locale_id).name }}
                             </a>
                         </li>
                     {% endfor %}

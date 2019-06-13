@@ -59,13 +59,13 @@
                     <div class="col-8 no-padding">
                         {% if product_shipping_details is not null %}
                             <a href="{{ urls.shopping_cart_add ~ store_product.id }}/1" data-product-id="{{ store_product.id }}"
-                               data-product-price="{{ (product_price.total_price_in) }}"
+                               data-product-price="{{ (product_price.total_price_in) }}" data-supplier-id="{{ (product_price.supplier_id) }}"
                                class="btn btn btn-block btn-success order-link">
                                 In winkelmand
                             </a>
                         {% else %}
                             <a class="btn btn btn-block btn-warning box-shadow"
-                               data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" disabled="true">
+                               data-product-id="{{ store_product.id }}" data-product-price="{{ (product_price.total_price_in) }}" data-supplier-id="{{ (product_price.supplier_id) }}" disabled="true">
                                 Niet beschikbaar <span class="glyphicon glyphicon-shopping-cart"></span>
                             </a>
                         {% endif %}
