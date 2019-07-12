@@ -130,7 +130,7 @@
                         <li class="page-item disabled"><span class="page-link">Vorige</span></li>
                     {% else %}
                         <li class="page-item">
-                            <a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ current_page-1 : '?page=' ~ current_page-1 }}"
+                            <a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ (current_page - 1) : '?page=' ~ (current_page - 1) }}"
                                rel="previous">Vorige</a></li>
                     {% endif %}
 
@@ -181,7 +181,7 @@
                     {% endif %}
 
                     {% if current_page < total_pages %}
-                        <li class="page-item"><a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ current_page : '?page=' ~ current_page }}"
+                        <li class="page-item"><a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ (current_page + 1) : '?page=' ~ (current_page + 1) }}"
                                                  rel="next">Volgende</a></li>
                     {% else %}
                         <li class="page-item disabled"><span class="page-link">Volgende</span></li>
