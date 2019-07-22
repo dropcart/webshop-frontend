@@ -43,9 +43,4 @@ interface Payment {
      */
     public function orderPayment() : Rest;
 
-    /**
-     * @return Rest
-     */
-    public function publicKey() : Rest;
-
 }
