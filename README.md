@@ -23,7 +23,7 @@ This repository contains an fully functional, but basic PHP / HTML implementatio
   
 ### Installation
 
-1. Download latest version of this repository: [https://github.com/dropcart/webshop-frontend/archive/master.zip](https://github.com/dropcart/webshop-frontend/archive/master.zip)
+1. Download the latest release of this repository: [https://github.com/dropcart/webshop-frontend/releases](https://github.com/dropcart/webshop-frontend/releases)
 2. Upload (via (S)FTP) the (extracted) files to your server.
 3. Extract all the contents of the .zip file in your webroot folder. 
    Sometimes this folder is called `public_html` or `htdocs`.
@@ -44,7 +44,7 @@ Please check at least the emphasized options, those are mandatory.
 |    |   |
 | **DROPCART_KEY** | Here you have to paste your Dropcart public key. Please login to the management console and you'll find it in the settings of your store |
 | **DROPCART_SECRET** |  Please paste your Dropcart secret here. |
-| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.dropcart.nl/v4/store' |
+| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.v3.dropcart.nl/v4/store' |
 | TIMEOUT | This is the max amount of time a request to the Dropcart servers may take. 5.0 is a good max amount |
 |      |    |
 | **SITE_NAME** | Set you desired store name. |
@@ -75,7 +75,7 @@ Deze repository bevat een volledig functioneel, maar basale PHP / HTML implement
 
 ### Installatie
 
-1. Download de laatste versie van deze repository: [https://github.com/dropcart/webshop-frontend/archive/master.zip](https://github.com/dropcart/webshop-frontend/archive/master.zip)
+1. Download de laatste release van deze repository: [https://github.com/dropcart/webshop-frontend/releases](https://github.com/dropcart/webshop-frontend/releases)
 2. Upload (via (S)FTP) de (uitgepakte) bestanden naar je server.
 3. Pak het gehele .zip bestand uit in de webroot-map van jouw webhosting.
    De naam van deze map verschilt per webhosting soms heet deze `public_html` of `htdocs`.
@@ -96,7 +96,7 @@ Bekijk in elk geval de dikgedrukte opties; deze zijn verplicht.
 |    |   |
 | **DROPCART_KEY** | Plak hier je Dropcart public key. Login op het managment console en je vind de sleutel onder de instellingen van je winkel. |
 | **DROPCART_SECRET** | Plak hier je Dropcart secret. (HOUD DEZE GEHEIM!) |
-| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.dropcart.nl/v4/store' |
+| DROPCART_ENDPOINT | You can change the REST endpoint here. Normally you'll use: 'https://rest-api.v3.dropcart.nl/v4/store' |
 | TIMEOUT | This is the max amount of time a request to the Dropcart servers may take. 5.0 is a good max amount |
 |      |    |
 | **SITE_NAME** | Geef je winkel een naam. |
