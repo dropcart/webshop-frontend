@@ -65,6 +65,7 @@ return [
 
     "PRODUCT_OVERVIEW" => "list",   // options: "list" / "blocks"
     "PAYMENT_PROVIDER" => "mollie", // options: only "mollie" for now
+    "SHOW_UNAVAILABLE_ITEMS" => false, // options: true or false
 
     // Website layout in full width
     "FULL_WIDTH" => false,

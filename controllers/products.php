@@ -37,6 +37,10 @@
  * =========================================================
  */
 
+if (config('show_unavailable_items') && !isset($_GET['show_unavailable_items'])) {
+    $_GET['show_unavailable_items'] = true;
+}
+
 // Set up query string to share in the template
 if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']) {
     $query_string = removeqsvar('?'.$_SERVER['QUERY_STRING'], 'page');
