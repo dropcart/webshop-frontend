@@ -1,5 +1,5 @@
 <a href="{{ urls.shopping_cart }}" class="col-3 cart-icon no-padding">
-    <i class="fa fa-shopping-cart"></i>
+    <i class="fa fa-shopping-cart primary-color"></i>
 </a>
 <div class="cart-content col-5">
     {% if shopping_cart_overview is defined and shopping_cart_overview.total_products > 0 %}
@@ -11,6 +11,6 @@
         <span class="cart-total fill">&euro;&nbsp;<span class="cart-total-amount">{{ 0|number_format(2, ',', '.') }}</span></span>
     {% endif %}
 </div>
-<a href="{{ urls.shopping_cart }}" class="btn btn btn-block btn-success col-4">
+<a href="{{ urls.shopping_cart }}" class="btn btn btn-block col-4 primary-background">
     Afrekenen
 </a>

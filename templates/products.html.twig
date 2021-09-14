@@ -74,12 +74,12 @@
                         {#<button class="btn list-btn float-right ml-2 mb-2" type="button" title="list view"><i class="fa fa-list"></i></button>#}
                         {#<button class="btn blocks-btn float-right" type="button" title="blocks view"><i class="fa fa-th-large"></i></button>#}
 
-                        <div class="search-category input-group" data-initialize="search" role="search">
+                        <div class="search search-category input-group" data-initialize="search" role="search">
                             <input id="query" name="query" class="form-control"
                                    placeholder="Naam, beschrijving, EAN of SKU"
                                    type="search" value="{{ search_query ? search_query : '' }}">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
+                                <button class="btn btn-default primary-background" type="submit">
                                     <span><i class="fa fa-search"></i></span>
                                     <span class="sr-only">{{ lang.site_header.search }}</span>
                                 </button>

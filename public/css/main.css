@@ -155,6 +155,62 @@ h3, .h3 {
     width: 100%;
 }
 
+/* ############## */
+/* STANDARD STYLING */
+/* ############## */
+
+:root {
+    --primary-color: #d5d5d5;
+    --secondary-color: #e5e5e5;
+    --secondary-link-text-color: #777;
+    --shoppingcart-bg-color: #28a745;
+    --shoppingcart-text-color: #fff;
+}
+
+/* algemeen primary achtergrond kleur*/
+.primary-background{
+    background-color: var(--primary-color) !important;
+}
+
+/* algemeen primary tekst of icoon kleur*/
+.primary-color{
+    color: var(--primary-color) !important;
+}
+
+/* afrekenknop */
+.cart .primary-background{
+    color: var(--shoppingcart-text-color);
+    background-color:  var(--shoppingcart-bg-color);
+}
+
+/* in winkelwagen knop*/
+.order .primary-background{
+    color: var(--shoppingcart-text-color);
+    background-color: var(--shoppingcart-bg-color);
+}
+
+/* zoek icoon */
+.search .primary-background{
+    color: #fff !important;
+    background-color: var(--primary-color);
+}
+
+/* algemeen secondary achtergrond kleur*/
+.secondary-background{
+    background-color: var(--secondary-color) !important;
+}
+
+/* algemeen secondary tekst of icoon kleur*/
+.secondary-color{
+    color: var(--secondary-color) !important;
+}
+
+/* Aanpassen links */
+.secondary-background .navbar-light .navbar-nav .nav-link {
+    color: var(--secondary-link-text-color);
+    background-color: var(--secondary-color);
+}
+
 /* ##################################### */
 
 /* ############## */
@@ -205,7 +261,7 @@ h3, .h3 {
 
 /* NAVBAR */
 .masthead {
-    background-color: #e5e5e5;
+    /*background-color: #e5e5e5;*/
     border-top: 1px solid #d5d5d5;
     border-bottom: 1px solid #d5d5d5;
     -webkit-border-radius: 0;
@@ -213,13 +269,14 @@ h3, .h3 {
     border-radius: 0;
     float: left;
 }
+
 .masthead nav li .nav-link {
     display: block;
     height: 48px;
     padding: 12px 1rem;
     cursor: pointer;
     border-right: 1px solid #d5d5d5;
-    color: #777 !important;
+    color: #777;
     font-weight: 200;
 }
 .masthead nav li .nav-link:hover {

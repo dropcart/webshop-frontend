@@ -28,7 +28,19 @@ This repository contains an fully functional, but basic PHP / HTML implementatio
 3. Extract all the contents of the .zip file in your webroot folder. 
    Sometimes this folder is called `public_html` or `htdocs`.
 4. Create the folder `templates/compilation_cache` when it doesn't exist. And chmod it to 777.
+5. (optional) To customize the base colors of your webshop, copy and paste the snippet below in the "/public/css/custom.css" file and change the color codes to your liking:
+  ```
+  :root {
+   --primary-color: #d5d5d5 !important;
+   --secondary-color: #e5e5e5 !important;
+   --secondary-link-text-color: #777 !important;
+   --shoppingcart-bg-color: #28a745 !important;
+   --shoppingcart-text-color: #fff !important;
+   }
+``` 
 
+6. (optional) Replace the logo by replacing logo.png in the folder /public/images/logo/. 
+   1. Make sure you give the replacement logo the same name: logo.png
 
 ### Configuration
 
@@ -80,7 +92,18 @@ Deze repository bevat een volledig functioneel, maar basale PHP / HTML implement
 3. Pak het gehele .zip bestand uit in de webroot-map van jouw webhosting.
    De naam van deze map verschilt per webhosting soms heet deze `public_html` of `htdocs`.
 4. Maak de map `templates/compilation_cache` aan als deze nog niet bestaat. Zet de rechten naar 777.
-
+5. (optioneel) Om de basis kleuren van de websop aan te passen kan de onderstaande code worden overgenomen in het "/public/css/custom.css" bestand. Pas vervolgens de kleurcodes aan naar wens:
+  ```
+  :root {
+   --primary-color: #d5d5d5 !important;
+   --secondary-color: #e5e5e5 !important;
+   --secondary-link-text-color: #777 !important;
+   --shoppingcart-bg-color: #28a745 !important;
+   --shoppingcart-text-color: #fff !important;
+   }
+``` 
+6. (optioneel) Het logo vervang je door in de map /public/images/logo/, logo.png te vervangen.
+   1. Let erop dat je het vervangende logo dezelfde naam geeft: logo.png
 
 ### Configuratie
 

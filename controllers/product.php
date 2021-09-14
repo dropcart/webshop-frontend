@@ -52,9 +52,11 @@ $product_id = $uri[1];
 
 // Collect the products
 $store_product = request([], 'catalog', 'products', $product_id);
+$attributes = (array) $store_product->product->attributes[0]->attributes;
 
 echo view('product.html.twig', [
 	// Overwrite default page title
 	'page_title' => $store_product->product->translations->{get_locale_id()}->name,
 	'store_product' => object_to_array($store_product),
+    'attributes' => $attributes,
 ]);
