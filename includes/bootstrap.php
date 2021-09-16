@@ -36,7 +36,7 @@
  *
  * =========================================================
  */
- 
+
 session_start();
 
 define('__BASEDIR__', rtrim(realpath(__DIR__ . '/..'), '/'));
@@ -95,14 +95,14 @@ if(!function_exists('customer')) { function customer() { global $Customer; retur
 $Messages       = new FlashMessages([]);
 if(!function_exists('flash_messages')) { function flash_messages() { global $Messages; return $Messages; } }
 
-$twig_environment =  new Twig_Environment(new Twig_Loader_Filesystem(config('template_path')), array(
+$twig_environment =  new \Twig\Environment(new \Twig\Loader\FilesystemLoader(config('template_path')), array(
     'cache' => config('cache_path'),
     'auto_reload' => config('auto_reload'),
     'debug' => config('app_debug'),
 ));
 
 if (config('app_debug') === true) {
-    $twig_environment->addExtension(new Twig_Extension_Debug());
+    $twig_environment->addExtension(new \Twig\Extension\DebugExtension());
 }
 
 $Twig = (object) [

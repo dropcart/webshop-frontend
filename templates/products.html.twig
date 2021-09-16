@@ -149,10 +149,12 @@
                             <li class="page-item disabled"><span class="page-link">...</span></li>
                         {% endif %}
 
-                        {% for count in 3..1 if (current_page - count) > 1 %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ (current_page - count) : '?page=' ~ (current_page - count) }}">{{ current_page - count }}</a>
-                            </li>
+                        {% for count in 3..1 %}
+                            {% if (current_page - count) > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ (current_page - count) : '?page=' ~ (current_page - count) }}">{{ current_page - count }}</a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
 
                         <!-- ACTIVE PAGE -->
@@ -163,10 +165,12 @@
                     {% endif %}
 
                     {% if current_page < total_pages %}
-                        {% for count in (current_page + 1)..(current_page + 3) if count < total_pages %}
-                            <li class="page-item">
-                                <a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ count : '?page=' ~ count }}">{{ count }}</a>
-                            </li>
+                        {% for count in (current_page + 1)..(current_page + 3) %}
+                            {% if count < total_pages %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ query_string ? query_string ~ '&page=' ~ count : '?page=' ~ count }}">{{ count }}</a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     {% endif %}
 

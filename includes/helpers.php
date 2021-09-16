@@ -166,7 +166,7 @@ if (!function_exists('object_to_array')) {
      */
     function object_to_array($object): array
     {
-        return json_decode(json_encode($object), true);
+        return json_decode(json_encode($object), true) ?? [];
     }
 }
 
