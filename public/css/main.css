@@ -195,6 +195,12 @@ h3, .h3 {
     background-color: var(--primary-color);
 }
 
+
+.next-step .primary-background, .filter .primary-background, .footer .primary-background, .ftrbtm p {
+    color:  #fff !important;
+    background-color: var(--primary-color);
+}
+
 /* algemeen secondary achtergrond kleur*/
 .secondary-background{
     background-color: var(--secondary-color) !important;

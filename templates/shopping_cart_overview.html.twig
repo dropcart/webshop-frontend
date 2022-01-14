@@ -181,10 +181,10 @@
                 </div>
                 <div class="next-step fill">
                     {% if transaction is defined and transaction %}
-                        <button onclick="location.href='{{ urls.checkout }}'" class="btn btn btn-block btn-primary">Naar afrekenen <span
+                        <button onclick="location.href='{{ urls.checkout }}'" class="btn btn btn-block primary-background">Naar afrekenen <span
                                     class="glyphicon glyphicon-shopping-cart"></span></button>
                     {% else %}
-                        <button onclick="location.href='{{ urls.customer_details }}'" class="btn btn btn-block btn-primary customer-link">Naar klantgegevens <span
+                        <button onclick="location.href='{{ urls.customer_details }}'" class="btn btn btn-block primary-background">Naar klantgegevens <span
                                     class="glyphicon glyphicon-shopping-cart"></span></button>
                     {% endif %}
                 </div>
