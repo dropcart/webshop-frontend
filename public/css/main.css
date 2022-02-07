@@ -217,6 +217,12 @@ h3, .h3 {
     background-color: var(--secondary-color);
 }
 
+.printer-products a {
+    color: var(--shoppingcart-text-color) !important;
+    background-color: var(--primary-color) !important;
+    border: none !important;
+}
+
 /* ##################################### */
 
 /* ############## */
