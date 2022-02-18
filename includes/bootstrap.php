@@ -79,7 +79,7 @@ global $locale_id; // @todo
 $locale_id = 1;
 // Set default shipping country. This value might change once a customer fills in details or through switchbox (not implemented yet)
 global $shipping_country_id; // @todo
-$shipping_country_id = 1;
+$shipping_country_id = config('default_shipping_country');
 
 // Configure the Dropcart Client
 \Dropcart\PhpClient\DropcartClient::options()

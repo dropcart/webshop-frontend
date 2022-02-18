@@ -54,6 +54,9 @@ return [
     "SITE_NAME" => "",
     "SITE_SLUG" => "",
 
+    // Default shipping country (1 = The Netherlands, 2 = Belgium, 3 = Germany)
+    "DEFAULT_SHIPPING_COUNTRY" => 1,
+
     /* Base URL:
     Can be left blank, unless you want to run the site on a sub folder.
     For example:
