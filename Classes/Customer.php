@@ -57,7 +57,10 @@ class Customer
         if (!isset($_SESSION['customer'])) {
             $_SESSION['customer'] = [
                 // Set to global (default) shipping country ID
-                'shipping_country_id' => $shipping_country_id
+                'shipping_country_id' => $shipping_country_id,
+                'billing_address' => [
+                    'country_id' => $shipping_country_id,
+                ],
             ];
         }
 
