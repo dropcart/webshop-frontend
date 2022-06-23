@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$price_changed) {
         }
 
     }
-    header('location: ' . lang('url.checkout'));
+    header('location: ' . url().  lang('url.checkout'));
 }
 
 // Collect all countries

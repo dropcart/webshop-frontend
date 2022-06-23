@@ -27,7 +27,7 @@
                 {% set product_shipping_details = attribute(product_price.shipping_costs, shipping_country_id) %}
                 <div class="{{ store_product.id }} shopping-bag-item fill">
                     <div class="col-2 d-sm-none d-md-flex no-padding">
-                        <img src="{{ product.images|length > 0 and product.images.thumbnail.url ? product.images.thumbnail.url : '/images/no_image.png' }}"
+                        <img src="{{ product.images|length > 0 and product.images.thumbnail.url ? product.images.thumbnail.url : base_url ~ '/images/no_image.png' }}"
                              alt="{{ product_translation.name }}">
                     </div>
                     <div class="col-lg-6 col-md-5 col-6">

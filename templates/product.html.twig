@@ -20,7 +20,7 @@
 
     <div class="col-12 product-page no-padding">
         <div class="col-md-6 center mag">
-            <img src="{{ product.images|length > 0 and product.images.large.url ? product.images.large.url : '/images/no_image.png' }}" class="featured-img" alt="{{ product_translation.name }}" data-toggle="magnify">
+            <img src="{{ product.images|length > 0 and product.images.large.url ? product.images.large.url : base_url ~ '/images/no_image.png' }}" class="featured-img" alt="{{ product_translation.name }}" data-toggle="magnify">
         </div>
 
         <div class="col-md-6">

@@ -86,7 +86,7 @@
 
                     <div class="{{ store_product.id }} shopping-bag-item fill">
                         <div class="col-md-1 d-none d-md-flex no-padding">
-                            <img src="{{ product.images|length > 0 and product.images.thumbnail.url ? product.images.thumbnail.url : '/images/no_image.png' }}"
+                            <img src="{{ product.images|length > 0 and product.images.thumbnail.url ? product.images.thumbnail.url : base_url ~ '/images/no_image.png' }}"
                                  alt="{{ product_translation.name }}">
                         </div>
                         <div class="col-md-6 col-sm-5 col-5">

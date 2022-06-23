@@ -171,9 +171,9 @@ if (!function_exists('object_to_array')) {
 }
 
 if (!function_exists('request_uri')) {
-    function request_uri(string $base_uri): string
+    function request_uri(): string
     {
         $base_url = rtrim(config('base_url'), '/');
-        return str_replace($base_url, '', $_SERVER['REQUEST_URI']);
+        return str_replace([$base_url, '/public'], '', $_SERVER['REQUEST_URI']);
     }
 }

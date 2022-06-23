@@ -113,6 +113,7 @@ $Twig = (object) [
         'product_overview'          => config('product_overview'),
         'payment_provider'          => config('payment_provider'),
         'container'                 => config('full_width'),
+        'base_url'                  => config('base_url'),
         'locale_id'                 => $locale_id,
         'shipping_country_id'       => $shipping_country_id,
 		//'page_title'                => '',

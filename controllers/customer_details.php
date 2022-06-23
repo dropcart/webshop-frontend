@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     // Fill the customer details with the POST data
     customer()->fill($_POST);
-    header('location: ' . lang('url.checkout'));
+    header('location: ' . url() . lang('url.checkout'));
     exit;
 }
 

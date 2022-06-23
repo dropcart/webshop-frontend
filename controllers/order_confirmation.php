@@ -47,7 +47,7 @@ if (!isset($_GET['status'])) {
     // Redirect back to order checkout page with error message.
     // Payment is either cancelled or expired. A new payment_url should be generated.
     flash_messages()->setErrorMessages('De betaling is afgebroken of verlopen.<br>Indien u de bestelling toch door wilt voeren kunt u opnieuw uw betaalmethode selecteren en verder gaan naar de betaalpagina om uw bestelling af te ronden.');
-    header("Location: " . lang('url.checkout'));
+    header("Location: " . url() . lang('url.checkout'));
     exit();
 } else {
     // Switch the order payment status and pass it on to the template.
